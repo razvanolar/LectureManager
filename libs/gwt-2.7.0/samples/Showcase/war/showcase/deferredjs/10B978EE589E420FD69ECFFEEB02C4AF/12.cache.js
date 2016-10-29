@@ -1,0 +1,1 @@
+$wnd.showcase.runAsyncCallback12("function usb(){var a,b;a=new SUb;vp(a.e,Woc,5);for(b=1;b<5;b++){PUb(a,new fNb('Bouton '+b))}QUb(a,'cwHorizontalPanel');return a}\nw8(414,1,snc);_.xc=function zsb(){Pbb(this.a,usb())};nkc(Jl)(12);\n//# sourceURL=showcase-12.js\n")

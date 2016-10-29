@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact name="LectureManager:GWT">
+    <output-path>$PROJECT_DIR$/classes/artifacts/LectureManager_GWT</output-path>
+    <root id="root">
+      <element id="gwt-compiler-output" facet="LectureManager/gwt/GWT" />
+    </root>
+  </artifact>
+</component>

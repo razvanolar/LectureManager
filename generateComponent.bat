@@ -68,8 +68,13 @@ goto :success
 
 :help
 echo [gen comp] Info:
-echo [gen comp] To run the script -^> %0 viewName dirName
+echo [gen comp] To run the script -^> %0 viewName dirName [elementType]
+echo [gen comp] If elementType parameter is provided the following classes will be updated in order to use the new created component:
+echo [gen comp]   * ElementTypes
+echo [gen comp]   * ControllerFactory
+echo [gen comp]   * ViewFactory
 echo [gen comp] e.g. %0 Login login
+echo [gen comp] e.g. %0 Login login LOGIN_FORM
 goto :eof
 
 :javaFailed

@@ -1,2 +1,0 @@
-serviceClass: com.google.lecture_manager.client.GreetingService
-path: 474B05FCB5E231C1FFCD674B0FE5BEC2.gwt.rpc

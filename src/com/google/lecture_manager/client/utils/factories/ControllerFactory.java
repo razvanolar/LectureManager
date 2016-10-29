@@ -2,6 +2,7 @@ package com.google.lecture_manager.client.utils.factories;
 
 import com.google.lecture_manager.client.components.login.LoginController;
 import com.google.lecture_manager.client.components.sign_up.SignUpController;
+//{controller}
 import com.google.lecture_manager.client.utils.Controller;
 import com.google.lecture_manager.client.utils.ElementTypes;
 
@@ -16,6 +17,7 @@ public class ControllerFactory {
         return LoginController.getInstance();
       case SIGN_UP_FORM:
         return SignUpController.getInstance();
+      //{new_case}
     }
     return null;
   }

@@ -14,7 +14,8 @@ SET V=View
 SET CONTROLLER=%1!CTRL!
 SET VIEW=%1!V!
 SET I_VIEW=I%1!V!
-SET SOURCE=.\src\com\google\lecture_manager\client\components
+SET CLIENT=.\src\com\google\lecture_manager\client
+SET SOURCE=!CLIENT!\components
 
 if exist !SOURCE!\%2 goto alreadyExist
 
@@ -54,9 +55,14 @@ echo [gen comp] Done
 
 if [%3]==[] goto :success
 
+SET FACTORIES_PATH=!CLIENT!\utils\factories
+SET CONTROLLER_FACTORY_PATH=!FACTORIES_PATH!\ControllerFactory.java
+SET CONTROLLER_PACKAGE=!CLIENT_PATH!.%2.!CONTROLLER!
+SET VIEW_PACKAGE=!CLIENT_PATH!.%2.!VIEW!
+SET VIEW_FACTORY_PATH=!FACTORIES_PATH!\ViewFactory.java
 echo [gen comp]
 echo [gen comp] Start adding %e enum into ElementTypes
-java -cp .\utils UpdateElementTypes .\src\com\google\lecture_manager\client\utils\ElementTypes.java %3 || goto javaFailed
+java -cp .\utils UpdateElementTypes !CLIENT!\utils\ElementTypes.java !CONTROLLER_FACTORY_PATH! !VIEW_FACTORY_PATH! !CONTROLLER_PACKAGE! !VIEW_PACKAGE! %3 || goto javaFailed
 
 goto :success
 

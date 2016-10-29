@@ -2,6 +2,7 @@ package com.google.lecture_manager.client.utils.factories;
 
 import com.google.lecture_manager.client.components.login.LoginView;
 import com.google.lecture_manager.client.components.sign_up.SignUpView;
+//{view}
 import com.google.lecture_manager.client.utils.ElementTypes;
 import com.google.lecture_manager.client.utils.View;
 
@@ -16,6 +17,7 @@ public class ViewFactory {
         return new LoginView();
       case SIGN_UP_FORM:
         return new SignUpView();
+      //{new_case}
     }
     return null;
   }

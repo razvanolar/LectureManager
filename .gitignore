@@ -2,7 +2,10 @@
 .idea/
 .idea/*.xml
 gwt-unitCache/
-war/
+war/lecturemanager/
+war/WEB-INF/classes/
+war/WEB-INF/deploy/
+war/WEB-INF/lib/
 .classpath
 .project
 LectureManager.iml

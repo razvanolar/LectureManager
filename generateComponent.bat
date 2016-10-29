@@ -16,6 +16,8 @@ SET VIEW=%1!V!
 SET I_VIEW=I%1!V!
 SET SOURCE=.\src\com\google\lecture_manager\client\components
 
+if exist !SOURCE!\%2 goto alreadyExist
+
 echo [gen comp] Target component files
 echo [gen comp]   !CONTROLLER!
 echo [gen comp]   !VIEW!
@@ -44,15 +46,39 @@ echo [gen comp] Finished
 
 echo [gen comp]
 echo [gen comp] Create directory !SOURCE!\%2\
-mkdir !SOURCE!\%2\
+mkdir !SOURCE!\%2
 echo [gen comp] Writing objects
 echo !CTRL_RESULT! > !SOURCE!\%2\!CONTROLLER!.java
 echo !VIEW_RESULT! > !SOURCE!\%2\!VIEW!.java
 echo [gen comp] Done
 
-goto :eof
+if [%3]==[] goto :success
+
+echo [gen comp]
+echo [gen comp] Start adding %e enum into ElementTypes
+java -cp .\utils UpdateElementTypes .\src\com\google\lecture_manager\client\utils\ElementTypes.java %3 || goto javaFailed
+
+goto :success
 
 :help
 echo [gen comp] Info:
 echo [gen comp] To run the script -^> %0 viewName dirName
 echo [gen comp] e.g. %0 Login login
+goto :eof
+
+:javaFailed
+echo [gen comp] UpdateElementTypes failed
+echo [gen comp] Remove directory !SOURCE!\%2
+rmdir /s /q !SOURCE!\%2
+goto :error
+
+:alreadyExist
+echo [gen comp] The specified component already exists
+goto error
+
+:error
+echo [gen comp] STATUS: FAILED
+goto :eof
+
+:success
+echo [gen comp] STATUS: SUCCESS

@@ -9,7 +9,7 @@ import com.google.lecture_manager.client.handlers.BackToLoginEventHandler;
 public class BackToLoginEvent extends GwtEvent<BackToLoginEventHandler> {
 
   public static Type<BackToLoginEventHandler> TYPE = new Type<>();
-
+  
   @Override
   public Type<BackToLoginEventHandler> getAssociatedType() {
     return TYPE;

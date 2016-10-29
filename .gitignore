@@ -1,0 +1,9 @@
+
+.idea/
+gwt-unitCache/
+war/
+.classpath
+.project
+LectureManager.iml
+LectureManager.launch
+LectureManager.war

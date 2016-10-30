@@ -10,13 +10,21 @@
     <servlet-name>greetServlet</servlet-name>
     <servlet-class>com.google.lecture_manager.server.GreetingServiceImpl</servlet-class>
   </servlet>
-  
-  <servlet-mapping>
+    <servlet>
+        <servlet-name>com.google.lecture_manager.LectureManager UserService</servlet-name>
+        <servlet-class>com.google.lecture_manager.server.UserServiceImpl</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
     <servlet-name>greetServlet</servlet-name>
     <url-pattern>/lecturemanager/greet</url-pattern>
   </servlet-mapping>
-  
-  <!-- Default page to serve -->
+    <servlet-mapping>
+        <servlet-name>com.google.lecture_manager.LectureManager UserService</servlet-name>
+        <url-pattern>/lecturemanager/userService</url-pattern>
+    </servlet-mapping>
+
+    <!-- Default page to serve -->
   <welcome-file-list>
     <welcome-file>LectureManager.html</welcome-file>
   </welcome-file-list>

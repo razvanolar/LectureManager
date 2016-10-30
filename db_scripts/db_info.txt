@@ -1,0 +1,3 @@
+create database lecturemanager;
+create user 'manager'@'localhost' IDENTIFIED BY 'manager';
+flush privileges;

@@ -10,9 +10,9 @@ import java.sql.Statement;
  */
 public class JDBCUtil {
 
-  private static final String HOST = "jdbc:mysql://localhost/mpp";
-  private static final String USER = "root";
-  private static final String PASSWORD = "Changeme.1023";
+  private static final String HOST = "jdbc:mysql://localhost/lecturemanager";
+  private static final String USER = "manager";
+  private static final String PASSWORD = "manager";
 
   public JDBCUtil() {
     try {

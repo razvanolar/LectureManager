@@ -3,3 +3,9 @@
 .whiteBg {
   background-color: white !important;
 }
+
+.linkLabel {
+  color: #4b50ff;
+  text-decoration: underline;
+  cursor: pointer;
+}

@@ -2,6 +2,7 @@ package com.google.lecture_manager.client.components.sign_up;
 
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
+import com.google.lecture_manager.client.utils.AppConstants;
 import com.sencha.gxt.widget.core.client.container.CenterLayoutContainer;
 import com.sencha.gxt.widget.core.client.container.VBoxLayoutContainer;
 import com.sencha.gxt.widget.core.client.form.FieldLabel;
@@ -30,6 +31,7 @@ public class SignUpView implements SignUpController.ISignUpView {
     FieldLabel pwdFieldLabel = new FieldLabel(pwdTextField, "Password");
     FieldLabel repFieldLabel = new FieldLabel(repwdTextField, "Retype Password");
     backLabel = new Label("Back");
+    backLabel.setStyleName(AppConstants.LINK_LABEL_STYLE);
 
     int labelWidth = 120;
     int textFieldWidth = 300;

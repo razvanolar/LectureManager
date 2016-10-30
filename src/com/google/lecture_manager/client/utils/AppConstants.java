@@ -6,4 +6,5 @@ package com.google.lecture_manager.client.utils;
 public class AppConstants {
 
   public static final String WHITE_BG_STYLE = "whiteBg";
+  public static final String LINK_LABEL_STYLE = "linkLabel";
 }

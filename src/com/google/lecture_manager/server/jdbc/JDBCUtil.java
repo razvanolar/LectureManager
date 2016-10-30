@@ -14,6 +14,8 @@ public class JDBCUtil {
   private static final String USER = "manager";
   private static final String PASSWORD = "manager";
 
+  private static JDBCUtil INSTANCE;
+
   public JDBCUtil() {
     try {
       Class.forName("com.mysql.jdbc.Driver");
@@ -22,7 +24,7 @@ public class JDBCUtil {
     }
   }
 
-  private void closeStatement(Statement statement) {
+  public void closeStatement(Statement statement) {
     try {
       if (statement != null)
         statement.close();
@@ -31,7 +33,7 @@ public class JDBCUtil {
     }
   }
 
-  private void closeResultSet(ResultSet resultSet) {
+  public void closeResultSet(ResultSet resultSet) {
     try {
       if (resultSet != null)
         resultSet.close();
@@ -57,5 +59,11 @@ public class JDBCUtil {
       ex.printStackTrace();
       throw ex;
     }
+  }
+
+  public static JDBCUtil getInstance() {
+    if (INSTANCE == null)
+      INSTANCE = new JDBCUtil();
+    return INSTANCE;
   }
 }

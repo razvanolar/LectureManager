@@ -4,6 +4,7 @@ import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import com.google.lecture_manager.client.utils.services.UserService;
 import com.google.lecture_manager.server.jdbc.JDBCUtil;
 import com.google.lecture_manager.server.jdbc.dao.UserDAO;
+import com.google.lecture_manager.server.utils.ServerUtil;
 import com.google.lecture_manager.shared.model.User;
 
 import java.sql.Connection;
@@ -15,6 +16,10 @@ public class UserServiceImpl extends RemoteServiceServlet implements UserService
 
   @Override
   public void addNewUser(User user) throws Exception {
+    if (user == null || user.getPassword() == null || user.getPassword().isEmpty())
+      throw new Exception("Can not add user NULL instance into db.");
+    user.setPassword(ServerUtil.getMD5().crypt(user.getPassword()));
+
     Connection connection = null;
     try {
       connection = JDBCUtil.getInstance().getConnection();
@@ -22,7 +27,7 @@ public class UserServiceImpl extends RemoteServiceServlet implements UserService
       dao.addUser(user);
     } catch (Exception e) {
       System.out.println(e.getMessage());
-      throw e;
+      throw new Exception(e.getMessage());
     } finally {
       if (connection != null)
         JDBCUtil.getInstance().closeConnection(connection);

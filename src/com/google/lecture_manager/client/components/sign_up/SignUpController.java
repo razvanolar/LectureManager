@@ -12,10 +12,12 @@ import com.google.lecture_manager.client.utils.Controller;
 import com.google.lecture_manager.client.utils.MaskableView;
 import com.google.lecture_manager.client.utils.View;
 import com.google.lecture_manager.shared.model.User;
+import com.sencha.gxt.widget.core.client.box.AlertMessageBox;
 import com.sencha.gxt.widget.core.client.button.TextButton;
 import com.sencha.gxt.widget.core.client.event.SelectEvent;
 import com.sencha.gxt.widget.core.client.form.PasswordField;
 import com.sencha.gxt.widget.core.client.form.TextField;
+import com.sencha.gxt.widget.core.client.info.Info;
 
 /**
  * Created by razvanolar on 28.10.2016
@@ -86,15 +88,27 @@ public class SignUpController extends Controller<SignUpController.ISignUpView> {
       return;
     }
     view.mask("Sign Up...");
-    AppUtils.SERVICE_FACTORY.getUserService().addNewUser(new User(), new AsyncCallback<Void>() {
+    AppUtils.SERVICE_FACTORY.getUserService().addNewUser(collect(), new AsyncCallback<Void>() {
       public void onFailure(Throwable throwable) {
         view.unmask();
+        AlertMessageBox alertMessageBox = new AlertMessageBox("Sign Up Error", throwable.getMessage());
+        alertMessageBox.show();
       }
 
       public void onSuccess(Void aVoid) {
         view.unmask();
+        Info.display("Info", "Successfully Signed Up");
+        AppUtils.EVENT_BUS.fireEvent(new BackToLoginEvent());
       }
     });
+  }
+
+  private User collect() {
+    return new User(view.getFirstNameTextField().getText(),
+            view.getLastNameTextField().getText(),
+            view.getUsernameTextField().getText(),
+            view.getEmailTextField().getText(),
+            view.getPwdField().getText());
   }
 
   @Override

@@ -14,6 +14,10 @@ public class AppUtils {
 
   public static ServiceFactory SERVICE_FACTORY = new ServiceFactory();
 
+  public static boolean isNullOrEmpty(String value) {
+    return value == null || value.isEmpty();
+  }
+
   public static native void log(String message)/*-{
     console.info(message);
   }-*/;

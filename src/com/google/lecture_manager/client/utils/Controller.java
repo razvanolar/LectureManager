@@ -9,6 +9,8 @@ public abstract class Controller<T extends View> {
 
   public abstract View getView();
 
+  public void setDefaults() {}
+
   protected boolean isBound;
 
   public boolean isBound() {

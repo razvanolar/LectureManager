@@ -19,8 +19,10 @@ public class UIFactory {
     if (!controller.isBound() || controller.getView() == null) {
       View view = VIEW_FACTORY.getView(type);
       controller.bind(view);
+      controller.setDefaults();
       return view.asWidget();
     }
+    controller.setDefaults();
     return controller.getView().asWidget();
   }
 }

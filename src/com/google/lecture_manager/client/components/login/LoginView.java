@@ -1,6 +1,7 @@
 package com.google.lecture_manager.client.components.login;
 
 import com.google.gwt.user.client.ui.Widget;
+import com.google.lecture_manager.client.utils.MaskableView;
 import com.sencha.gxt.core.client.util.Margins;
 import com.sencha.gxt.widget.core.client.button.TextButton;
 import com.sencha.gxt.widget.core.client.container.*;

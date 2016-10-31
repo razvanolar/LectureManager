@@ -7,7 +7,5 @@ import com.google.gwt.user.client.ui.Widget;
  */
 public interface View {
   void initGUI();
-  void mask(String message);
-  void unmask();
   Widget asWidget();
 }

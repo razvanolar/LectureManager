@@ -9,6 +9,7 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.lecture_manager.client.events.BackToLoginEvent;
 import com.google.lecture_manager.client.utils.AppUtils;
 import com.google.lecture_manager.client.utils.Controller;
+import com.google.lecture_manager.client.utils.MaskableView;
 import com.google.lecture_manager.client.utils.View;
 import com.google.lecture_manager.shared.model.User;
 import com.sencha.gxt.widget.core.client.button.TextButton;
@@ -21,7 +22,7 @@ import com.sencha.gxt.widget.core.client.form.TextField;
  */
 public class SignUpController extends Controller<SignUpController.ISignUpView> {
 
-  public interface ISignUpView extends View {
+  public interface ISignUpView extends View, MaskableView {
     Label getBackLabel();
     TextButton getSignUpButton();
     TextField getFirstNameTextField();

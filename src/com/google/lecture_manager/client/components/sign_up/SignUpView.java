@@ -3,6 +3,7 @@ package com.google.lecture_manager.client.components.sign_up;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.lecture_manager.client.utils.AppConstants;
+import com.google.lecture_manager.client.utils.MaskableView;
 import com.sencha.gxt.widget.core.client.button.TextButton;
 import com.sencha.gxt.widget.core.client.container.BoxLayoutContainer;
 import com.sencha.gxt.widget.core.client.container.CenterLayoutContainer;
@@ -15,7 +16,7 @@ import com.sencha.gxt.widget.core.client.form.TextField;
 /**
  * Created by razvanolar on 28.10.2016
  */
-public class SignUpView implements SignUpController.ISignUpView {
+public class SignUpView implements SignUpController.ISignUpView, MaskableView {
 
   private CenterLayoutContainer centerLayoutContainer;
   private Label backLabel;

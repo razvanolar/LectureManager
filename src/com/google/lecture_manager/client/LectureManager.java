@@ -1,7 +1,6 @@
 package com.google.lecture_manager.client;
 
 import com.google.gwt.core.client.EntryPoint;
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.lecture_manager.client.events.BackToLoginEvent;
 import com.google.lecture_manager.client.events.SignUpEvent;
@@ -18,10 +17,6 @@ import com.sencha.gxt.widget.core.client.container.Viewport;
  * Entry point classes define <code>onModuleLoad()</code>.
  */
 public class LectureManager implements EntryPoint {
-  /**
-   * Create a remote service proxy to talk to the server-side Greeting service.
-   */
-  private final GreetingServiceAsync greetingService = GWT.create(GreetingService.class);
 
   private BorderLayoutContainer mainContainer;
 

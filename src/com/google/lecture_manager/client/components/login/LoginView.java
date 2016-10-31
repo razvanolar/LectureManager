@@ -48,6 +48,16 @@ public class LoginView implements LoginController.ILoginView {
     centerLayoutContainer.add(vBoxLayoutContainer);
   }
 
+  @Override
+  public void mask(String message) {
+    centerLayoutContainer.mask(message);
+  }
+
+  @Override
+  public void unmask() {
+    centerLayoutContainer.unmask();
+  }
+
   public TextButton getLoginButton() {
     return loginButton;
   }

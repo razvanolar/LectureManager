@@ -4,12 +4,16 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.KeyUpEvent;
 import com.google.gwt.event.dom.client.KeyUpHandler;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Label;
 import com.google.lecture_manager.client.events.BackToLoginEvent;
 import com.google.lecture_manager.client.utils.AppUtils;
 import com.google.lecture_manager.client.utils.Controller;
 import com.google.lecture_manager.client.utils.View;
+import com.google.lecture_manager.shared.model.User;
 import com.sencha.gxt.widget.core.client.button.TextButton;
+import com.sencha.gxt.widget.core.client.event.SelectEvent;
+import com.sencha.gxt.widget.core.client.form.PasswordField;
 import com.sencha.gxt.widget.core.client.form.TextField;
 
 /**
@@ -24,8 +28,8 @@ public class SignUpController extends Controller<SignUpController.ISignUpView> {
     TextField getLastNameTextField();
     TextField getUsernameTextField();
     TextField getEmailTextField();
-    TextField getPwdTextField();
-    TextField getRepwdTextField();
+    PasswordField getPwdField();
+    PasswordField getRepwdField();
   }
 
   private static SignUpController INSTANCE = null;
@@ -50,20 +54,46 @@ public class SignUpController extends Controller<SignUpController.ISignUpView> {
     view.getLastNameTextField().addKeyUpHandler(handler);
     view.getUsernameTextField().addKeyUpHandler(handler);
     view.getEmailTextField().addKeyUpHandler(handler);
-    view.getPwdTextField().addKeyUpHandler(handler);
-    view.getRepwdTextField().addKeyUpHandler(handler);
+    view.getPwdField().addKeyUpHandler(handler);
+    view.getRepwdField().addKeyUpHandler(handler);
+
+    view.getSignUpButton().addSelectHandler(new SelectEvent.SelectHandler() {
+      public void onSelect(SelectEvent event) {
+        onSignUpPressed();
+      }
+    });
 
     this.view = view;
     setIsBound(true);
   }
 
   private boolean validFields() {
-    return !(AppUtils.isNullOrEmpty(view.getFirstNameTextField().getText()) ||
-            AppUtils.isNullOrEmpty(view.getLastNameTextField().getText()) ||
-            AppUtils.isNullOrEmpty(view.getUsernameTextField().getText()) ||
-            AppUtils.isNullOrEmpty(view.getEmailTextField().getText()) ||
-            AppUtils.isNullOrEmpty(view.getPwdTextField().getText()) ||
-            AppUtils.isNullOrEmpty(view.getRepwdTextField().getText()));
+    String firstName = view.getFirstNameTextField().getText();
+    String lastName = view.getLastNameTextField().getText();
+    String userName = view.getUsernameTextField().getText();
+    String email = view.getEmailTextField().getText();
+    String password = view.getPwdField().getText();
+    String repassword = view.getRepwdField().getText();
+    return !(AppUtils.isNullOrEmpty(firstName) || AppUtils.isNullOrEmpty(lastName) || AppUtils.isNullOrEmpty(userName) ||
+            AppUtils.isNullOrEmpty(email) || AppUtils.isNullOrEmpty(password) || AppUtils.isNullOrEmpty(repassword)) &&
+            firstName.length() > 2 && lastName.length() > 2 && userName.length() > 2 && email.matches(".+@.+\\.[a-z]+") &&
+            password.equals(repassword);
+  }
+
+  private void onSignUpPressed() {
+    if (!validFields()) {
+      return;
+    }
+    view.mask("Sign Up...");
+    AppUtils.SERVICE_FACTORY.getUserService().addNewUser(new User(), new AsyncCallback<Void>() {
+      public void onFailure(Throwable throwable) {
+        view.unmask();
+      }
+
+      public void onSuccess(Void aVoid) {
+        view.unmask();
+      }
+    });
   }
 
   @Override

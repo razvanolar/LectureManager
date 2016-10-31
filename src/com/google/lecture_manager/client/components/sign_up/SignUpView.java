@@ -9,6 +9,7 @@ import com.sencha.gxt.widget.core.client.container.CenterLayoutContainer;
 import com.sencha.gxt.widget.core.client.container.HBoxLayoutContainer;
 import com.sencha.gxt.widget.core.client.container.VBoxLayoutContainer;
 import com.sencha.gxt.widget.core.client.form.FieldLabel;
+import com.sencha.gxt.widget.core.client.form.PasswordField;
 import com.sencha.gxt.widget.core.client.form.TextField;
 
 /**
@@ -23,8 +24,8 @@ public class SignUpView implements SignUpController.ISignUpView {
   private TextField lastNameTextField;
   private TextField usernameTextField;
   private TextField emailTextField;
-  private TextField pwdTextField;
-  private TextField repwdTextField;
+  private PasswordField pwdField;
+  private PasswordField repwdField;
 
   public SignUpView() {
     initGUI();
@@ -36,15 +37,15 @@ public class SignUpView implements SignUpController.ISignUpView {
     lastNameTextField = new TextField();
     usernameTextField = new TextField();
     emailTextField = new TextField();
-    pwdTextField = new TextField();
-    repwdTextField = new TextField();
+    pwdField = new PasswordField();
+    repwdField = new PasswordField();
     signUpButton = new TextButton("Sign Up");
     FieldLabel firstNameFieldLabel = new FieldLabel(firstNameTextField, "First Name");
     FieldLabel lastNameFieldLabel = new FieldLabel(lastNameTextField, "Last Name");
     FieldLabel usernameFieldLabel = new FieldLabel(usernameTextField, "Username");
     FieldLabel emailFieldLabel = new FieldLabel(emailTextField, "Email");
-    FieldLabel pwdFieldLabel = new FieldLabel(pwdTextField, "Password");
-    FieldLabel repFieldLabel = new FieldLabel(repwdTextField, "Retype Password");
+    FieldLabel pwdFieldLabel = new FieldLabel(pwdField, "Password");
+    FieldLabel repFieldLabel = new FieldLabel(repwdField, "Retype Password");
     backLabel = new Label("Back");
     backLabel.setStyleName(AppConstants.LINK_LABEL_STYLE);
 
@@ -82,6 +83,16 @@ public class SignUpView implements SignUpController.ISignUpView {
     centerLayoutContainer.add(vBoxLayoutContainer);
   }
 
+  @Override
+  public void mask(String message) {
+    centerLayoutContainer.mask(message);
+  }
+
+  @Override
+  public void unmask() {
+    centerLayoutContainer.unmask();
+  }
+
   public Label getBackLabel() {
     return backLabel;
   }
@@ -106,12 +117,12 @@ public class SignUpView implements SignUpController.ISignUpView {
     return emailTextField;
   }
 
-  public TextField getPwdTextField() {
-    return pwdTextField;
+  public PasswordField getPwdField() {
+    return pwdField;
   }
 
-  public TextField getRepwdTextField() {
-    return repwdTextField;
+  public PasswordField getRepwdField() {
+    return repwdField;
   }
 
   @Override

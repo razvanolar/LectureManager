@@ -10,6 +10,8 @@ import com.google.lecture_manager.client.utils.View;
 import com.sencha.gxt.widget.core.client.box.AlertMessageBox;
 import com.sencha.gxt.widget.core.client.button.TextButton;
 import com.sencha.gxt.widget.core.client.event.SelectEvent;
+import com.sencha.gxt.widget.core.client.form.PasswordField;
+import com.sencha.gxt.widget.core.client.form.TextField;
 
 /**
  * Created by razvanolar on 27.10.2016
@@ -19,6 +21,8 @@ public class LoginController extends Controller<LoginController.ILoginView> {
   public interface ILoginView extends View, MaskableView {
     TextButton getLoginButton();
     TextButton getSignUpButton();
+    TextField getUserTextField();
+    PasswordField getPasswordField();
   }
 
   private static LoginController INSTANCE = null;
@@ -47,8 +51,18 @@ public class LoginController extends Controller<LoginController.ILoginView> {
       }
     });
 
+    view.getUserTextField().setText("admin");
+    view.getPasswordField().setText("admin");
     this.view = view;
     setIsBound(true);
+  }
+
+  @Override
+  public void setDefaults() {
+    if (view != null) {
+      view.getUserTextField().setText("admin");
+      view.getPasswordField().setText("admin");
+    }
   }
 
   @Override

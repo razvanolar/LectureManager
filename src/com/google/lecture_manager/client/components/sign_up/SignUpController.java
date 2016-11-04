@@ -11,6 +11,7 @@ import com.google.lecture_manager.client.utils.AppUtils;
 import com.google.lecture_manager.client.utils.Controller;
 import com.google.lecture_manager.client.utils.MaskableView;
 import com.google.lecture_manager.client.utils.View;
+import com.google.lecture_manager.shared.InputValidator;
 import com.google.lecture_manager.shared.model.User;
 import com.sencha.gxt.widget.core.client.box.AlertMessageBox;
 import com.sencha.gxt.widget.core.client.button.TextButton;
@@ -77,8 +78,8 @@ public class SignUpController extends Controller<SignUpController.ISignUpView> {
     String email = view.getEmailTextField().getText();
     String password = view.getPwdField().getText();
     String repassword = view.getRepwdField().getText();
-    return !(AppUtils.isNullOrEmpty(firstName) || AppUtils.isNullOrEmpty(lastName) || AppUtils.isNullOrEmpty(userName) ||
-            AppUtils.isNullOrEmpty(email) || AppUtils.isNullOrEmpty(password) || AppUtils.isNullOrEmpty(repassword)) &&
+    return !(InputValidator.isNullOrEmpty(firstName) || InputValidator.isNullOrEmpty(lastName) || InputValidator.isNullOrEmpty(userName) ||
+            InputValidator.isNullOrEmpty(email) || InputValidator.isNullOrEmpty(password) || InputValidator.isNullOrEmpty(repassword)) &&
             firstName.length() > 2 && lastName.length() > 2 && userName.length() > 2 && email.matches(".+@.+\\.[a-z]+") &&
             password.equals(repassword);
   }
@@ -114,6 +115,12 @@ public class SignUpController extends Controller<SignUpController.ISignUpView> {
   @Override
   public void setDefaults() {
     if (view != null) {
+      view.getFirstNameTextField().setText("");
+      view.getLastNameTextField().setText("");
+      view.getUsernameTextField().setText("");
+      view.getEmailTextField().setText("");
+      view.getPwdField().setText("");
+      view.getRepwdField().setText("");
       view.getSignUpButton().setEnabled(validFields());
     }
   }

@@ -5,6 +5,7 @@ import com.sencha.gxt.core.client.util.Margins;
 import com.sencha.gxt.widget.core.client.button.TextButton;
 import com.sencha.gxt.widget.core.client.container.*;
 import com.sencha.gxt.widget.core.client.form.FieldLabel;
+import com.sencha.gxt.widget.core.client.form.PasswordField;
 import com.sencha.gxt.widget.core.client.form.TextField;
 
 /**
@@ -15,6 +16,8 @@ public class LoginView implements LoginController.ILoginView {
   private CenterLayoutContainer centerLayoutContainer;
   private TextButton loginButton;
   private TextButton signUpButton;
+  private TextField userTextField;
+  private PasswordField passwordField;
 
   public LoginView() {
     initGUI();
@@ -24,8 +27,8 @@ public class LoginView implements LoginController.ILoginView {
   public void initGUI() {
     loginButton = new TextButton("Login");
     signUpButton = new TextButton("Sign Up");
-    TextField userTextField = new TextField();
-    TextField passwordField = new TextField();
+    userTextField = new TextField();
+    passwordField = new PasswordField();
     FieldLabel userFieldLabel = new FieldLabel(userTextField, "Username");
     FieldLabel passwordFieldLabel = new FieldLabel(passwordField, "Password");
 
@@ -56,6 +59,14 @@ public class LoginView implements LoginController.ILoginView {
   @Override
   public void unmask() {
     centerLayoutContainer.unmask();
+  }
+
+  public TextField getUserTextField() {
+    return userTextField;
+  }
+
+  public PasswordField getPasswordField() {
+    return passwordField;
   }
 
   public TextButton getLoginButton() {

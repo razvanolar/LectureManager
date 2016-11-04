@@ -10,4 +10,5 @@ import com.google.lecture_manager.shared.model.User;
 @RemoteServiceRelativePath("userService")
 public interface UserService extends RemoteService {
   void addNewUser(User user) throws Exception;
+  User authenticate(String user, String password) throws Exception;
 }

@@ -5,5 +5,6 @@ package com.google.lecture_manager.client.utils;
  */
 public enum ElementTypes {
   LOGIN_FORM,
-  SIGN_UP_FORM//{new}
+  SIGN_UP_FORM,
+  APP//{new}
 }

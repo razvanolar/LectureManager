@@ -58,10 +58,17 @@ public class UserDAO {
   }
 
   private User computeResultSet(ResultSet result) throws Exception {
+    int id = result.getInt(7);
+    UserTypes type = UserTypes.fromId(id);
+    if (type == null) {
+      System.out.println("Unable to determine user type for id: " + id);
+      throw new Exception("Unable to determine user type");
+    }
     return new User(result.getInt(1),
             result.getString(2),
             result.getString(3),
             result.getString(5),
-            result.getString(4));
+            result.getString(4),
+            type);
   }
 }

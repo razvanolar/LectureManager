@@ -16,4 +16,12 @@ public enum UserTypes {
   public int getId() {
     return id;
   }
+
+  public static UserTypes fromId(int id) {
+    for (UserTypes type : values()) {
+      if (type.getId() == id)
+        return type;
+    }
+    return null;
+  }
 }

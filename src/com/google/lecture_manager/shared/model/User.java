@@ -1,6 +1,7 @@
 package com.google.lecture_manager.shared.model;
 
 import com.google.gwt.user.client.rpc.IsSerializable;
+import com.google.lecture_manager.shared.UserTypes;
 
 /**
  * Created by razvanolar on 30.10.2016
@@ -15,13 +16,15 @@ public class User implements IsSerializable {
   private String userName;
   private String email;
   private String password;
+  private UserTypes type;
 
-  public User(int id, String firstName, String lastName, String userName, String email) {
+  public User(int id, String firstName, String lastName, String userName, String email, UserTypes type) {
     this.id = id;
     this.firstName = firstName;
     this.lastName = lastName;
     this.userName = userName;
     this.email = email;
+    this.type = type;
   }
 
   public User(String firstName, String lastName, String userName, String email, String password) {
@@ -54,6 +57,10 @@ public class User implements IsSerializable {
 
   public String getPassword() {
     return password;
+  }
+
+  public UserTypes getType() {
+    return type;
   }
 
   public void setPassword(String password) {

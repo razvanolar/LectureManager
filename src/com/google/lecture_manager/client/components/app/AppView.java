@@ -14,6 +14,7 @@ public class AppView implements AppController.IAppView {
   @Override
   public void initGUI() {
     borderLayoutContainer = new BorderLayoutContainer();
+    borderLayoutContainer.getElement().getStyle().setBackgroundColor("#ffffff");
   }
 
   @Override

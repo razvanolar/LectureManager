@@ -1,3 +1,4 @@
 create database lecturemanager;
 create user 'manager'@'localhost' IDENTIFIED BY 'manager';
+grant all privileges on lecturemanager.* TO 'manager'@'localhost';
 flush privileges;

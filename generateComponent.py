@@ -16,11 +16,13 @@ def main(params):
     view_name = params[0] + 'View'
     create_view_and_controller(controller_name, view_name, params[1])
     if len(params) == 3:
+        print('[gen comp] Provided ElementTypes: ' + params[2])
         update_element_types(params[2])
         update_view_and_controller_factories(controller_name, view_name, params[1], params[2])
 
 
 def update_element_types(enum):
+    print('[gen comp] Updating ElementTypes...')
     file = open(ELEMENT_TYPES_PATH, 'r')
     content = ''
     for line in file:
@@ -33,6 +35,7 @@ def update_element_types(enum):
     file = open(ELEMENT_TYPES_PATH, 'w')
     file.write(content)
     file.close()
+    print('[gen comp] Done')
 
 
 def update_view_and_controller_factories(controller_name, view_name, path, enum):
@@ -41,6 +44,7 @@ def update_view_and_controller_factories(controller_name, view_name, path, enum)
 
 
 def update_view_factory(view_name, view_package_suffix, enum):
+    print('[gen comp] Updating ViewFactory...')
     file = open(VIEW_FACTORY, 'r')
     content = ''
     for line in file:
@@ -53,9 +57,11 @@ def update_view_factory(view_name, view_package_suffix, enum):
     file = open(VIEW_FACTORY, 'w')
     file.write(content)
     file.close()
+    print('[gen comp] Done')
 
 
 def update_controller_factory(controller_name, controller_package_suffix, enum):
+    print('[gen comp] Updating ControllerFactory...')
     file = open(CONTROLLER_FACTORY, 'r')
     content = ''
     for line in file:
@@ -68,24 +74,32 @@ def update_controller_factory(controller_name, controller_package_suffix, enum):
     file = open(CONTROLLER_FACTORY, 'w')
     file.write(content)
     file.close()
+    print('[gen comp] Done')
 
 
 def create_view_and_controller(controller_name, view_name, path):
     new_path = COMPONENTS_PATH + path
     if not os.path.isdir(new_path):
+        print('[gen comp] Create ' + new_path + ' directory')
         os.makedirs(new_path)
     if not new_path.endswith('\\'):
         new_path += '\\'
     i_view_name = 'I' + view_name
     controller_path = new_path + controller_name + '.java'
+    print('[gen comp] Computing controller source code...')
     controller_string = create_controller_string(controller_name, i_view_name, path)
+    print('[gen comp] Done')
     view_path = new_path + view_name + '.java'
+    print('[gen comp] Computing view source code...')
     view_string = create_view_string(controller_name, view_name, path)
+    print('[gen comp] Done')
 
     controller_file = open(controller_path, 'w')
     view_file = open(view_path, 'w')
     controller_file.write(controller_string)
+    print('[gen comp] ' + controller_name + '.java was written')
     view_file.write(view_string)
+    print('[gen comp] ' + view_name + '.java was written')
     controller_file.close()
     view_file.close()
 
@@ -144,4 +158,6 @@ if __name__ == "__main__":
     if len(args) < 3:
         showinfo()
         exit()
+    print('[gen comp] Start generating ' + args[1] + ' component')
     main(args[1:])
+    print('[gen comp] Finished')

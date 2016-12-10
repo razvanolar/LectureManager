@@ -16,6 +16,8 @@ public class AppUtils {
 
   public static ServiceFactory SERVICE_FACTORY = new ServiceFactory();
 
+  public static Icons ICONS = GWT.create(Icons.class);
+
   private User authenticatedUser;
 
   public User getAuthenticatedUser() {

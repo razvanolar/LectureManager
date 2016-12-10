@@ -2,6 +2,8 @@ package com.google.lecture_manager.client.components.app.header;
 
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
+import com.google.lecture_manager.client.utils.AppUtils;
+import com.sencha.gxt.cell.core.client.ButtonCell;
 import com.sencha.gxt.core.client.util.Margins;
 import com.sencha.gxt.widget.core.client.button.TextButton;
 import com.sencha.gxt.widget.core.client.container.BorderLayoutContainer;
@@ -24,7 +26,7 @@ public class HeaderView implements HeaderController.IHeaderView {
   public void initGUI() {
     borderLayoutContainer = new BorderLayoutContainer();
     userNameLabel = new Label("Test");
-    logoutButton = new TextButton("Logout");
+    logoutButton = new TextButton("LOGOUT ", AppUtils.ICONS.logout());
     Label userText = new Label("Logged in as: ");
 
     HBoxLayoutContainer leftContainer = new HBoxLayoutContainer(HBoxLayoutContainer.HBoxLayoutAlign.MIDDLE);
@@ -38,6 +40,7 @@ public class HeaderView implements HeaderController.IHeaderView {
 
     userText.getElement().getStyle().setProperty("fontWeight", "bold");
     userNameLabel.getElement().getStyle().setProperty("fontWeight", "bold");
+    logoutButton.setIconAlign(ButtonCell.IconAlign.RIGHT);
 
     borderLayoutContainer.setWestWidget(leftContainer, new BorderLayoutContainer.BorderLayoutData(200));
     borderLayoutContainer.setEastWidget(rightContainer);

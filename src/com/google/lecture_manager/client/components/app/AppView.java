@@ -6,8 +6,12 @@ import com.sencha.gxt.widget.core.client.container.BorderLayoutContainer;
 public class AppView implements AppController.IAppView {
 
   private BorderLayoutContainer borderLayoutContainer;
+  private Widget northWidget;
+  private Widget centerWidget;
 
-  public AppView() {
+  public AppView(Widget northWidget, Widget centerWidget) {
+    this.northWidget = northWidget;
+    this.centerWidget = centerWidget;
     initGUI();
   }
 
@@ -15,6 +19,11 @@ public class AppView implements AppController.IAppView {
   public void initGUI() {
     borderLayoutContainer = new BorderLayoutContainer();
     borderLayoutContainer.getElement().getStyle().setBackgroundColor("#ffffff");
+
+    if (northWidget != null)
+      borderLayoutContainer.setNorthWidget(northWidget, new BorderLayoutContainer.BorderLayoutData(40));
+    if (centerWidget != null)
+      borderLayoutContainer.setCenterWidget(centerWidget);
   }
 
   @Override

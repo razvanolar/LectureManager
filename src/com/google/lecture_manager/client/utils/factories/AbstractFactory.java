@@ -16,12 +16,21 @@ public class AbstractFactory {
   @SuppressWarnings("unchecked")
   public static Controller getController(ElementTypes type) {
     Controller controller = CONTROLLER_FACTORY.getController(type);
+    if (type == ElementTypes.APP) {
+      bindController(CONTROLLER_FACTORY.getController(ElementTypes.HEADER), ElementTypes.HEADER);
+      bindController(CONTROLLER_FACTORY.getController(ElementTypes.CENTER), ElementTypes.CENTER);
+    }
+    bindController(controller, type);
+    return controller;
+  }
+
+  @SuppressWarnings("unchecked")
+  private static void bindController(Controller controller, ElementTypes type) {
     if (!controller.isBound() || controller.getView() == null) {
       View view = VIEW_FACTORY.getView(type);
       controller.bind(view);
       controller.setDefaults();
     }
-    return controller;
   }
 
   public static Widget getWidget(ElementTypes type) {

@@ -4,6 +4,7 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.event.shared.SimpleEventBus;
 import com.google.lecture_manager.client.utils.factories.ServiceFactory;
+import com.google.lecture_manager.shared.UserTypes;
 import com.google.lecture_manager.shared.model.User;
 
 /**
@@ -15,7 +16,7 @@ public class AppUtils {
 
   public static ServiceFactory SERVICE_FACTORY = new ServiceFactory();
 
-  public User authenticatedUser;
+  private User authenticatedUser;
 
   public User getAuthenticatedUser() {
     return authenticatedUser;
@@ -23,6 +24,10 @@ public class AppUtils {
 
   public void setAuthenticatedUser(User authenticatedUser) {
     this.authenticatedUser = authenticatedUser;
+  }
+
+  public boolean isAdmin() {
+    return authenticatedUser != null && authenticatedUser.getType() == UserTypes.ADMIN;
   }
 
   public static native void log(String message)/*-{

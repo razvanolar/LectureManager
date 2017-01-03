@@ -1,6 +1,7 @@
 package com.google.lecture_manager.client.components.app.header;
 
 import com.google.gwt.user.client.ui.Label;
+import com.google.lecture_manager.client.utils.AppUtils;
 import com.google.lecture_manager.client.utils.Controller;
 import com.google.lecture_manager.client.utils.View;
 import com.sencha.gxt.widget.core.client.button.TextButton;
@@ -10,6 +11,8 @@ public class HeaderController extends Controller<HeaderController.IHeaderView> {
   public interface IHeaderView extends View {
     Label getUserNameLabel();
     TextButton getLogoutButton();
+    TextButton getAdminButton();
+    TextButton getApplyForLectureButton();
   }
 
   private static HeaderController INSTANCE = null;
@@ -19,6 +22,8 @@ public class HeaderController extends Controller<HeaderController.IHeaderView> {
   @Override
   public void bind(IHeaderView view) {
     this.view = view;
+    if (!AppUtils.getInstance().isAdmin())
+      view.getAdminButton().setVisible(false);
     setIsBound(true);
   }
 

@@ -17,6 +17,8 @@ public class HeaderView implements HeaderController.IHeaderView {
   private BorderLayoutContainer borderLayoutContainer;
   private Label userNameLabel;
   private TextButton logoutButton;
+  private TextButton adminButton;
+  private TextButton applyForLectureButton;
 
   private HeaderView() {
     initGUI();
@@ -26,6 +28,8 @@ public class HeaderView implements HeaderController.IHeaderView {
   public void initGUI() {
     borderLayoutContainer = new BorderLayoutContainer();
     userNameLabel = new Label("Test");
+    adminButton = new TextButton("Admin");
+    applyForLectureButton = new TextButton("Apply for Lecture");
     logoutButton = new TextButton("LOGOUT ", AppUtils.ICONS.logout());
     Label userText = new Label("Logged in as: ");
 
@@ -36,14 +40,17 @@ public class HeaderView implements HeaderController.IHeaderView {
 
     leftContainer.add(userText, new BoxLayoutContainer.BoxLayoutData(new Margins(0, 3, 0, 10)));
     leftContainer.add(userNameLabel);
-    rightContainer.add(logoutButton, new BoxLayoutContainer.BoxLayoutData(new Margins(0, 10, 0, 0)));
+    BoxLayoutContainer.BoxLayoutData rightLayoutData = new BoxLayoutContainer.BoxLayoutData(new Margins(0, 10, 0, 0));
+    rightContainer.add(adminButton, rightLayoutData);
+    rightContainer.add(applyForLectureButton, rightLayoutData);
+    rightContainer.add(logoutButton, rightLayoutData);
 
     userText.getElement().getStyle().setProperty("fontWeight", "bold");
     userNameLabel.getElement().getStyle().setProperty("fontWeight", "bold");
     logoutButton.setIconAlign(ButtonCell.IconAlign.RIGHT);
 
     borderLayoutContainer.setWestWidget(leftContainer, new BorderLayoutContainer.BorderLayoutData(200));
-    borderLayoutContainer.setEastWidget(rightContainer);
+    borderLayoutContainer.setEastWidget(rightContainer, new BorderLayoutContainer.BorderLayoutData(300));
     borderLayoutContainer.getElement().getStyle().setBackgroundColor("#ffffff");
   }
 
@@ -53,6 +60,14 @@ public class HeaderView implements HeaderController.IHeaderView {
 
   public TextButton getLogoutButton() {
     return logoutButton;
+  }
+
+  public TextButton getAdminButton() {
+    return adminButton;
+  }
+
+  public TextButton getApplyForLectureButton() {
+    return applyForLectureButton;
   }
 
   @Override

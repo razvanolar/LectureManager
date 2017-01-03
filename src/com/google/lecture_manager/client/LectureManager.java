@@ -28,7 +28,7 @@ public class LectureManager implements EntryPoint {
    * This is the entry point method.
    */
   public void onModuleLoad() {
-    appUtils = new AppUtils();
+    appUtils = AppUtils.getInstance();
     Viewport viewport = new Viewport();
     mainContainer = new BorderLayoutContainer();
     mainContainer.setStyleName(AppConstants.WHITE_BG_STYLE);

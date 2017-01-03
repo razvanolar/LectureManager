@@ -12,6 +12,8 @@ import com.google.lecture_manager.shared.model.User;
  */
 public class AppUtils {
 
+  private static AppUtils INSTANCE;
+
   public static EventBus EVENT_BUS = GWT.create(SimpleEventBus.class);
 
   public static ServiceFactory SERVICE_FACTORY = new ServiceFactory();
@@ -19,6 +21,8 @@ public class AppUtils {
   public static Icons ICONS = GWT.create(Icons.class);
 
   private User authenticatedUser;
+
+  private AppUtils() {}
 
   public User getAuthenticatedUser() {
     return authenticatedUser;
@@ -30,6 +34,12 @@ public class AppUtils {
 
   public boolean isAdmin() {
     return authenticatedUser != null && authenticatedUser.getType() == UserTypes.ADMIN;
+  }
+
+  public static AppUtils getInstance() {
+    if (INSTANCE == null)
+      INSTANCE = new AppUtils();
+    return INSTANCE;
   }
 
   public static native void log(String message)/*-{

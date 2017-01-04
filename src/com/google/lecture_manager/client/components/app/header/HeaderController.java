@@ -1,10 +1,13 @@
 package com.google.lecture_manager.client.components.app.header;
 
 import com.google.gwt.user.client.ui.Label;
+import com.google.lecture_manager.client.events.ManageLecturesEvent;
+import com.google.lecture_manager.client.events.ManageUsersEvent;
 import com.google.lecture_manager.client.utils.AppUtils;
 import com.google.lecture_manager.client.utils.Controller;
 import com.google.lecture_manager.client.utils.View;
 import com.sencha.gxt.widget.core.client.button.TextButton;
+import com.sencha.gxt.widget.core.client.event.SelectEvent;
 
 public class HeaderController extends Controller<HeaderController.IHeaderView> {
 
@@ -29,6 +32,19 @@ public class HeaderController extends Controller<HeaderController.IHeaderView> {
     } else {
       view.getApplyForLectureButton().setVisible(false);
     }
+    view.getManageUsersButton().addSelectHandler(new SelectEvent.SelectHandler() {
+      @Override
+      public void onSelect(SelectEvent event) {
+        AppUtils.EVENT_BUS.fireEvent(new ManageUsersEvent());
+      }
+    });
+
+    view.getManageLecturesButton().addSelectHandler(new SelectEvent.SelectHandler() {
+      @Override
+      public void onSelect(SelectEvent event) {
+        AppUtils.EVENT_BUS.fireEvent(new ManageLecturesEvent());
+      }
+    });
     setIsBound(true);
   }
 

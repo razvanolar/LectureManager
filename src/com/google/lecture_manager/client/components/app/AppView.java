@@ -40,4 +40,8 @@ public class AppView implements AppController.IAppView {
   public Widget asWidget() {
     return borderLayoutContainer;
   }
-} 
+
+  public BorderLayoutContainer getBorderLayoutContainer() {
+    return borderLayoutContainer;
+  }
+}

@@ -3,7 +3,7 @@ package com.google.lecture_manager.client.events;
 import com.google.gwt.event.shared.GwtEvent;
 import com.google.lecture_manager.client.handlers.ManageLecturesHandler;
 
-public class ManageLectures extends GwtEvent<ManageLecturesHandler> {
+public class ManageLecturesEvent extends GwtEvent<ManageLecturesHandler> {
 
   public static Type<ManageLecturesHandler> TYPE = new Type<>();
 

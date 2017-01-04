@@ -4,6 +4,8 @@ import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 import com.google.lecture_manager.shared.model.User;
 
+import java.util.List;
+
 /**
  * Created by razvanolar on 30.10.2016
  */
@@ -11,4 +13,5 @@ import com.google.lecture_manager.shared.model.User;
 public interface UserService extends RemoteService {
   void addNewUser(User user) throws Exception;
   User authenticate(String user, String password) throws Exception;
+  List<User> getAllUsers() throws Exception;
 }

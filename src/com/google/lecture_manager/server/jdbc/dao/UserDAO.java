@@ -7,6 +7,9 @@ import com.google.lecture_manager.shared.model.User;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by razvanolar on 30.10.2016
@@ -70,5 +73,25 @@ public class UserDAO {
             result.getString(5),
             result.getString(4),
             type);
+  }
+
+  public List<User> getAllUsers() throws Exception {
+    List<User> result = new ArrayList<>();
+    PreparedStatement statement = null;
+    ResultSet rs = null;
+    try {
+      String query = "SELECT * FROM users";
+      statement = connection.prepareStatement(query);
+      rs = statement.executeQuery();
+      while (rs.next()){
+        result.add(computeResultSet(rs));
+      }
+      return result;
+    } finally {
+      if (statement != null)
+        JDBCUtil.getInstance().closeStatement(statement);
+      if (rs != null)
+        JDBCUtil.getInstance().closeResultSet(rs);
+    }
   }
 }

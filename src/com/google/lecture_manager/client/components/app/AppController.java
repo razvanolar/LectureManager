@@ -1,12 +1,17 @@
 package com.google.lecture_manager.client.components.app;
 
-import com.google.lecture_manager.client.utils.Controller;
-import com.google.lecture_manager.client.utils.MaskableView;
-import com.google.lecture_manager.client.utils.View;
+import com.google.lecture_manager.client.events.ManageLecturesEvent;
+import com.google.lecture_manager.client.events.ManageUsersEvent;
+import com.google.lecture_manager.client.handlers.ManageLecturesHandler;
+import com.google.lecture_manager.client.handlers.ManageUsersHandler;
+import com.google.lecture_manager.client.utils.*;
+import com.google.lecture_manager.client.utils.factories.AbstractFactory;
+import com.sencha.gxt.widget.core.client.container.BorderLayoutContainer;
 
 public class AppController extends Controller<AppController.IAppView> {
 
   public interface IAppView extends View, MaskableView {
+    BorderLayoutContainer getBorderLayoutContainer();
   }
 
   private static AppController INSTANCE = null;
@@ -14,9 +19,25 @@ public class AppController extends Controller<AppController.IAppView> {
   private IAppView view;
 
   @Override
-  public void bind(IAppView view) {
+  public void bind(final IAppView view) {
     this.view = view;
     setIsBound(true);
+    AppUtils.EVENT_BUS.addHandler(ManageUsersEvent.TYPE, new ManageUsersHandler() {
+      @Override
+      public void onManageUsersEvent(ManageUsersEvent event) {
+        view.getBorderLayoutContainer().setCenterWidget(AbstractFactory.getWidget(ElementTypes.MANAGE_USERS));
+        view.getBorderLayoutContainer().forceLayout();
+        System.out.println();
+      }
+    });
+
+    AppUtils.EVENT_BUS.addHandler(ManageLecturesEvent.TYPE, new ManageLecturesHandler() {
+      @Override
+      public void onManageLecturesEvent(ManageLecturesEvent event) {
+        view.getBorderLayoutContainer().setCenterWidget(AbstractFactory.getWidget(ElementTypes.MANAGE_LECTURES));
+        view.getBorderLayoutContainer().forceLayout();
+      }
+    });
   }
 
   @Override

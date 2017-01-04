@@ -59,21 +59,5 @@ public class LectureManager implements EntryPoint {
         mainContainer.forceLayout();
       }
     });
-
-    AppUtils.EVENT_BUS.addHandler(ManageUsers.TYPE, new ManageUsersHandler() {
-      @Override
-      public void onManageUsersEvent(ManageUsers event) {
-        mainContainer.setCenterWidget(AbstractFactory.getWidget(ElementTypes.MANAGE_USERS));
-        mainContainer.forceLayout();
-      }
-    });
-
-    AppUtils.EVENT_BUS.addHandler(ManageLectures.TYPE, new ManageLecturesHandler() {
-      @Override
-      public void onManageLecturesEvent(ManageLectures event) {
-        mainContainer.setCenterWidget(AbstractFactory.getWidget(ElementTypes.MANAGE_LECTURES));
-        mainContainer.forceLayout();
-      }
-    });
   }
 }

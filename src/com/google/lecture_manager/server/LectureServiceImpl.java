@@ -20,11 +20,11 @@ public class LectureServiceImpl extends RemoteServiceServlet implements LectureS
     Node<FileData> node3 = new Node<>(new FileData("Lecture_3", "3", FileTypes.FOLDER, -1, null));
     Node<FileData> node4 = new Node<>(new FileData("Lecture_4", "4", FileTypes.FOLDER, -1, null));
 
-    Node<FileData> node11 = new Node<>(new FileData("lecture1_file1", "11", FileTypes.REGULAR, 125, null));
-    Node<FileData> node12 = new Node<>(new FileData("lecture1_file2", "12", FileTypes.REGULAR, 225, null));
-    Node<FileData> node13 = new Node<>(new FileData("lecture1_file3", "13", FileTypes.REGULAR, 325, null));
+    Node<FileData> node11 = new Node<>(new FileData("lecture1_file1", "lecturemanager\\app_files\\lectures\\1\\generateComponent.bat", FileTypes.REGULAR, 125, null));
+    Node<FileData> node12 = new Node<>(new FileData("lecture1_file2", "lecturemanager\\app_files\\lectures\\1\\generateComponent.py", FileTypes.REGULAR, 225, null));
+    Node<FileData> node13 = new Node<>(new FileData("lecture1_file3", "lecturemanager\\app_files\\lectures\\1\\generateEvent.bat", FileTypes.REGULAR, 325, null));
 
-    Node<FileData> node21 = new Node<>(new FileData("lecture2_file1", "21", FileTypes.REGULAR, 125, null));
+    Node<FileData> node21 = new Node<>(new FileData("lecture2_file1", "lecturemanager\\app_files\\lectures\\1\\mysqlDumpScript.bat", FileTypes.REGULAR, 125, null));
     Node<FileData> node22 = new Node<>(new FileData("lecture2_file2", "22", FileTypes.REGULAR, 225, null));
     Node<FileData> node23 = new Node<>(new FileData("lecture2_file3", "23", FileTypes.REGULAR, 325, null));
 

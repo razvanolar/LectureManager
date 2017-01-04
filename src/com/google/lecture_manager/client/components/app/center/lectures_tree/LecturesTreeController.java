@@ -1,6 +1,9 @@
 package com.google.lecture_manager.client.components.app.center.lectures_tree;
 
+import com.google.gwt.event.logical.shared.SelectionEvent;
+import com.google.gwt.event.logical.shared.SelectionHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.lecture_manager.client.events.SelectFileEvent;
 import com.google.lecture_manager.client.utils.AppUtils;
 import com.google.lecture_manager.client.utils.Controller;
 import com.google.lecture_manager.client.utils.View;
@@ -31,6 +34,14 @@ public class LecturesTreeController extends Controller<LecturesTreeController.IL
     this.view = view;
     this.treeStore = view.getTreeGrid().getTreeStore();
     loadLecturesTree();
+
+    view.getTreeGrid().getSelectionModel().addSelectionHandler(new SelectionHandler<FileData>() {
+      public void onSelection(SelectionEvent<FileData> selectionEvent) {
+        Info.display("Selected File", selectionEvent.getSelectedItem() != null ? selectionEvent.getSelectedItem().getName() : "null");
+        AppUtils.EVENT_BUS.fireEvent(new SelectFileEvent(selectionEvent.getSelectedItem()));
+      }
+    });
+
     setIsBound(true);
   }
 

@@ -10,7 +10,7 @@ public class User implements IsSerializable {
 
   public User() {}
 
-  private int id;
+  private long id;
   private String firstName;
   private String lastName;
   private String userName;
@@ -18,7 +18,7 @@ public class User implements IsSerializable {
   private String password;
   private UserTypes type;
 
-  public User(int id, String firstName, String lastName, String userName, String email, UserTypes type) {
+  public User(long id, String firstName, String lastName, String userName, String email, UserTypes type) {
     this.id = id;
     this.firstName = firstName;
     this.lastName = lastName;
@@ -35,7 +35,7 @@ public class User implements IsSerializable {
     this.password = password;
   }
 
-  public int getId() {
+  public long getId() {
     return id;
   }
 

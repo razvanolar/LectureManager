@@ -17,7 +17,8 @@ public class HeaderView implements HeaderController.IHeaderView {
   private BorderLayoutContainer borderLayoutContainer;
   private Label userNameLabel;
   private TextButton logoutButton;
-  private TextButton adminButton;
+  private TextButton manageUsersButton;
+  private TextButton manageLecturesButton;
   private TextButton applyForLectureButton;
 
   private HeaderView() {
@@ -28,7 +29,8 @@ public class HeaderView implements HeaderController.IHeaderView {
   public void initGUI() {
     borderLayoutContainer = new BorderLayoutContainer();
     userNameLabel = new Label("Test");
-    adminButton = new TextButton("Admin");
+    manageUsersButton = new TextButton("Manage Users");
+    manageLecturesButton = new TextButton("Manage Lectures");
     applyForLectureButton = new TextButton("Apply for Lecture");
     logoutButton = new TextButton("LOGOUT ", AppUtils.ICONS.logout());
     Label userText = new Label("Logged in as: ");
@@ -41,7 +43,8 @@ public class HeaderView implements HeaderController.IHeaderView {
     leftContainer.add(userText, new BoxLayoutContainer.BoxLayoutData(new Margins(0, 3, 0, 10)));
     leftContainer.add(userNameLabel);
     BoxLayoutContainer.BoxLayoutData rightLayoutData = new BoxLayoutContainer.BoxLayoutData(new Margins(0, 10, 0, 0));
-    rightContainer.add(adminButton, rightLayoutData);
+    rightContainer.add(manageUsersButton, rightLayoutData);
+    rightContainer.add(manageLecturesButton, rightLayoutData);
     rightContainer.add(applyForLectureButton, rightLayoutData);
     rightContainer.add(logoutButton, rightLayoutData);
 
@@ -50,7 +53,7 @@ public class HeaderView implements HeaderController.IHeaderView {
     logoutButton.setIconAlign(ButtonCell.IconAlign.RIGHT);
 
     borderLayoutContainer.setWestWidget(leftContainer, new BorderLayoutContainer.BorderLayoutData(200));
-    borderLayoutContainer.setEastWidget(rightContainer, new BorderLayoutContainer.BorderLayoutData(300));
+    borderLayoutContainer.setEastWidget(rightContainer, new BorderLayoutContainer.BorderLayoutData(400));
     borderLayoutContainer.getElement().getStyle().setBackgroundColor("#ffffff");
   }
 
@@ -62,8 +65,12 @@ public class HeaderView implements HeaderController.IHeaderView {
     return logoutButton;
   }
 
-  public TextButton getAdminButton() {
-    return adminButton;
+  public TextButton getManageUsersButton() {
+    return manageUsersButton;
+  }
+
+  public TextButton getManageLecturesButton() {
+    return manageLecturesButton;
   }
 
   public TextButton getApplyForLectureButton() {

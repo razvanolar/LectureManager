@@ -5,6 +5,7 @@ import com.google.lecture_manager.client.components.app.header.HeaderController;
 import com.google.lecture_manager.client.components.login.LoginController;
 import com.google.lecture_manager.client.components.sign_up.SignUpController;
 import com.google.lecture_manager.client.components.app.AppController;
+import com.google.lecture_manager.client.components.app.manage_users.ManageUsersController;
 //{controller}
 import com.google.lecture_manager.client.utils.Controller;
 import com.google.lecture_manager.client.utils.ElementTypes;
@@ -26,6 +27,8 @@ public class ControllerFactory {
         return HeaderController.getInstance();
       case CENTER:
         return CenterController.getInstance();
+      case MANAGE_USERS:
+        return ManageUsersController.getInstance();
       //{new_case}
     }
     return null;

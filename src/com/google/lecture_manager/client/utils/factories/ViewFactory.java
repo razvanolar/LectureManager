@@ -5,6 +5,7 @@ import com.google.lecture_manager.client.components.app.header.HeaderView;
 import com.google.lecture_manager.client.components.login.LoginView;
 import com.google.lecture_manager.client.components.sign_up.SignUpView;
 import com.google.lecture_manager.client.components.app.AppView;
+import com.google.lecture_manager.client.components.app.manage_users.ManageUsersView;
 //{view}
 import com.google.lecture_manager.client.utils.ElementTypes;
 import com.google.lecture_manager.client.utils.View;
@@ -26,6 +27,8 @@ public class ViewFactory {
         return HeaderView.getInstance();
       case CENTER:
         return CenterView.getInstance();
+      case MANAGE_USERS:
+        return new ManageUsersView();
       //{new_case}
     }
     return null;

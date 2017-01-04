@@ -8,5 +8,6 @@ public enum ElementTypes {
   SIGN_UP_FORM,
   APP,
   HEADER,
-  CENTER//{new}
+  CENTER,
+  MANAGE_USERS//{new}
 }

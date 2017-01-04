@@ -11,7 +11,8 @@ public class HeaderController extends Controller<HeaderController.IHeaderView> {
   public interface IHeaderView extends View {
     Label getUserNameLabel();
     TextButton getLogoutButton();
-    TextButton getAdminButton();
+    TextButton getManageUsersButton();
+    TextButton getManageLecturesButton();
     TextButton getApplyForLectureButton();
   }
 
@@ -22,8 +23,12 @@ public class HeaderController extends Controller<HeaderController.IHeaderView> {
   @Override
   public void bind(IHeaderView view) {
     this.view = view;
-    if (!AppUtils.getInstance().isAdmin())
-      view.getAdminButton().setVisible(false);
+    if (!AppUtils.getInstance().isAdmin()) {
+      view.getManageUsersButton().setVisible(false);
+      view.getManageLecturesButton().setVisible(false);
+    } else {
+      view.getApplyForLectureButton().setVisible(false);
+    }
     setIsBound(true);
   }
 

@@ -1,8 +1,8 @@
 Lecture management   *
  add         1
  remove      2
- add test    3
- remove test 4
+ add test    3 ?
+ remove test 4 ?
 
 User management   **
  add    5
@@ -14,7 +14,7 @@ User management   **
     * change pwd
     * edit names
     * view lectures
-    * submit tests
+    * submit tests ?
     * view grades
     * download lecture files
  - prof user *, ** (only for his lectures)

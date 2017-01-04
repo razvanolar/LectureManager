@@ -9,5 +9,8 @@ public enum ElementTypes {
   APP,
   HEADER,
   CENTER,
-  MANAGE_USERS//{new}
+  MANAGE_USERS,
+  MANAGE_LECTURES,
+  LECTURES_TREE,
+  LECTURE_FILE_CONTENT//{new}
 }

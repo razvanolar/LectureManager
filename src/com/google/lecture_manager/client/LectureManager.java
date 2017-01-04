@@ -3,12 +3,8 @@ package com.google.lecture_manager.client;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.lecture_manager.client.components.app.AppController;
-import com.google.lecture_manager.client.events.BackToLoginEvent;
-import com.google.lecture_manager.client.events.LoginEvent;
-import com.google.lecture_manager.client.events.SignUpEvent;
-import com.google.lecture_manager.client.handlers.BackToLoginEventHandler;
-import com.google.lecture_manager.client.handlers.LoginEventHandler;
-import com.google.lecture_manager.client.handlers.SignUpEventHandler;
+import com.google.lecture_manager.client.events.*;
+import com.google.lecture_manager.client.handlers.*;
 import com.google.lecture_manager.client.utils.AppConstants;
 import com.google.lecture_manager.client.utils.AppUtils;
 import com.google.lecture_manager.client.utils.ElementTypes;
@@ -60,6 +56,22 @@ public class LectureManager implements EntryPoint {
         appUtils.setAuthenticatedUser(loginEvent.getUser());
         AppController appController = (AppController) AbstractFactory.getController(ElementTypes.APP);
         mainContainer.setCenterWidget(appController.getView().asWidget());
+        mainContainer.forceLayout();
+      }
+    });
+
+    AppUtils.EVENT_BUS.addHandler(ManageUsers.TYPE, new ManageUsersHandler() {
+      @Override
+      public void onManageUsersEvent(ManageUsers event) {
+        mainContainer.setCenterWidget(AbstractFactory.getWidget(ElementTypes.MANAGE_USERS));
+        mainContainer.forceLayout();
+      }
+    });
+
+    AppUtils.EVENT_BUS.addHandler(ManageLectures.TYPE, new ManageLecturesHandler() {
+      @Override
+      public void onManageLecturesEvent(ManageLectures event) {
+        mainContainer.setCenterWidget(AbstractFactory.getWidget(ElementTypes.MANAGE_LECTURES));
         mainContainer.forceLayout();
       }
     });

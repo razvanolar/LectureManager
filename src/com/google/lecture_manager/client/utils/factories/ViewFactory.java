@@ -5,6 +5,8 @@ import com.google.lecture_manager.client.components.app.header.HeaderView;
 import com.google.lecture_manager.client.components.login.LoginView;
 import com.google.lecture_manager.client.components.sign_up.SignUpView;
 import com.google.lecture_manager.client.components.app.AppView;
+import com.google.lecture_manager.client.components.app.center.lectures_tree.LecturesTreeView;
+import com.google.lecture_manager.client.components.app.center.lecture_file_content.LectureFileContentView;
 //{view}
 import com.google.lecture_manager.client.utils.ElementTypes;
 import com.google.lecture_manager.client.utils.View;
@@ -26,6 +28,10 @@ public class ViewFactory {
         return HeaderView.getInstance();
       case CENTER:
         return CenterView.getInstance();
+      case LECTURES_TREE:
+        return new LecturesTreeView();
+      case LECTURE_FILE_CONTENT:
+        return new LectureFileContentView();
       //{new_case}
     }
     return null;

@@ -8,5 +8,7 @@ public enum ElementTypes {
   SIGN_UP_FORM,
   APP,
   HEADER,
-  CENTER//{new}
+  CENTER,
+  LECTURES_TREE,
+  LECTURE_FILE_CONTENT//{new}
 }

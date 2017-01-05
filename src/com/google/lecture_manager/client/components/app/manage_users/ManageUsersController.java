@@ -1,18 +1,18 @@
 package com.google.lecture_manager.client.components.app.manage_users;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.google.lecture_manager.client.events.AddUserEvent;
-import com.google.lecture_manager.client.events.DeleteUserEvent;
-import com.google.lecture_manager.client.events.EditUserEvent;
-import com.google.lecture_manager.client.events.LoadUsersEvent;
+import com.google.lecture_manager.client.events.*;
 import com.google.lecture_manager.client.handlers.AddUserEventHandler;
 import com.google.lecture_manager.client.handlers.DeleteUserEventHandler;
 import com.google.lecture_manager.client.handlers.EditUserEventHandler;
 import com.google.lecture_manager.client.handlers.LoadUsersEventHandler;
 import com.google.lecture_manager.client.utils.AppUtils;
 import com.google.lecture_manager.client.utils.Controller;
+import com.google.lecture_manager.client.utils.ElementTypes;
 import com.google.lecture_manager.client.utils.View;
+import com.google.lecture_manager.client.utils.factories.AbstractFactory;
 import com.google.lecture_manager.shared.model.User;
+import com.sencha.gxt.widget.core.client.Window;
 import com.sencha.gxt.widget.core.client.box.AlertMessageBox;
 import com.sencha.gxt.widget.core.client.button.TextButton;
 import com.sencha.gxt.widget.core.client.grid.Grid;
@@ -42,20 +42,16 @@ public class ManageUsersController extends Controller<ManageUsersController.IMan
     AppUtils.EVENT_BUS.addHandler(AddUserEvent.TYPE, new AddUserEventHandler() {
       @Override
       public void onAddUserEvent(AddUserEvent event) {
-        AddEditUsersController.IAddEditUsersView view = new AddEditUsersView();
-        AddEditUsersController controller = new AddEditUsersController();
-        controller.bind(view);
+        ((Window) AbstractFactory.getWidget(ElementTypes.ADD_EDIT_USERS)).show();
       }
     });
 
+    AbstractFactory.getController(ElementTypes.ADD_EDIT_USERS);
     AppUtils.EVENT_BUS.addHandler(EditUserEvent.TYPE, new EditUserEventHandler() {
       @Override
       public void onEditUserEvent(EditUserEvent event) {
-        AddEditUsersController.IAddEditUsersView view = new AddEditUsersView();
-        AddEditUsersController controller = new AddEditUsersController();
-        controller.bind(view);
-        controller.loadFields(event.getSelectedItem());
-
+        ((Window) AbstractFactory.getWidget(ElementTypes.ADD_EDIT_USERS)).show();
+        AppUtils.EVENT_BUS.fireEvent(new PopulateUserFields(event.getSelectedItem()));
       }
     });
 

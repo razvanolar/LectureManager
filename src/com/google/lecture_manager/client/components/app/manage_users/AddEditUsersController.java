@@ -3,6 +3,8 @@ package com.google.lecture_manager.client.components.app.manage_users;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.lecture_manager.client.events.LoadUsersEvent;
+import com.google.lecture_manager.client.events.PopulateUserFields;
+import com.google.lecture_manager.client.handlers.PopulateUserFieldsHandler;
 import com.google.lecture_manager.client.utils.AppUtils;
 import com.google.lecture_manager.client.utils.Controller;
 import com.google.lecture_manager.client.utils.View;
@@ -18,9 +20,10 @@ import com.sencha.gxt.widget.core.client.form.PasswordField;
 import com.sencha.gxt.widget.core.client.form.TextField;
 import com.sencha.gxt.widget.core.client.info.Info;
 
-public class AddEditUsersController {
+public class AddEditUsersController extends Controller<AddEditUsersController.IAddEditUsersView> {
 
-  public interface IAddEditUsersView {
+  public interface IAddEditUsersView extends View{
+
     TextField getFirstNameTextField();
     TextField getLastNameTextField();
     TextField getUsernameTextField();
@@ -36,32 +39,36 @@ public class AddEditUsersController {
     void unmask();
     void close();
   }
+  private static AddEditUsersController INSTANCE;
 
   private IAddEditUsersView view;
   private User selectedUser;
 
-  public void bind(IAddEditUsersView view) {
+  public void bind(final IAddEditUsersView view) {
     this.view = view;
+    setIsBound(true);
+    AppUtils.EVENT_BUS.addHandler(PopulateUserFields.TYPE, new PopulateUserFieldsHandler() {
+      @Override
+      public void initEditMode(PopulateUserFields event) {
+        selectedUser = event.getUser();
+        view.getPwdField().setVisible(false);
+        view.getPwdFieldLabel().setVisible(false);
+        view.getRepwdField().setVisible(false);
+        view.getRepFieldLabel().setVisible(false);
+        view.getFirstNameTextField().setValue(selectedUser.getFirstName());
+        view.getLastNameTextField().setValue(selectedUser.getLastName());
+        view.getUsernameTextField().setValue(selectedUser.getUserName());
+        view.getEmailTextField().setValue(selectedUser.getEmail());
+        view.getPwdField().setValue("");
+        view.getRepwdField().setValue("");
+        view.getUserTypesComboBox().setValue(selectedUser.getType());
+      }
+    });
     addListeners();
   }
 
   public IAddEditUsersView getView() {
     return view;
-  }
-
-  public void loadFields(User user) {
-    this.selectedUser = user;
-    view.getPwdField().setVisible(false);
-    view.getPwdFieldLabel().setVisible(false);
-    view.getRepwdField().setVisible(false);
-    view.getRepFieldLabel().setVisible(false);
-    view.getFirstNameTextField().setValue(selectedUser.getFirstName());
-    view.getLastNameTextField().setValue(selectedUser.getLastName());
-    view.getUsernameTextField().setValue(selectedUser.getUserName());
-    view.getEmailTextField().setValue(selectedUser.getEmail());
-    view.getPwdField().setValue("");
-    view.getRepwdField().setValue("");
-    view.getUserTypesComboBox().setValue(selectedUser.getType());
   }
 
   private void addListeners() {
@@ -135,5 +142,22 @@ public class AddEditUsersController {
             view.getPwdField().getText());
     temp.setType(view.getUserTypesComboBox().getValue());
     return temp;
+  }
+
+  public static Controller getInstance() {
+    if (INSTANCE == null)
+      INSTANCE = new AddEditUsersController();
+    return INSTANCE;
+  }
+
+  @Override
+  public void setDefaults() {
+    view.getFirstNameTextField().setValue("");
+    view.getLastNameTextField().setValue("");
+    view.getUsernameTextField().setValue("");
+    view.getEmailTextField().setValue("");
+    view.getPwdField().setValue("");
+    view.getRepwdField().setValue("");
+    view.getUserTypesComboBox().setValue(UserTypes.STUDENT);
   }
 }

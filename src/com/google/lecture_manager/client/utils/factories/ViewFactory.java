@@ -3,6 +3,7 @@ package com.google.lecture_manager.client.utils.factories;
 import com.google.lecture_manager.client.components.app.center.CenterView;
 import com.google.lecture_manager.client.components.app.header.HeaderView;
 import com.google.lecture_manager.client.components.app.manage_lectures.ManageLecturesView;
+import com.google.lecture_manager.client.components.app.manage_users.AddEditUsersView;
 import com.google.lecture_manager.client.components.login.LoginView;
 import com.google.lecture_manager.client.components.sign_up.SignUpView;
 import com.google.lecture_manager.client.components.app.AppView;
@@ -34,6 +35,8 @@ public class ViewFactory {
         return new ManageUsersView();
       case MANAGE_LECTURES:
         return new ManageLecturesView();
+      case ADD_EDIT_USERS:
+        return new AddEditUsersView();
       case LECTURES_TREE:
         return new LecturesTreeView();
       case LECTURE_FILE_CONTENT:

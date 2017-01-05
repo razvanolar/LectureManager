@@ -68,8 +68,8 @@ public class LecturesTreeController extends Controller<LecturesTreeController.IL
       addStoreChildrenHierarchy(root, node.getChildren());
     }
 
-    for (FileData root : treeStore.getRootItems())
-      view.getTreeGrid().setExpanded(root, true, true);
+//    for (FileData root : treeStore.getRootItems())
+//      view.getTreeGrid().setExpanded(root, true, true);
   }
 
   private void addStoreChildrenHierarchy(FileData parent, List<Node<FileData>> children) {

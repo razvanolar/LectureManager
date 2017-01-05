@@ -12,5 +12,6 @@ public enum ElementTypes {
   MANAGE_USERS,
   MANAGE_LECTURES,
   LECTURES_TREE,
+  ADD_EDIT_USERS,
   LECTURE_FILE_CONTENT//{new}
 }

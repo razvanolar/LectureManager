@@ -3,6 +3,7 @@ package com.google.lecture_manager.client.utils.factories;
 import com.google.lecture_manager.client.components.app.center.CenterController;
 import com.google.lecture_manager.client.components.app.header.HeaderController;
 import com.google.lecture_manager.client.components.app.manage_lectures.ManageLecturesController;
+import com.google.lecture_manager.client.components.app.manage_users.AddEditUsersController;
 import com.google.lecture_manager.client.components.login.LoginController;
 import com.google.lecture_manager.client.components.sign_up.SignUpController;
 import com.google.lecture_manager.client.components.app.AppController;
@@ -34,6 +35,8 @@ public class ControllerFactory {
         return ManageUsersController.getInstance();
       case MANAGE_LECTURES:
         return ManageLecturesController.getInstance();
+      case ADD_EDIT_USERS:
+        return AddEditUsersController.getInstance();
       case LECTURES_TREE:
         return LecturesTreeController.getInstance();
       case LECTURE_FILE_CONTENT:

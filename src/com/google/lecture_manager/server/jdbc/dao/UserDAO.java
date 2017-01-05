@@ -32,7 +32,11 @@ public class UserDAO {
       statement.setString(3, user.getEmail());
       statement.setString(4, user.getUserName());
       statement.setString(5, user.getPassword());
-      statement.setInt(6, UserTypes.STUDENT.getId());
+      if (user.getType() == null)
+        statement.setInt(6, UserTypes.STUDENT.getId());
+      else {
+        statement.setInt(6, user.getType().getId());
+      }
       statement.execute();
     } finally {
       if (statement != null)

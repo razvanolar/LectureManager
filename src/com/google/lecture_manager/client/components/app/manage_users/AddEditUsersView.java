@@ -112,7 +112,6 @@ public class AddEditUsersView implements AddEditUsersController.IAddEditUsersVie
     window.add(mainContainer);
     window.setSize("320", "300");
     window.setModal(true);
-    window.show();
   }
 
   public TextField getFirstNameTextField() {
@@ -157,7 +156,7 @@ public class AddEditUsersView implements AddEditUsersController.IAddEditUsersVie
 
   @Override
   public Widget asWidget() {
-    return mainContainer;
+    return window;
   }
 
   @Override

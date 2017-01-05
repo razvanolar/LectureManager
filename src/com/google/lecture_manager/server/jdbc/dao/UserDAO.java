@@ -94,4 +94,21 @@ public class UserDAO {
         JDBCUtil.getInstance().closeResultSet(rs);
     }
   }
+
+  public void editUser(User user) throws Exception {
+    PreparedStatement statement = null;
+    try {
+      statement = connection.prepareStatement("UPDATE users set first_name = ?, last_name = ? , email = ?, user_name = ?, user_type = ? where id = ?");
+      statement.setString(1, user.getFirstName());
+      statement.setString(2, user.getLastName());
+      statement.setString(3, user.getEmail());
+      statement.setString(4, user.getUserName());
+      statement.setLong(5, user.getType().getId());
+      statement.setLong(6, user.getId());
+      statement.executeUpdate();
+    } finally {
+      if (statement != null)
+        JDBCUtil.getInstance().closeStatement(statement);
+    }
+  }
 }

@@ -1,5 +1,6 @@
 package com.google.lecture_manager.client.components.app;
 
+import com.google.lecture_manager.client.events.LoadUsersEvent;
 import com.google.lecture_manager.client.events.ManageLecturesEvent;
 import com.google.lecture_manager.client.events.ManageUsersEvent;
 import com.google.lecture_manager.client.handlers.ManageLecturesHandler;
@@ -27,7 +28,7 @@ public class AppController extends Controller<AppController.IAppView> {
       public void onManageUsersEvent(ManageUsersEvent event) {
         view.getBorderLayoutContainer().setCenterWidget(AbstractFactory.getWidget(ElementTypes.MANAGE_USERS));
         view.getBorderLayoutContainer().forceLayout();
-        System.out.println();
+        AppUtils.EVENT_BUS.fireEvent(new LoadUsersEvent());
       }
     });
 

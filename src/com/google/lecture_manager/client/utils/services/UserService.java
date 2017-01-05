@@ -14,4 +14,5 @@ public interface UserService extends RemoteService {
   void addNewUser(User user) throws Exception;
   User authenticate(String user, String password) throws Exception;
   List<User> getAllUsers() throws Exception;
+  void editUser(User user) throws Exception;
 }

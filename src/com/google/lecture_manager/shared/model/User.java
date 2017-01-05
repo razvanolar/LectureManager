@@ -66,4 +66,12 @@ public class User implements IsSerializable {
   public void setPassword(String password) {
     this.password = password;
   }
+
+  public void setId(long id) {
+    this.id = id;
+  }
+
+  public void setType(UserTypes type) {
+    this.type = type;
+  }
 }

@@ -2,6 +2,10 @@ package com.google.lecture_manager.client.components.app.manage_users;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.ui.Widget;
+import com.google.lecture_manager.client.events.AddUserEvent;
+import com.google.lecture_manager.client.events.DeleteUserEvent;
+import com.google.lecture_manager.client.events.EditUserEvent;
+import com.google.lecture_manager.client.utils.AppUtils;
 import com.google.lecture_manager.client.utils.properties.UsersProperties;
 import com.google.lecture_manager.shared.model.User;
 import com.sencha.gxt.core.client.IdentityValueProvider;
@@ -12,6 +16,7 @@ import com.sencha.gxt.data.shared.ListStore;
 import com.sencha.gxt.widget.core.client.button.TextButton;
 import com.sencha.gxt.widget.core.client.container.HorizontalLayoutContainer;
 import com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer;
+import com.sencha.gxt.widget.core.client.event.SelectEvent;
 import com.sencha.gxt.widget.core.client.grid.CheckBoxSelectionModel;
 import com.sencha.gxt.widget.core.client.grid.ColumnConfig;
 import com.sencha.gxt.widget.core.client.grid.ColumnModel;
@@ -30,6 +35,30 @@ public class ManageUsersView implements ManageUsersController.IManageUsersView {
 
   public ManageUsersView() {
     initGUI();
+    addHandlers();
+  }
+
+  private void addHandlers() {
+    addButton.addSelectHandler(new SelectEvent.SelectHandler() {
+      @Override
+      public void onSelect(SelectEvent event) {
+        AppUtils.EVENT_BUS.fireEvent(new AddUserEvent());
+      }
+    });
+
+    editButton.addSelectHandler(new SelectEvent.SelectHandler() {
+      @Override
+      public void onSelect(SelectEvent event) {
+        AppUtils.EVENT_BUS.fireEvent(new EditUserEvent(grid.getSelectionModel().getSelectedItem()));
+      }
+    });
+
+    deleteButton.addSelectHandler(new SelectEvent.SelectHandler() {
+      @Override
+      public void onSelect(SelectEvent event) {
+        AppUtils.EVENT_BUS.fireEvent(new DeleteUserEvent(grid.getSelectionModel().getSelectedItems()));
+      }
+    });
   }
 
   @Override

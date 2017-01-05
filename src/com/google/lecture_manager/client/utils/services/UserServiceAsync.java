@@ -8,5 +8,6 @@ import java.util.List;
 public interface UserServiceAsync {
   void addNewUser(User user, AsyncCallback<Void> async);
   void authenticate(String user, String password, AsyncCallback<User> async);
-  void getAllUsers(AsyncCallback<List<User>> asyng);
+  void getAllUsers(AsyncCallback<List<User>> async);
+  void editUser(User user, AsyncCallback<Void> async);
 }

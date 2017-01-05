@@ -1,5 +1,6 @@
 package com.google.lecture_manager.client.components.app.manage_users;
 
+import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.lecture_manager.client.events.AddUserEvent;
 import com.google.lecture_manager.client.events.DeleteUserEvent;
@@ -62,24 +63,7 @@ public class ManageUsersController extends Controller<ManageUsersController.IMan
     AppUtils.EVENT_BUS.addHandler(LoadUsersEvent.TYPE, new LoadUsersEventHandler() {
       @Override
       public void reloadUsers(final LoadUsersEvent event) {
-        Info.display("..", "63");
-        view.mask("Loading users...");
-        Info.display("..", "64");
-        AppUtils.SERVICE_FACTORY.getUserService().getAllUsers(new AsyncCallback<List<User>>() {
-          @Override
-          public void onFailure(Throwable caught) {
-            view.unmask();
-            new AlertMessageBox("Info", "Error while loading users: " + caught.getMessage()).show();
-          }
-
-          @Override
-          public void onSuccess(List<User> result) {
-            view.unmask();
-            view.getGrid().getStore().clear();
-            view.getGrid().getStore().addAll(result);
-          }
-        });
-        Info.display("..", "80");
+        loadUsers();
       }
     });
 
@@ -89,7 +73,25 @@ public class ManageUsersController extends Controller<ManageUsersController.IMan
         AppUtils.EVENT_BUS.fireEvent(new LoadUsersEvent());
       }
     });
+    loadUsers();
+  }
 
+  private void loadUsers() {
+    view.mask("Loading users...");
+    AppUtils.SERVICE_FACTORY.getUserService().getAllUsers(new AsyncCallback<List<User>>() {
+      @Override
+      public void onFailure(Throwable caught) {
+        view.unmask();
+        new AlertMessageBox("Info", "Error while loading users: " + caught.getMessage()).show();
+      }
+
+      @Override
+      public void onSuccess(List<User> result) {
+        view.unmask();
+        view.getGrid().getStore().clear();
+        view.getGrid().getStore().addAll(result);
+      }
+    });
   }
 
   @Override

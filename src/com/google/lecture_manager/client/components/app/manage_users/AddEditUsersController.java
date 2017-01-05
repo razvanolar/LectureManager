@@ -2,6 +2,7 @@ package com.google.lecture_manager.client.components.app.manage_users;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Widget;
+import com.google.lecture_manager.client.events.LoadUsersEvent;
 import com.google.lecture_manager.client.utils.AppUtils;
 import com.google.lecture_manager.client.utils.Controller;
 import com.google.lecture_manager.client.utils.View;
@@ -86,6 +87,7 @@ public class AddEditUsersController {
               view.unmask();
               Info.display("Info", "User added successfully.");
               view.close();
+              AppUtils.EVENT_BUS.fireEvent(new LoadUsersEvent());
             }
           });
         } else {
@@ -102,7 +104,7 @@ public class AddEditUsersController {
               view.unmask();
               Info.display("Info", "User edited successfully");
               view.close();
-
+              AppUtils.EVENT_BUS.fireEvent(new LoadUsersEvent());
             }
           });
         }

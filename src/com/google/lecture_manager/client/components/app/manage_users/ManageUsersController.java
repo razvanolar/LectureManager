@@ -1,6 +1,5 @@
 package com.google.lecture_manager.client.components.app.manage_users;
 
-import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.lecture_manager.client.events.AddUserEvent;
 import com.google.lecture_manager.client.events.DeleteUserEvent;
@@ -12,15 +11,13 @@ import com.google.lecture_manager.client.handlers.EditUserEventHandler;
 import com.google.lecture_manager.client.handlers.LoadUsersEventHandler;
 import com.google.lecture_manager.client.utils.AppUtils;
 import com.google.lecture_manager.client.utils.Controller;
-import com.google.lecture_manager.client.utils.ElementTypes;
 import com.google.lecture_manager.client.utils.View;
-import com.google.lecture_manager.client.utils.factories.AbstractFactory;
 import com.google.lecture_manager.shared.model.User;
-import com.sencha.gxt.widget.core.client.Window;
 import com.sencha.gxt.widget.core.client.box.AlertMessageBox;
 import com.sencha.gxt.widget.core.client.button.TextButton;
 import com.sencha.gxt.widget.core.client.grid.Grid;
 import com.sencha.gxt.widget.core.client.info.Info;
+import com.sencha.gxt.widget.core.client.selection.SelectionChangedEvent;
 
 import java.util.List;
 
@@ -28,6 +25,8 @@ public class ManageUsersController extends Controller<ManageUsersController.IMan
 
   public interface IManageUsersView extends View {
     Grid<User> getGrid();
+    TextButton getEditButton();
+    TextButton getDeleteButton();
     void mask(String message);
     void unmask();
   }
@@ -70,7 +69,26 @@ public class ManageUsersController extends Controller<ManageUsersController.IMan
     AppUtils.EVENT_BUS.addHandler(DeleteUserEvent.TYPE, new DeleteUserEventHandler() {
       @Override
       public void onDeleteUserEvent(DeleteUserEvent event) {
-        AppUtils.EVENT_BUS.fireEvent(new LoadUsersEvent());
+        AppUtils.SERVICE_FACTORY.getUserService().deleteUsers(event.getSelectedItems(), new AsyncCallback<Void>() {
+          @Override
+          public void onFailure(Throwable caught) {
+            new AlertMessageBox("Info", "Error while deleting users: " + caught.getMessage()).show();
+
+          }
+
+          @Override
+          public void onSuccess(Void result) {
+            Info.display("Info", "Users deleted successfully");
+            AppUtils.EVENT_BUS.fireEvent(new LoadUsersEvent());
+          }
+        });
+      }
+    });
+    view.getGrid().getSelectionModel().addSelectionChangedHandler(new SelectionChangedEvent.SelectionChangedHandler<User>() {
+      @Override
+      public void onSelectionChanged(SelectionChangedEvent<User> event) {
+        view.getDeleteButton().setEnabled(!(event.getSelection() == null || event.getSelection().size() == 0));
+        view.getEditButton().setEnabled(event.getSelection() != null && event.getSelection().size() == 1);
       }
     });
     loadUsers();

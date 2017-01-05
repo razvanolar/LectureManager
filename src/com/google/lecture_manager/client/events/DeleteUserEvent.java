@@ -24,4 +24,8 @@ public class DeleteUserEvent extends GwtEvent<DeleteUserEventHandler> {
   protected void dispatch(DeleteUserEventHandler handler) {
     handler.onDeleteUserEvent(this);
   }
-} 
+
+  public List<User> getSelectedItems() {
+    return selectedItems;
+  }
+}

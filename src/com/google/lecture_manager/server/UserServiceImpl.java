@@ -87,4 +87,20 @@ public class UserServiceImpl extends RemoteServiceServlet implements UserService
         JDBCUtil.getInstance().closeConnection(connection);
     }
   }
+
+  @Override
+  public void deleteUsers(List<User> users) throws Exception {
+    Connection connection = null;
+    try {
+      connection = JDBCUtil.getInstance().getConnection();
+      UserDAO dao = new UserDAO(connection);
+      dao.deleteUsers(users);
+    } catch (Exception e) {
+      System.out.println(e.getMessage());
+      throw new Exception(e.getMessage());
+    } finally {
+      if (connection != null)
+        JDBCUtil.getInstance().closeConnection(connection);
+    }
+  }
 }

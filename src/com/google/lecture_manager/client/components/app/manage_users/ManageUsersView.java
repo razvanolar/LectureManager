@@ -68,7 +68,9 @@ public class ManageUsersView implements ManageUsersController.IManageUsersView {
     grid = createGrid();
     addButton = new TextButton("Add");
     editButton = new TextButton("Edit");
+    editButton.setEnabled(false);
     deleteButton = new TextButton("Delete");
+    deleteButton.setEnabled(false);
     horizontalLayoutContainer.add(addButton, new HorizontalLayoutContainer.HorizontalLayoutData(-1, -1, new Margins(0, 10, 0, 10)));
     horizontalLayoutContainer.add(editButton, new HorizontalLayoutContainer.HorizontalLayoutData(-1, -1, new Margins(0, 10, 0, 0)));
     horizontalLayoutContainer.add(deleteButton, new HorizontalLayoutContainer.HorizontalLayoutData(-1, -1, new Margins(0, 10, 0, 0)));
@@ -114,6 +116,14 @@ public class ManageUsersView implements ManageUsersController.IManageUsersView {
 
   public Grid<User> getGrid() {
     return grid;
+  }
+
+  public TextButton getEditButton() {
+    return editButton;
+  }
+
+  public TextButton getDeleteButton() {
+    return deleteButton;
   }
 
   @Override

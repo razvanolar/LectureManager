@@ -10,4 +10,5 @@ public interface UserServiceAsync {
   void authenticate(String user, String password, AsyncCallback<User> async);
   void getAllUsers(AsyncCallback<List<User>> async);
   void editUser(User user, AsyncCallback<Void> async);
+  void deleteUsers(List<User> users, AsyncCallback<Void> async);
 }

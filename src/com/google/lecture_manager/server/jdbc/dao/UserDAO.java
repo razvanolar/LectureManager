@@ -111,4 +111,23 @@ public class UserDAO {
         JDBCUtil.getInstance().closeStatement(statement);
     }
   }
+
+  public void deleteUsers(List<User> users) throws SQLException {
+    PreparedStatement statement = null;
+    try {
+      String sql = "delete from users where id in (";
+      for (int i=0; i<users.size(); i++) {
+        if (i<users.size() - 1) {
+          sql += users.get(i).getId() + ", ";
+        } else {
+          sql += users.get(i).getId() + ")";
+        }
+      }
+      statement = connection.prepareStatement(sql);
+      statement.executeUpdate();
+    } finally {
+      if (statement != null)
+        JDBCUtil.getInstance().closeStatement(statement);
+    }
+  }
 }

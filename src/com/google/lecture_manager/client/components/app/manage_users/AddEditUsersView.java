@@ -112,6 +112,8 @@ public class AddEditUsersView implements AddEditUsersController.IAddEditUsersVie
     window.add(mainContainer);
     window.setSize("320", "300");
     window.setModal(true);
+    window.setResizable(false);
+    window.setHeadingText("User Management");
   }
 
   public TextField getFirstNameTextField() {

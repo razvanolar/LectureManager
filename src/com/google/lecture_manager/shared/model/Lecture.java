@@ -57,6 +57,10 @@ public class Lecture implements IsSerializable {
     return id;
   }
 
+  public void setId(long id) {
+    this.id = id;
+  }
+
   public String toString() {
     return id + " " + lectureName + " " + enrolmentKey;
   }

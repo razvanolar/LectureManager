@@ -19,10 +19,10 @@
 -- Table structure for table `lecture`
 --
 
-DROP TABLE IF EXISTS `lecture`;
+DROP TABLE IF EXISTS `lectures`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `lecture` (
+CREATE TABLE `lectures` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `teacher_id` int(11) DEFAULT NULL,
   `name` varchar(100) DEFAULT NULL,
@@ -37,9 +37,9 @@ CREATE TABLE `lecture` (
 -- Dumping data for table `lecture`
 --
 
-LOCK TABLES `lecture` WRITE;
-/*!40000 ALTER TABLE `lecture` DISABLE KEYS */;
-/*!40000 ALTER TABLE `lecture` ENABLE KEYS */;
+LOCK TABLES `lectures` WRITE;
+/*!40000 ALTER TABLE `lectures` DISABLE KEYS */;
+/*!40000 ALTER TABLE `lectures` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --

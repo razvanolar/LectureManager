@@ -2,6 +2,7 @@ package com.google.lecture_manager.server.jdbc.dao;
 
 import com.google.lecture_manager.server.jdbc.JDBCUtil;
 import com.google.lecture_manager.shared.UserTypes;
+import com.google.lecture_manager.shared.model.Teacher;
 import com.google.lecture_manager.shared.model.User;
 
 import java.sql.Connection;
@@ -89,6 +90,27 @@ public class UserDAO {
       rs = statement.executeQuery();
       while (rs.next()){
         result.add(computeResultSet(rs));
+      }
+      return result;
+    } finally {
+      if (statement != null)
+        JDBCUtil.getInstance().closeStatement(statement);
+      if (rs != null)
+        JDBCUtil.getInstance().closeResultSet(rs);
+    }
+  }
+
+  public List<Teacher> getAllTeachers() throws SQLException {
+    List<Teacher> result = new ArrayList<>();
+    PreparedStatement statement = null;
+    ResultSet rs = null;
+    try {
+      String query = "SELECT * FROM users where user_type = ?";
+      statement = connection.prepareStatement(query);
+      statement.setLong(1, UserTypes.TEACHER.getId());
+      rs = statement.executeQuery();
+      while (rs.next()){
+        result.add(new Teacher(rs.getLong(1), rs.getString(2), rs.getString(3), rs.getString(5), rs.getString(4)));
       }
       return result;
     } finally {

@@ -2,10 +2,17 @@ package com.google.lecture_manager.server;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import com.google.lecture_manager.client.utils.services.LectureService;
+import com.google.lecture_manager.server.jdbc.JDBCUtil;
+import com.google.lecture_manager.server.jdbc.dao.LectureDAO;
+import com.google.lecture_manager.server.jdbc.dao.UserDAO;
 import com.google.lecture_manager.shared.FileTypes;
 import com.google.lecture_manager.shared.model.FileData;
+import com.google.lecture_manager.shared.model.Lecture;
 import com.google.lecture_manager.shared.model.tree.Node;
 import com.google.lecture_manager.shared.model.tree.Tree;
+
+import java.sql.Connection;
+import java.util.List;
 
 /**
  * Created by razvanolar on 04.01.2017
@@ -41,5 +48,69 @@ public class LectureServiceImpl extends RemoteServiceServlet implements LectureS
     tree.addRoot(node3);
     tree.addRoot(node4);
     return tree;
+  }
+
+  @Override
+  public List<Lecture> getAllLectures() throws Exception {
+    Connection connection = null;
+    try {
+      connection = JDBCUtil.getInstance().getConnection();
+      LectureDAO dao = new LectureDAO(connection);
+      return dao.getAllLectures();
+    } catch (Exception e) {
+      System.out.println(e.getMessage());
+      throw new Exception(e.getMessage());
+    } finally {
+      if (connection != null)
+        JDBCUtil.getInstance().closeConnection(connection);
+    }
+  }
+
+  @Override
+  public void deleteLecture(List<Lecture> lectures) throws Exception {
+    Connection connection = null;
+    try {
+      connection = JDBCUtil.getInstance().getConnection();
+      LectureDAO dao = new LectureDAO(connection);
+      dao.deleteLectures(lectures);
+    } catch (Exception e) {
+      System.out.println(e.getMessage());
+      throw new Exception(e.getMessage());
+    } finally {
+      if (connection != null)
+        JDBCUtil.getInstance().closeConnection(connection);
+    }
+  }
+
+  @Override
+  public void editLecture(Lecture lecture) throws Exception {
+    Connection connection = null;
+    try {
+      connection = JDBCUtil.getInstance().getConnection();
+      LectureDAO dao = new LectureDAO(connection);
+      dao.editLecture(lecture);
+    } catch (Exception e) {
+      System.out.println(e.getMessage());
+      throw new Exception(e.getMessage());
+    } finally {
+      if (connection != null)
+        JDBCUtil.getInstance().closeConnection(connection);
+    }
+  }
+
+  @Override
+  public void addLecture(Lecture temp) throws Exception {
+    Connection connection = null;
+    try {
+      connection = JDBCUtil.getInstance().getConnection();
+      LectureDAO dao = new LectureDAO(connection);
+      dao.addLecture(temp);
+    } catch (Exception e) {
+      System.out.println(e.getMessage());
+      throw new Exception(e.getMessage());
+    } finally {
+      if (connection != null)
+        JDBCUtil.getInstance().closeConnection(connection);
+    }
   }
 }

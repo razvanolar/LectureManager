@@ -29,8 +29,8 @@ public class AbstractFactory {
     if (!controller.isBound() || controller.getView() == null) {
       View view = VIEW_FACTORY.getView(type);
       controller.bind(view);
-      controller.setDefaults();
     }
+    controller.setDefaults();
   }
 
   public static Widget getWidget(ElementTypes type) {

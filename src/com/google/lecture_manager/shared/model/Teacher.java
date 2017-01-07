@@ -15,14 +15,17 @@ public class Teacher extends User {
   public Teacher() {
   }
 
-  public Teacher(long id, String username, String password, String firstName, String lastName, String email) {
+  public Teacher(long id, String firstName, String lastName, String username, String email) {
     super(id, firstName, lastName, username, email, UserTypes.TEACHER);
-    setPassword(password);
   }
 
 
   public List<Lecture> getTeachedLectures() {
     return teachedLectures;
+  }
+
+  public void setTeachedLectures(List<Lecture> teachedLectures) {
+    this.teachedLectures = teachedLectures;
   }
 
   public void addLecture(Lecture lecture) {

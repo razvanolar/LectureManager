@@ -10,6 +10,7 @@ import com.google.lecture_manager.client.components.app.AppController;
 import com.google.lecture_manager.client.components.app.manage_users.ManageUsersController;
 import com.google.lecture_manager.client.components.app.center.lectures_tree.LecturesTreeController;
 import com.google.lecture_manager.client.components.app.center.lecture_file_content.LectureFileContentController;
+import com.google.lecture_manager.client.components.app.manage_lectures.AddEditLectureController;
 //{controller}
 import com.google.lecture_manager.client.utils.Controller;
 import com.google.lecture_manager.client.utils.ElementTypes;
@@ -41,6 +42,8 @@ public class ControllerFactory {
         return LecturesTreeController.getInstance();
       case LECTURE_FILE_CONTENT:
         return LectureFileContentController.getInstance();
+      case ADD_EDIT_LECTURES:
+        return AddEditLectureController.getInstance();
       //{new_case}
     }
     return null;

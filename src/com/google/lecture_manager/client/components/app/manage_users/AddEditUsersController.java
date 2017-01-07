@@ -152,6 +152,10 @@ public class AddEditUsersController extends Controller<AddEditUsersController.IA
 
   @Override
   public void setDefaults() {
+    view.getPwdField().setVisible(true);
+    view.getPwdFieldLabel().setVisible(true);
+    view.getRepwdField().setVisible(true);
+    view.getRepFieldLabel().setVisible(true);
     view.getFirstNameTextField().setValue("");
     view.getLastNameTextField().setValue("");
     view.getUsernameTextField().setValue("");
@@ -159,5 +163,6 @@ public class AddEditUsersController extends Controller<AddEditUsersController.IA
     view.getPwdField().setValue("");
     view.getRepwdField().setValue("");
     view.getUserTypesComboBox().setValue(UserTypes.STUDENT);
+    selectedUser = null;
   }
 }

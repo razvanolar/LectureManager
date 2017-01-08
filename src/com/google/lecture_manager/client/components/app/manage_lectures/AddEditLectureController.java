@@ -149,6 +149,7 @@ public class AddEditLectureController extends Controller<AddEditLectureControlle
     view.getNameField().setValue("");
     view.getEnrolmentField().setValue("");
     view.getTeacherComboBox().setValue(view.getTeacherComboBox().getStore().size() > 0 ? view.getTeacherComboBox().getStore().get(0) : null);
+    loadTeachers();
     selectedLecture = null;
   }
 }

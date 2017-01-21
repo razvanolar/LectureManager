@@ -4,7 +4,7 @@
         "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping>
-    <class name="com.google.lecture_manager.shared.model.User" table="users">
+    <class name="com.google.lecture_manager.shared.model.Teacher" table="users">
         <meta attribute="class-description">
             This class contains the user detail.
         </meta>

@@ -7,8 +7,8 @@ import com.google.lecture_manager.client.handlers.PopulateLectureFieldsHandler;
 import com.google.lecture_manager.client.utils.AppUtils;
 import com.google.lecture_manager.client.utils.Controller;
 import com.google.lecture_manager.client.utils.View;
-import com.google.lecture_manager.shared.model.Lecture;
-import com.google.lecture_manager.shared.model.Teacher;
+import com.google.lecture_manager.shared.model.LectureDTO;
+import com.google.lecture_manager.shared.model.TeacherDTO;
 import com.sencha.gxt.widget.core.client.box.AlertMessageBox;
 import com.sencha.gxt.widget.core.client.button.TextButton;
 import com.sencha.gxt.widget.core.client.event.SelectEvent;
@@ -23,7 +23,7 @@ public class AddEditLectureController extends Controller<AddEditLectureControlle
   public interface IAddEditLectureView extends View {
     TextField getNameField();
     TextField getEnrolmentField();
-    ComboBox<Teacher> getTeacherComboBox();
+    ComboBox<TeacherDTO> getTeacherComboBox();
     TextButton getApplyButton();
     void mask(String message);
     void unmask();
@@ -31,7 +31,7 @@ public class AddEditLectureController extends Controller<AddEditLectureControlle
   }
 
   private static AddEditLectureController INSTANCE = null;
-  private Lecture selectedLecture;
+  private LectureDTO selectedLecture;
 
   private IAddEditLectureView view;
 
@@ -54,7 +54,7 @@ public class AddEditLectureController extends Controller<AddEditLectureControlle
 
   private void loadTeachers() {
     view.mask("Loading Teachers...");
-    AppUtils.SERVICE_FACTORY.getUserService().getAllTeachers(new AsyncCallback<List<Teacher>>() {
+    AppUtils.SERVICE_FACTORY.getUserService().getAllTeachers(new AsyncCallback<List<TeacherDTO>>() {
       @Override
       public void onFailure(Throwable caught) {
         view.unmask();
@@ -62,7 +62,7 @@ public class AddEditLectureController extends Controller<AddEditLectureControlle
       }
 
       @Override
-      public void onSuccess(List<Teacher> result) {
+      public void onSuccess(List<TeacherDTO> result) {
         view.unmask();
         view.getTeacherComboBox().getStore().clear();
         view.getTeacherComboBox().getStore().addAll(result);
@@ -80,7 +80,7 @@ public class AddEditLectureController extends Controller<AddEditLectureControlle
           return;
         }
         view.mask("Applying...");
-        Lecture temp = collectData();
+        LectureDTO temp = collectData();
         if (selectedLecture == null) {
           AppUtils.SERVICE_FACTORY.getLectureService().addLecture(temp, new AsyncCallback<Void>() {
             @Override
@@ -140,8 +140,8 @@ public class AddEditLectureController extends Controller<AddEditLectureControlle
     return true;
   }
 
-  private Lecture collectData() {
-    return new Lecture(view.getTeacherComboBox().getValue(), view.getNameField().getValue(), view.getEnrolmentField().getValue());
+  private LectureDTO collectData() {
+    return new LectureDTO(view.getTeacherComboBox().getValue(), view.getNameField().getValue(), view.getEnrolmentField().getValue());
   }
 
   @Override

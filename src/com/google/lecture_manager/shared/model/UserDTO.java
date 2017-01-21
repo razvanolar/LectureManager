@@ -3,8 +3,6 @@ package com.google.lecture_manager.shared.model;
 import com.google.lecture_manager.shared.UserTypes;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by razvanolar on 30.10.2016
@@ -20,7 +18,6 @@ public class UserDTO implements Serializable {
   private String email;
   private String password;
   private int typeId;
-  private List<Lecture> lectures;
 
   public UserDTO(long id, String firstName, String lastName, String userName, String email, int typeId) {
     this.id = id;
@@ -47,12 +44,6 @@ public class UserDTO implements Serializable {
     this.email = user.getEmail();
     this.password = user.getPassword();
     this.typeId = user.getTypeId();
-    if (user.getLectures() != null) {
-      this.lectures = new ArrayList<>();
-      for (Lecture lecture : user.getLectures()) {
-        this.lectures.add(lecture);
-      }
-    }
   }
 
   public long getId() {
@@ -81,10 +72,6 @@ public class UserDTO implements Serializable {
 
   public int getTypeId() {
     return typeId;
-  }
-
-  public List<Lecture> getLectures() {
-    return lectures;
   }
 
   public void setFirstName(String firstName) {
@@ -117,9 +104,5 @@ public class UserDTO implements Serializable {
 
   public void setId(long id) {
     this.id = id;
-  }
-
-  public void setLectures(List<Lecture> lectures) {
-    this.lectures = lectures;
   }
 }

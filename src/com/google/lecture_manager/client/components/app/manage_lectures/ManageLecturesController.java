@@ -11,7 +11,7 @@ import com.google.lecture_manager.client.utils.Controller;
 import com.google.lecture_manager.client.utils.ElementTypes;
 import com.google.lecture_manager.client.utils.View;
 import com.google.lecture_manager.client.utils.factories.AbstractFactory;
-import com.google.lecture_manager.shared.model.Lecture;
+import com.google.lecture_manager.shared.model.LectureDTO;
 import com.sencha.gxt.widget.core.client.Window;
 import com.sencha.gxt.widget.core.client.box.AlertMessageBox;
 import com.sencha.gxt.widget.core.client.button.TextButton;
@@ -24,7 +24,7 @@ import java.util.List;
 public class ManageLecturesController extends Controller<ManageLecturesController.IManageLecturesView> {
 
   public interface IManageLecturesView extends View {
-    Grid<Lecture> getGrid();
+    Grid<LectureDTO> getGrid();
     TextButton getEditButton();
     TextButton getDeleteButton();
     void mask(String message);
@@ -80,9 +80,9 @@ public class ManageLecturesController extends Controller<ManageLecturesControlle
         });
       }
     });
-    view.getGrid().getSelectionModel().addSelectionChangedHandler(new SelectionChangedEvent.SelectionChangedHandler<Lecture>() {
+    view.getGrid().getSelectionModel().addSelectionChangedHandler(new SelectionChangedEvent.SelectionChangedHandler<LectureDTO>() {
       @Override
-      public void onSelectionChanged(SelectionChangedEvent<Lecture> event) {
+      public void onSelectionChanged(SelectionChangedEvent<LectureDTO> event) {
         view.getDeleteButton().setEnabled(!(event.getSelection() == null || event.getSelection().size() == 0));
         view.getEditButton().setEnabled(event.getSelection() != null && event.getSelection().size() == 1);
       }
@@ -92,7 +92,7 @@ public class ManageLecturesController extends Controller<ManageLecturesControlle
 
   private void loadLectures() {
     view.mask("Loading lectures...");
-    AppUtils.SERVICE_FACTORY.getLectureService().getAllLectures(new AsyncCallback<List<Lecture>>() {
+    AppUtils.SERVICE_FACTORY.getLectureService().getAllLectures(new AsyncCallback<List<LectureDTO>>() {
       @Override
       public void onFailure(Throwable caught) {
         view.unmask();
@@ -100,7 +100,7 @@ public class ManageLecturesController extends Controller<ManageLecturesControlle
       }
 
       @Override
-      public void onSuccess(List<Lecture> result) {
+      public void onSuccess(List<LectureDTO> result) {
         view.unmask();
         view.getGrid().getStore().clear();
         view.getGrid().getStore().addAll(result);

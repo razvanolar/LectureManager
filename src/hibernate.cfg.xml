@@ -24,6 +24,7 @@
 
         <!-- List of XML mapping files -->
         <mapping resource="users.hbm.xml"/>
+        <mapping resource="teachers.hbm.xml"/>
         <mapping resource="lectures.hbm.xml"/>
 
     </session-factory>

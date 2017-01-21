@@ -6,7 +6,7 @@ import com.google.lecture_manager.server.jdbc.JDBCUtil;
 import com.google.lecture_manager.server.jdbc.dao.UserDAO;
 import com.google.lecture_manager.server.utils.ServerUtil;
 import com.google.lecture_manager.shared.InputValidator;
-import com.google.lecture_manager.shared.model.Teacher;
+import com.google.lecture_manager.shared.model.TeacherDTO;
 import com.google.lecture_manager.shared.model.User;
 import com.google.lecture_manager.shared.model.UserDTO;
 import org.hibernate.Criteria;
@@ -83,7 +83,7 @@ public class UserServiceImpl extends RemoteServiceServlet implements UserService
   }
 
   @Override
-  public List<Teacher> getAllTeachers() throws Exception {
+  public List<TeacherDTO> getAllTeachers() throws Exception {
     Connection connection = null;
     try {
       connection = JDBCUtil.getInstance().getConnection();

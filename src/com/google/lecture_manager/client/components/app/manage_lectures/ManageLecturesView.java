@@ -7,7 +7,7 @@ import com.google.lecture_manager.client.events.DeleteLectureEvent;
 import com.google.lecture_manager.client.events.EditLectureEvent;
 import com.google.lecture_manager.client.utils.AppUtils;
 import com.google.lecture_manager.client.utils.properties.LectureProperties;
-import com.google.lecture_manager.shared.model.Lecture;
+import com.google.lecture_manager.shared.model.LectureDTO;
 import com.sencha.gxt.core.client.IdentityValueProvider;
 import com.sencha.gxt.core.client.Style;
 import com.sencha.gxt.core.client.ValueProvider;
@@ -27,8 +27,8 @@ import java.util.List;
 
 public class ManageLecturesView implements ManageLecturesController.IManageLecturesView {
   private VerticalLayoutContainer mainContainer;
-  private ListStore<Lecture> listStore;
-  private Grid<Lecture> grid;
+  private ListStore<LectureDTO> listStore;
+  private Grid<LectureDTO> grid;
   private LectureProperties lecturesProperties = GWT.create(LectureProperties.class);
   private HorizontalLayoutContainer horizontalLayoutContainer;
   private TextButton addButton, editButton, deleteButton;
@@ -79,22 +79,22 @@ public class ManageLecturesView implements ManageLecturesController.IManageLectu
     mainContainer.add(grid, new VerticalLayoutContainer.VerticalLayoutData(1, 1));
   }
 
-  private Grid<Lecture> createGrid() {
-    IdentityValueProvider<Lecture> identityValueProvider = new IdentityValueProvider<>("sm");
-    CheckBoxSelectionModel<Lecture> selectionModel = new CheckBoxSelectionModel<>(identityValueProvider);
+  private Grid<LectureDTO> createGrid() {
+    IdentityValueProvider<LectureDTO> identityValueProvider = new IdentityValueProvider<>("sm");
+    CheckBoxSelectionModel<LectureDTO> selectionModel = new CheckBoxSelectionModel<>(identityValueProvider);
     selectionModel.setSelectionMode(Style.SelectionMode.MULTI);
 
-    List<ColumnConfig<Lecture, ?>> columnConfigs = new ArrayList<>();
+    List<ColumnConfig<LectureDTO, ?>> columnConfigs = new ArrayList<>();
     columnConfigs.add(selectionModel.getColumn());
     columnConfigs.add(new ColumnConfig<>(lecturesProperties.id(), 20, "ID"));
     columnConfigs.add(new ColumnConfig<>(lecturesProperties.lectureName(), 100, "Lecture Name"));
-    columnConfigs.add(new ColumnConfig<>(new ValueProvider<Lecture, String>() {
+    columnConfigs.add(new ColumnConfig<>(new ValueProvider<LectureDTO, String>() {
       @Override
-      public String getValue(Lecture object) {
+      public String getValue(LectureDTO object) {
         return object.getTeacher().getFirstName() + " " + object.getTeacher().getLastName();
       }
       @Override
-      public void setValue(Lecture object, String value) {  }
+      public void setValue(LectureDTO object, String value) {  }
       @Override
       public String getPath() {
         return "teacherName";
@@ -102,16 +102,16 @@ public class ManageLecturesView implements ManageLecturesController.IManageLectu
     }, 100, "Teacher"));
     columnConfigs.add(new ColumnConfig<>(lecturesProperties.enrolmentKey(), 100, "Enrolment Key"));
 
-    ColumnModel<Lecture> columnModel = new ColumnModel<>(columnConfigs);
+    ColumnModel<LectureDTO> columnModel = new ColumnModel<>(columnConfigs);
     listStore = new ListStore<>(lecturesProperties.key());
-    Grid<Lecture> LectureGrid = new Grid<>(listStore, columnModel);
+    Grid<LectureDTO> LectureGrid = new Grid<>(listStore, columnModel);
     LectureGrid.getView().setAutoFill(true);
     LectureGrid.setSelectionModel(selectionModel);
 
     return LectureGrid;
   }
 
-  public Grid<Lecture> getGrid() {
+  public Grid<LectureDTO> getGrid() {
     return grid;
   }
 

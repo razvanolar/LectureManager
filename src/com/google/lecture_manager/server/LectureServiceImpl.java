@@ -4,10 +4,9 @@ import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import com.google.lecture_manager.client.utils.services.LectureService;
 import com.google.lecture_manager.server.jdbc.JDBCUtil;
 import com.google.lecture_manager.server.jdbc.dao.LectureDAO;
-import com.google.lecture_manager.server.jdbc.dao.UserDAO;
 import com.google.lecture_manager.shared.FileTypes;
 import com.google.lecture_manager.shared.model.FileData;
-import com.google.lecture_manager.shared.model.Lecture;
+import com.google.lecture_manager.shared.model.LectureDTO;
 import com.google.lecture_manager.shared.model.tree.Node;
 import com.google.lecture_manager.shared.model.tree.Tree;
 
@@ -51,7 +50,7 @@ public class LectureServiceImpl extends RemoteServiceServlet implements LectureS
   }
 
   @Override
-  public List<Lecture> getAllLectures() throws Exception {
+  public List<LectureDTO> getAllLectures() throws Exception {
     Connection connection = null;
     try {
       connection = JDBCUtil.getInstance().getConnection();
@@ -67,7 +66,7 @@ public class LectureServiceImpl extends RemoteServiceServlet implements LectureS
   }
 
   @Override
-  public void deleteLecture(List<Lecture> lectures) throws Exception {
+  public void deleteLecture(List<LectureDTO> lectures) throws Exception {
     Connection connection = null;
     try {
       connection = JDBCUtil.getInstance().getConnection();
@@ -83,7 +82,7 @@ public class LectureServiceImpl extends RemoteServiceServlet implements LectureS
   }
 
   @Override
-  public void editLecture(Lecture lecture) throws Exception {
+  public void editLecture(LectureDTO lecture) throws Exception {
     Connection connection = null;
     try {
       connection = JDBCUtil.getInstance().getConnection();
@@ -99,7 +98,7 @@ public class LectureServiceImpl extends RemoteServiceServlet implements LectureS
   }
 
   @Override
-  public void addLecture(Lecture temp) throws Exception {
+  public void addLecture(LectureDTO temp) throws Exception {
     Connection connection = null;
     try {
       connection = JDBCUtil.getInstance().getConnection();

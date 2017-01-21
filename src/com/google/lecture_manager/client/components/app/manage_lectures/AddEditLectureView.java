@@ -2,7 +2,7 @@ package com.google.lecture_manager.client.components.app.manage_lectures;
 
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
-import com.google.lecture_manager.shared.model.Teacher;
+import com.google.lecture_manager.shared.model.TeacherDTO;
 import com.sencha.gxt.cell.core.client.form.ComboBoxCell;
 import com.sencha.gxt.core.client.util.Margins;
 import com.sencha.gxt.data.shared.LabelProvider;
@@ -20,8 +20,8 @@ import com.sencha.gxt.widget.core.client.form.TextField;
 
 public class AddEditLectureView implements AddEditLectureController.IAddEditLectureView {
   private TextField nameField, enrolmentField;
-  private ComboBox<Teacher> teacherComboBox;
-  private ListStore<Teacher> listStore;
+  private ComboBox<TeacherDTO> teacherComboBox;
+  private ListStore<TeacherDTO> listStore;
   private VerticalLayoutContainer mainContainer;
   private TextButton applyButton;
   private Window window;
@@ -35,15 +35,15 @@ public class AddEditLectureView implements AddEditLectureController.IAddEditLect
     window = new Window();
     nameField = new TextField();
     enrolmentField = new TextField();
-    listStore = new ListStore<>(new ModelKeyProvider<Teacher>() {
+    listStore = new ListStore<>(new ModelKeyProvider<TeacherDTO>() {
       @Override
-      public String getKey(Teacher item) {
+      public String getKey(TeacherDTO item) {
         return item.getId() + "";
       }
     });
-    teacherComboBox = new ComboBox<>(listStore, new LabelProvider<Teacher>() {
+    teacherComboBox = new ComboBox<>(listStore, new LabelProvider<TeacherDTO>() {
       @Override
-      public String getLabel(Teacher item) {
+      public String getLabel(TeacherDTO item) {
         return item.getFirstName() + " " + item.getLastName();
       }
     });
@@ -117,7 +117,7 @@ public class AddEditLectureView implements AddEditLectureController.IAddEditLect
     return enrolmentField;
   }
 
-  public ComboBox<Teacher> getTeacherComboBox() {
+  public ComboBox<TeacherDTO> getTeacherComboBox() {
     return teacherComboBox;
   }
 

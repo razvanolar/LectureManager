@@ -2,16 +2,16 @@ package com.google.lecture_manager.client.events;
 
 import com.google.gwt.event.shared.GwtEvent;
 import com.google.lecture_manager.client.handlers.DeleteLectureEventHandler;
-import com.google.lecture_manager.shared.model.Lecture;
+import com.google.lecture_manager.shared.model.LectureDTO;
 
 import java.util.List;
 
 public class DeleteLectureEvent extends GwtEvent<DeleteLectureEventHandler> {
 
   public static Type<DeleteLectureEventHandler> TYPE = new Type<>();
-  private final List<Lecture> selectedItems;
+  private final List<LectureDTO> selectedItems;
 
-  public DeleteLectureEvent(List<Lecture> selectedItems) {
+  public DeleteLectureEvent(List<LectureDTO> selectedItems) {
     this.selectedItems = selectedItems;
   }
 
@@ -25,7 +25,7 @@ public class DeleteLectureEvent extends GwtEvent<DeleteLectureEventHandler> {
     handler.onDeleteLectureEvent(this);
   }
 
-  public List<Lecture> getSelectedItems() {
+  public List<LectureDTO> getSelectedItems() {
     return selectedItems;
   }
 }

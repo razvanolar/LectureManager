@@ -2,7 +2,7 @@ package com.google.lecture_manager.server.jdbc.dao;
 
 import com.google.lecture_manager.server.jdbc.JDBCUtil;
 import com.google.lecture_manager.shared.UserTypes;
-import com.google.lecture_manager.shared.model.Teacher;
+import com.google.lecture_manager.shared.model.TeacherDTO;
 import com.google.lecture_manager.shared.model.UserDTO;
 
 import java.sql.Connection;
@@ -95,8 +95,8 @@ public class UserDAO {
     }
   }
 
-  public List<Teacher> getAllTeachers() throws SQLException {
-    List<Teacher> result = new ArrayList<>();
+  public List<TeacherDTO> getAllTeachers() throws SQLException {
+    List<TeacherDTO> result = new ArrayList<>();
     PreparedStatement statement = null;
     ResultSet rs = null;
     try {
@@ -105,7 +105,7 @@ public class UserDAO {
       statement.setLong(1, UserTypes.TEACHER.getId());
       rs = statement.executeQuery();
       while (rs.next()){
-        result.add(new Teacher(rs.getLong(1), rs.getString(2), rs.getString(3), rs.getString(5), rs.getString(4)));
+        result.add(new TeacherDTO(rs.getLong(1), rs.getString(2), rs.getString(3), rs.getString(5), rs.getString(4)));
       }
       return result;
     } finally {

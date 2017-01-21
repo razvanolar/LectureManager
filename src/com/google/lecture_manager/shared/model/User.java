@@ -1,8 +1,5 @@
 package com.google.lecture_manager.shared.model;
 
-import java.util.HashSet;
-import java.util.Set;
-
 /**
  * Created by razvanolar on 21.01.2017
  */
@@ -15,7 +12,6 @@ public class User {
   private String email;
   private String password;
   private int typeId;
-  private Set<Lecture> lectures = new HashSet<>(0);
 
   public User() {}
 
@@ -47,10 +43,6 @@ public class User {
     return typeId;
   }
 
-  public Set<Lecture> getLectures() {
-    return lectures;
-  }
-
   public void setFirstName(String firstName) {
     this.firstName = firstName;
   }
@@ -77,9 +69,5 @@ public class User {
 
   public void setId(long id) {
     this.id = id;
-  }
-
-  public void setLectures(Set<Lecture> lectures) {
-    this.lectures = lectures;
   }
 }

@@ -22,9 +22,11 @@ public class LecturesGrid {
 
   private Grid<LectureDTO> lecturesGrid;
   private Style.SelectionMode selectionMode;
+  private boolean showEnrolmentKey;
 
-  public LecturesGrid(Style.SelectionMode selectionMode) {
+  public LecturesGrid(Style.SelectionMode selectionMode, boolean showEnrolmentKey) {
     this.selectionMode = selectionMode;
+    this.showEnrolmentKey = showEnrolmentKey;
     init();
   }
 
@@ -47,7 +49,10 @@ public class LecturesGrid {
         return "teacherName";
       }
     }, 100, "Teacher"));
-    columnConfigs.add(new ColumnConfig<>(lecturesProperties.enrolmentKey(), 100, "Enrolment Key"));
+
+    if (showEnrolmentKey) {
+      columnConfigs.add(new ColumnConfig<>(lecturesProperties.enrolmentKey(), 100, "Enrolment Key"));
+    }
 
     ColumnModel<LectureDTO> columnModel = new ColumnModel<>(columnConfigs);
     ListStore<LectureDTO> listStore = new ListStore<>(lecturesProperties.key());

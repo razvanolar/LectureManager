@@ -15,5 +15,5 @@ public enum ElementTypes {
   ADD_EDIT_USERS,
   LECTURE_FILE_CONTENT,
   ADD_EDIT_LECTURES,
-  APPLY_FOR_LECTURE//{new}
+  SHOW_APPLY_FOR_LECTURE//{new}
 }

@@ -48,7 +48,7 @@ public class ManageLecturesView implements ManageLecturesController.IManageLectu
   @Override
   public void initGUI() {
     mainContainer = new VerticalLayoutContainer();
-    grid = new LecturesGrid(Style.SelectionMode.MULTI).getLecturesGrid();
+    grid = new LecturesGrid(Style.SelectionMode.MULTI, true).getLecturesGrid();
     addButton = new TextButton("Add");
     editButton = new TextButton("Edit");
     editButton.setEnabled(false);

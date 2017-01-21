@@ -45,7 +45,7 @@ public class ViewFactory {
         return new LectureFileContentView();
       case ADD_EDIT_LECTURES:
         return new AddEditLectureView();
-      case APPLY_FOR_LECTURE:
+      case SHOW_APPLY_FOR_LECTURE:
         return new ApplyForLectureView();
       //{new_case}
     }

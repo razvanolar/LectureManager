@@ -1,7 +1,7 @@
 package com.google.lecture_manager.client.components.app.header;
 
 import com.google.gwt.user.client.ui.Label;
-import com.google.lecture_manager.client.events.ApplyForLectureEvent;
+import com.google.lecture_manager.client.events.ShowApplyForLectureEvent;
 import com.google.lecture_manager.client.events.ManageLecturesEvent;
 import com.google.lecture_manager.client.events.ManageUsersEvent;
 import com.google.lecture_manager.client.events.ShowHomeEvent;
@@ -36,7 +36,7 @@ public class HeaderController extends Controller<HeaderController.IHeaderView> {
 
       view.getApplyForLectureButton().addSelectHandler(new SelectEvent.SelectHandler() {
         public void onSelect(SelectEvent event) {
-          AppUtils.EVENT_BUS.fireEvent(new ApplyForLectureEvent());
+          AppUtils.EVENT_BUS.fireEvent(new ShowApplyForLectureEvent());
         }
       });
     } else {

@@ -45,7 +45,7 @@ public class ControllerFactory {
         return LectureFileContentController.getInstance();
       case ADD_EDIT_LECTURES:
         return AddEditLectureController.getInstance();
-      case APPLY_FOR_LECTURE:
+      case SHOW_APPLY_FOR_LECTURE:
         return ApplyForLectureController.getInstance();
       //{new_case}
     }

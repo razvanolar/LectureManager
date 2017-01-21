@@ -16,6 +16,7 @@ public class HeaderView implements HeaderController.IHeaderView {
 
   private BorderLayoutContainer borderLayoutContainer;
   private Label userNameLabel;
+  private TextButton homeButton;
   private TextButton logoutButton;
   private TextButton manageUsersButton;
   private TextButton manageLecturesButton;
@@ -28,6 +29,7 @@ public class HeaderView implements HeaderController.IHeaderView {
   @Override
   public void initGUI() {
     borderLayoutContainer = new BorderLayoutContainer();
+    homeButton = new TextButton("Home");
     userNameLabel = new Label("Test");
     manageUsersButton = new TextButton("Manage Users");
     manageLecturesButton = new TextButton("Manage Lectures");
@@ -40,6 +42,7 @@ public class HeaderView implements HeaderController.IHeaderView {
     leftContainer.setPack(BoxLayoutContainer.BoxLayoutPack.START);
     rightContainer.setPack(BoxLayoutContainer.BoxLayoutPack.END);
 
+    leftContainer.add(homeButton, new BoxLayoutContainer.BoxLayoutData(new Margins(0, 0, 0, 5)));
     leftContainer.add(userText, new BoxLayoutContainer.BoxLayoutData(new Margins(0, 3, 0, 10)));
     leftContainer.add(userNameLabel);
     BoxLayoutContainer.BoxLayoutData rightLayoutData = new BoxLayoutContainer.BoxLayoutData(new Margins(0, 10, 0, 0));
@@ -55,6 +58,10 @@ public class HeaderView implements HeaderController.IHeaderView {
     borderLayoutContainer.setWestWidget(leftContainer, new BorderLayoutContainer.BorderLayoutData(200));
     borderLayoutContainer.setEastWidget(rightContainer, new BorderLayoutContainer.BorderLayoutData(400));
     borderLayoutContainer.getElement().getStyle().setBackgroundColor("#ffffff");
+  }
+
+  public TextButton getHomeButton() {
+    return homeButton;
   }
 
   public Label getUserNameLabel() {

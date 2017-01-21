@@ -3,6 +3,7 @@ package com.google.lecture_manager.client.components.app.header;
 import com.google.gwt.user.client.ui.Label;
 import com.google.lecture_manager.client.events.ManageLecturesEvent;
 import com.google.lecture_manager.client.events.ManageUsersEvent;
+import com.google.lecture_manager.client.events.ShowHomeEvent;
 import com.google.lecture_manager.client.utils.AppUtils;
 import com.google.lecture_manager.client.utils.Controller;
 import com.google.lecture_manager.client.utils.View;
@@ -12,6 +13,7 @@ import com.sencha.gxt.widget.core.client.event.SelectEvent;
 public class HeaderController extends Controller<HeaderController.IHeaderView> {
 
   public interface IHeaderView extends View {
+    TextButton getHomeButton();
     Label getUserNameLabel();
     TextButton getLogoutButton();
     TextButton getManageUsersButton();
@@ -26,14 +28,21 @@ public class HeaderController extends Controller<HeaderController.IHeaderView> {
   @Override
   public void bind(IHeaderView view) {
     this.view = view;
+
     if (!AppUtils.getInstance().isAdmin()) {
       view.getManageUsersButton().setVisible(false);
       view.getManageLecturesButton().setVisible(false);
     } else {
       view.getApplyForLectureButton().setVisible(false);
     }
+
+    view.getHomeButton().addSelectHandler(new SelectEvent.SelectHandler() {
+      public void onSelect(SelectEvent event) {
+        AppUtils.EVENT_BUS.fireEvent(new ShowHomeEvent());
+      }
+    });
+
     view.getManageUsersButton().addSelectHandler(new SelectEvent.SelectHandler() {
-      @Override
       public void onSelect(SelectEvent event) {
         AppUtils.EVENT_BUS.fireEvent(new ManageUsersEvent());
       }

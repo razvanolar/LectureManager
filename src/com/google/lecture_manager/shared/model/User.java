@@ -16,7 +16,7 @@ public class User implements IsSerializable {
   private String userName;
   private String email;
   private String password;
-  private UserTypes type;
+  private int typeId;
 
   public User(long id, String firstName, String lastName, String userName, String email, int typeId) {
     this.id = id;
@@ -24,7 +24,7 @@ public class User implements IsSerializable {
     this.lastName = lastName;
     this.userName = userName;
     this.email = email;
-    this.type = UserTypes.fromId(typeId);
+    this.typeId = typeId;
   }
 
   public User(String firstName, String lastName, String userName, String email, String password) {
@@ -59,6 +59,10 @@ public class User implements IsSerializable {
     return password;
   }
 
+  public int getTypeId() {
+    return typeId;
+  }
+
   public void setFirstName(String firstName) {
     this.firstName = firstName;
   }
@@ -75,8 +79,12 @@ public class User implements IsSerializable {
     this.email = email;
   }
 
+  public void setTypeId(int typeId) {
+    this.typeId = typeId;
+  }
+
   public UserTypes getType() {
-    return type;
+    return UserTypes.fromId(typeId);
   }
 
   public void setPassword(String password) {
@@ -85,9 +93,5 @@ public class User implements IsSerializable {
 
   public void setId(long id) {
     this.id = id;
-  }
-
-  public void setType(UserTypes type) {
-    this.type = type;
   }
 }

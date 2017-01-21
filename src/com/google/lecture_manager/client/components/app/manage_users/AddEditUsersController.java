@@ -140,7 +140,7 @@ public class AddEditUsersController extends Controller<AddEditUsersController.IA
             view.getUsernameTextField().getText(),
             view.getEmailTextField().getText(),
             view.getPwdField().getText());
-    temp.setType(view.getUserTypesComboBox().getValue());
+    temp.setTypeId(view.getUserTypesComboBox().getValue().getId());
     return temp;
   }
 

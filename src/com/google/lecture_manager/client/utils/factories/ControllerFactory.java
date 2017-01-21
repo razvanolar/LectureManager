@@ -1,5 +1,6 @@
 package com.google.lecture_manager.client.utils.factories;
 
+import com.google.lecture_manager.client.components.app.apply_for_lecture.ApplyForLectureController;
 import com.google.lecture_manager.client.components.app.center.CenterController;
 import com.google.lecture_manager.client.components.app.header.HeaderController;
 import com.google.lecture_manager.client.components.app.manage_lectures.ManageLecturesController;
@@ -44,6 +45,8 @@ public class ControllerFactory {
         return LectureFileContentController.getInstance();
       case ADD_EDIT_LECTURES:
         return AddEditLectureController.getInstance();
+      case APPLY_FOR_LECTURE:
+        return ApplyForLectureController.getInstance();
       //{new_case}
     }
     return null;

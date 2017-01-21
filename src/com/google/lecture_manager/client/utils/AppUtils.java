@@ -3,6 +3,7 @@ package com.google.lecture_manager.client.utils;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.event.shared.SimpleEventBus;
+import com.google.lecture_manager.client.utils.factories.PropertiesFactory;
 import com.google.lecture_manager.client.utils.factories.ServiceFactory;
 import com.google.lecture_manager.shared.UserTypes;
 import com.google.lecture_manager.shared.model.UserDTO;
@@ -13,16 +14,18 @@ import com.google.lecture_manager.shared.model.UserDTO;
 public class AppUtils {
 
   private static AppUtils INSTANCE;
-
   public static EventBus EVENT_BUS = GWT.create(SimpleEventBus.class);
-
   public static ServiceFactory SERVICE_FACTORY = new ServiceFactory();
-
+  public static PropertiesFactory PROPERTIES_FACTORY = new PropertiesFactory();
   public static Icons ICONS = GWT.create(Icons.class);
 
   private UserDTO authenticatedUser;
 
-  private AppUtils() {}
+  private HandlerUtil handlerUtil;
+
+  private AppUtils() {
+    this.handlerUtil = new HandlerUtil();
+  }
 
   public UserDTO getAuthenticatedUser() {
     return authenticatedUser;

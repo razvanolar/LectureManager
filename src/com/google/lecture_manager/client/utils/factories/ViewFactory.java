@@ -1,5 +1,6 @@
 package com.google.lecture_manager.client.utils.factories;
 
+import com.google.lecture_manager.client.components.app.apply_for_lecture.ApplyForLectureView;
 import com.google.lecture_manager.client.components.app.center.CenterView;
 import com.google.lecture_manager.client.components.app.header.HeaderView;
 import com.google.lecture_manager.client.components.app.manage_lectures.ManageLecturesView;
@@ -44,6 +45,8 @@ public class ViewFactory {
         return new LectureFileContentView();
       case ADD_EDIT_LECTURES:
         return new AddEditLectureView();
+      case APPLY_FOR_LECTURE:
+        return new ApplyForLectureView();
       //{new_case}
     }
     return null;

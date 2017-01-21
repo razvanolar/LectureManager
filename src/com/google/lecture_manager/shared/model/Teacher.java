@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Cristi on 1/4/2017.
+ * Created by Cristi on 1/4/2017
  */
 public class Teacher extends User {
 
@@ -16,7 +16,7 @@ public class Teacher extends User {
   }
 
   public Teacher(long id, String firstName, String lastName, String username, String email) {
-    super(id, firstName, lastName, username, email, UserTypes.TEACHER);
+    super(id, firstName, lastName, username, email, UserTypes.TEACHER.getId());
   }
 
 

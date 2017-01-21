@@ -14,6 +14,10 @@
         <servlet-name>LectureService</servlet-name>
         <servlet-class>com.google.lecture_manager.server.LectureServiceImpl</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>com.google.lecture_manager.LectureManager InitService</servlet-name>
+        <servlet-class>com.google.lecture_manager.server.InitServiceImpl</servlet-class>
+    </servlet>
 
     <servlet-mapping>
         <servlet-name>com.google.lecture_manager.LectureManager UserService</servlet-name>
@@ -22,6 +26,10 @@
     <servlet-mapping>
         <servlet-name>LectureService</servlet-name>
         <url-pattern>/lecturemanager/lectureService</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>com.google.lecture_manager.LectureManager InitService</servlet-name>
+        <url-pattern>/lecturemanager/initService</url-pattern>
     </servlet-mapping>
 
     <!-- Default page to serve -->

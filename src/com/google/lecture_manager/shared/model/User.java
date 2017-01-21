@@ -18,13 +18,13 @@ public class User implements IsSerializable {
   private String password;
   private UserTypes type;
 
-  public User(long id, String firstName, String lastName, String userName, String email, UserTypes type) {
+  public User(long id, String firstName, String lastName, String userName, String email, int typeId) {
     this.id = id;
     this.firstName = firstName;
     this.lastName = lastName;
     this.userName = userName;
     this.email = email;
-    this.type = type;
+    this.type = UserTypes.fromId(typeId);
   }
 
   public User(String firstName, String lastName, String userName, String email, String password) {
@@ -57,6 +57,22 @@ public class User implements IsSerializable {
 
   public String getPassword() {
     return password;
+  }
+
+  public void setFirstName(String firstName) {
+    this.firstName = firstName;
+  }
+
+  public void setLastName(String lastName) {
+    this.lastName = lastName;
+  }
+
+  public void setUserName(String userName) {
+    this.userName = userName;
+  }
+
+  public void setEmail(String email) {
+    this.email = email;
   }
 
   public UserTypes getType() {

@@ -8,6 +8,9 @@ import com.google.lecture_manager.server.utils.ServerUtil;
 import com.google.lecture_manager.shared.InputValidator;
 import com.google.lecture_manager.shared.model.Teacher;
 import com.google.lecture_manager.shared.model.User;
+import org.hibernate.Criteria;
+import org.hibernate.Session;
+import org.hibernate.criterion.Restrictions;
 
 import java.sql.Connection;
 import java.util.List;
@@ -43,18 +46,23 @@ public class UserServiceImpl extends RemoteServiceServlet implements UserService
       throw new Exception("Authentication failed due to incomplete data.");
     password = ServerUtil.getMD5().crypt(password);
 
-    Connection connection = null;
+    Session session = ServerUtil.SESSION_FACTORY.openSession();
+    List userList = null;
     try {
-      connection = JDBCUtil.getInstance().getConnection();
-      UserDAO dao = new UserDAO(connection);
-      return dao.getUser(username, password);
+      Criteria criteria = session.createCriteria(User.class);
+      criteria.add(Restrictions.eq("userName", username));
+      criteria.add(Restrictions.eq("password", password));
+      userList = criteria.list();
     } catch (Exception e) {
-      System.out.println(e.getMessage());
-      throw new Exception(e.getMessage());
+      e.printStackTrace();
+      throw e;
     } finally {
-      if (connection != null)
-        JDBCUtil.getInstance().closeConnection(connection);
+      session.close();
     }
+
+    if (userList == null || userList.isEmpty() || userList.size() > 1)
+      return null;
+    return (User) userList.get(0);
   }
 
   @Override

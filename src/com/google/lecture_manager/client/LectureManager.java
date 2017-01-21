@@ -1,6 +1,8 @@
 package com.google.lecture_manager.client;
 
 import com.google.gwt.core.client.EntryPoint;
+import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.lecture_manager.client.components.app.AppController;
 import com.google.lecture_manager.client.events.*;
@@ -28,12 +30,30 @@ public class LectureManager implements EntryPoint {
     Viewport viewport = new Viewport();
     mainContainer = new BorderLayoutContainer();
     mainContainer.setStyleName(AppConstants.WHITE_BG_STYLE);
-    mainContainer.setCenterWidget(AbstractFactory.getWidget(ElementTypes.LOGIN_FORM));
     viewport.add(mainContainer);
-    initHandlers();
     // Add the nameField and sendButton to the RootPanel
     // Use RootPanel.get() to get the entire body element
     RootPanel.get().add(viewport);
+    callInitService();
+  }
+
+  private void callInitService() {
+    mainContainer.setCenterWidget(AbstractFactory.getWidget(ElementTypes.LOGIN_FORM));
+    initHandlers();
+
+    mainContainer.mask("Init Server Data...");
+    AppUtils.SERVICE_FACTORY.getInitService().initServerData(new AsyncCallback<Void>() {
+      public void onFailure(Throwable throwable) {
+        mainContainer.unmask();
+        mainContainer.setCenterWidget(new Label(throwable.getMessage()));
+      }
+
+      public void onSuccess(Void aVoid) {
+        mainContainer.setCenterWidget(AbstractFactory.getWidget(ElementTypes.LOGIN_FORM));
+        initHandlers();
+        mainContainer.unmask();
+      }
+    });
   }
 
   private void initHandlers() {

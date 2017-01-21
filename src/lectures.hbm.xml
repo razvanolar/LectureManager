@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="com.google.lecture_manager.shared.model.Lecture" table="lectures">
+        <meta attribute="class-description">
+            This class contains the user detail.
+        </meta>
+        <id name="id" type="int" column="id">
+            <generator class="identity"/>
+        </id>
+        <property name="lectureName" column="name" type="string"/>
+        <property name="enrolmentKey" column="enrolment_key" type="string"/>
+        <!--<property name="teacher" column="enrolment_key" type="com.google.lecture_manager.shared.model.Teacher"/>-->
+        <!--<set name="lectures" table="user_lecture_maps" inverse="false" lazy="true" fetch="select" cascade="all">-->
+            <!--<key>-->
+                <!--<column name="user_id" not-null="true" />-->
+            <!--</key>-->
+            <!--<many-to-many entity-name="com.google.lecture_manager.shared.model.Lecture">-->
+                <!--<column name="lecture_id" not-null="true" />-->
+            <!--</many-to-many>-->
+        <!--</set>-->
+    </class>
+</hibernate-mapping>

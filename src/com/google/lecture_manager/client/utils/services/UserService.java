@@ -3,7 +3,7 @@ package com.google.lecture_manager.client.utils.services;
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 import com.google.lecture_manager.shared.model.Teacher;
-import com.google.lecture_manager.shared.model.User;
+import com.google.lecture_manager.shared.model.UserDTO;
 
 import java.util.List;
 
@@ -12,10 +12,10 @@ import java.util.List;
  */
 @RemoteServiceRelativePath("userService")
 public interface UserService extends RemoteService {
-  void addNewUser(User user) throws Exception;
-  User authenticate(String user, String password) throws Exception;
-  List<User> getAllUsers() throws Exception;
-  void editUser(User user) throws Exception;
-  void deleteUsers(List<User> users) throws Exception;
+  void addNewUser(UserDTO user) throws Exception;
+  UserDTO authenticate(String user, String password) throws Exception;
+  List<UserDTO> getAllUsers() throws Exception;
+  void editUser(UserDTO user) throws Exception;
+  void deleteUsers(List<UserDTO> users) throws Exception;
   List<Teacher> getAllTeachers() throws Exception;
 }

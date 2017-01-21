@@ -3,13 +3,11 @@ package com.google.lecture_manager.client.components.login;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.lecture_manager.client.events.SignUpEvent;
 import com.google.lecture_manager.client.events.LoginEvent;
-import com.google.lecture_manager.client.handlers.LoginEventHandler;
 import com.google.lecture_manager.client.utils.AppUtils;
 import com.google.lecture_manager.client.utils.Controller;
 import com.google.lecture_manager.client.utils.MaskableView;
 import com.google.lecture_manager.client.utils.View;
-import com.google.lecture_manager.shared.model.User;
-import com.sencha.gxt.widget.core.client.box.AlertMessageBox;
+import com.google.lecture_manager.shared.model.UserDTO;
 import com.sencha.gxt.widget.core.client.button.TextButton;
 import com.sencha.gxt.widget.core.client.event.SelectEvent;
 import com.sencha.gxt.widget.core.client.form.PasswordField;
@@ -38,13 +36,13 @@ public class LoginController extends Controller<LoginController.ILoginView> {
       public void onSelect(SelectEvent event) {
         view.mask("Authenticating");
         AppUtils.SERVICE_FACTORY.getUserService().authenticate(view.getUserTextField().getText(),
-                view.getPasswordField().getText(), new AsyncCallback<User>() {
+                view.getPasswordField().getText(), new AsyncCallback<UserDTO>() {
                   public void onFailure(Throwable throwable) {
                     view.unmask();
                     Info.display("Error", throwable.getMessage());
                   }
 
-                  public void onSuccess(User user) {
+                  public void onSuccess(UserDTO user) {
                     view.unmask();
                     if (user == null) {
                       Info.display("Error", "Unable to authenticate.");

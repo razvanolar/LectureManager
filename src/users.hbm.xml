@@ -17,5 +17,13 @@
         <property name="email" column="email" type="string"/>
         <property name="password" column="password" type="string"/>
         <property name="typeId" column="user_type" type="int"/>
+        <set name="lectures" table="user_lecture_maps" inverse="false" lazy="false" fetch="select" cascade="all">
+            <key>
+                <column name="user_id" not-null="true" />
+            </key>
+            <many-to-many entity-name="com.google.lecture_manager.shared.model.Lecture">
+                <column name="lecture_id" not-null="true" />
+            </many-to-many>
+        </set>
     </class>
 </hibernate-mapping>

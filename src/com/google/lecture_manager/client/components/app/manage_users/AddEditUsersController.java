@@ -10,7 +10,7 @@ import com.google.lecture_manager.client.utils.Controller;
 import com.google.lecture_manager.client.utils.View;
 import com.google.lecture_manager.shared.InputValidator;
 import com.google.lecture_manager.shared.UserTypes;
-import com.google.lecture_manager.shared.model.User;
+import com.google.lecture_manager.shared.model.UserDTO;
 import com.sencha.gxt.widget.core.client.box.AlertMessageBox;
 import com.sencha.gxt.widget.core.client.button.TextButton;
 import com.sencha.gxt.widget.core.client.event.SelectEvent;
@@ -42,7 +42,7 @@ public class AddEditUsersController extends Controller<AddEditUsersController.IA
   private static AddEditUsersController INSTANCE;
 
   private IAddEditUsersView view;
-  private User selectedUser;
+  private UserDTO selectedUser;
 
   public void bind(final IAddEditUsersView view) {
     this.view = view;
@@ -79,7 +79,7 @@ public class AddEditUsersController extends Controller<AddEditUsersController.IA
           Info.display("Info", "Invalid input");
           return;
         }
-        User temp = collectData();
+        UserDTO temp = collectData();
         view.mask("Applying...");
         if (selectedUser == null) {
           AppUtils.SERVICE_FACTORY.getUserService().addNewUser(temp, new AsyncCallback<Void>() {
@@ -92,7 +92,7 @@ public class AddEditUsersController extends Controller<AddEditUsersController.IA
             @Override
             public void onSuccess(Void result) {
               view.unmask();
-              Info.display("Info", "User added successfully.");
+              Info.display("Info", "UserDTO added successfully.");
               view.close();
               AppUtils.EVENT_BUS.fireEvent(new LoadUsersEvent());
             }
@@ -109,7 +109,7 @@ public class AddEditUsersController extends Controller<AddEditUsersController.IA
             @Override
             public void onSuccess(Void result) {
               view.unmask();
-              Info.display("Info", "User edited successfully");
+              Info.display("Info", "UserDTO edited successfully");
               view.close();
               AppUtils.EVENT_BUS.fireEvent(new LoadUsersEvent());
             }
@@ -134,8 +134,8 @@ public class AddEditUsersController extends Controller<AddEditUsersController.IA
     return result;
   }
 
-  private User collectData() {
-    User temp = new User(view.getFirstNameTextField().getText(),
+  private UserDTO collectData() {
+    UserDTO temp = new UserDTO(view.getFirstNameTextField().getText(),
             view.getLastNameTextField().getText(),
             view.getUsernameTextField().getText(),
             view.getEmailTextField().getText(),

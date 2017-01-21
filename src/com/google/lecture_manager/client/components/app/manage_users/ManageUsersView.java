@@ -7,7 +7,7 @@ import com.google.lecture_manager.client.events.DeleteUserEvent;
 import com.google.lecture_manager.client.events.EditUserEvent;
 import com.google.lecture_manager.client.utils.AppUtils;
 import com.google.lecture_manager.client.utils.properties.UsersProperties;
-import com.google.lecture_manager.shared.model.User;
+import com.google.lecture_manager.shared.model.UserDTO;
 import com.sencha.gxt.core.client.IdentityValueProvider;
 import com.sencha.gxt.core.client.Style;
 import com.sencha.gxt.core.client.ValueProvider;
@@ -27,8 +27,8 @@ import java.util.List;
 
 public class ManageUsersView implements ManageUsersController.IManageUsersView {
   private VerticalLayoutContainer mainContainer;
-  private ListStore<User> listStore;
-  private Grid<User> grid;
+  private ListStore<UserDTO> listStore;
+  private Grid<UserDTO> grid;
   private UsersProperties usersProperties = GWT.create(UsersProperties.class);
   private HorizontalLayoutContainer horizontalLayoutContainer;
   private TextButton addButton, editButton, deleteButton;
@@ -79,25 +79,25 @@ public class ManageUsersView implements ManageUsersController.IManageUsersView {
     mainContainer.add(grid, new VerticalLayoutContainer.VerticalLayoutData(1, 1));
   }
 
-  private Grid<User> createGrid() {
-    IdentityValueProvider<User> identityValueProvider = new IdentityValueProvider<>("sm");
-    CheckBoxSelectionModel<User> selectionModel = new CheckBoxSelectionModel<>(identityValueProvider);
+  private Grid<UserDTO> createGrid() {
+    IdentityValueProvider<UserDTO> identityValueProvider = new IdentityValueProvider<>("sm");
+    CheckBoxSelectionModel<UserDTO> selectionModel = new CheckBoxSelectionModel<>(identityValueProvider);
     selectionModel.setSelectionMode(Style.SelectionMode.MULTI);
 
-    List<ColumnConfig<User, ?>> columnConfigs = new ArrayList<>();
+    List<ColumnConfig<UserDTO, ?>> columnConfigs = new ArrayList<>();
     columnConfigs.add(selectionModel.getColumn());
     columnConfigs.add(new ColumnConfig<>(usersProperties.id(), 20, "ID"));
     columnConfigs.add(new ColumnConfig<>(usersProperties.firstName(), 100, "First Name"));
     columnConfigs.add(new ColumnConfig<>(usersProperties.lastName(), 100, "Last Name"));
-    columnConfigs.add(new ColumnConfig<>(usersProperties.userName(), 100, "User Name"));
+    columnConfigs.add(new ColumnConfig<>(usersProperties.userName(), 100, "UserDTO Name"));
     columnConfigs.add(new ColumnConfig<>(usersProperties.email(), 100, "Email"));
-    columnConfigs.add(new ColumnConfig<>(new ValueProvider<User, String>() {
+    columnConfigs.add(new ColumnConfig<>(new ValueProvider<UserDTO, String>() {
       @Override
-      public String getValue(User object) {
+      public String getValue(UserDTO object) {
         return object.getType().name();
       }
       @Override
-      public void setValue(User object, String value) {
+      public void setValue(UserDTO object, String value) {
       }
       @Override
       public String getPath() {
@@ -105,16 +105,16 @@ public class ManageUsersView implements ManageUsersController.IManageUsersView {
       }
     }, 100, "Type"));
 
-    ColumnModel<User> columnModel = new ColumnModel<>(columnConfigs);
+    ColumnModel<UserDTO> columnModel = new ColumnModel<>(columnConfigs);
     listStore = new ListStore<>(usersProperties.key());
-    Grid<User> userGrid = new Grid<>(listStore, columnModel);
+    Grid<UserDTO> userGrid = new Grid<>(listStore, columnModel);
     userGrid.getView().setAutoFill(true);
     userGrid.setSelectionModel(selectionModel);
 
     return userGrid;
   }
 
-  public Grid<User> getGrid() {
+  public Grid<UserDTO> getGrid() {
     return grid;
   }
 

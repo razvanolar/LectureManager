@@ -3,7 +3,7 @@ package com.google.lecture_manager.server.jdbc.dao;
 import com.google.lecture_manager.server.jdbc.JDBCUtil;
 import com.google.lecture_manager.shared.UserTypes;
 import com.google.lecture_manager.shared.model.Teacher;
-import com.google.lecture_manager.shared.model.User;
+import com.google.lecture_manager.shared.model.UserDTO;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -23,7 +23,7 @@ public class UserDAO {
     this.connection = connection;
   }
 
-  public void addUser(User user) throws Exception {
+  public void addUser(UserDTO user) throws Exception {
     PreparedStatement statement = null;
     try {
       String query = "INSERT INTO users (first_name, last_name, email, user_name, password, user_type) VALUES (?, ?, ?, ?, ?, ?)";
@@ -45,7 +45,7 @@ public class UserDAO {
     }
   }
 
-  public User getUser(String username, String password) throws Exception {
+  public UserDTO getUser(String username, String password) throws Exception {
     PreparedStatement statement = null;
     ResultSet result = null;
     try {
@@ -65,9 +65,9 @@ public class UserDAO {
     }
   }
 
-  private User computeResultSet(ResultSet result) throws Exception {
+  private UserDTO computeResultSet(ResultSet result) throws Exception {
     int typeId = result.getInt(7);
-    return new User(result.getInt(1),
+    return new UserDTO(result.getInt(1),
             result.getString(2),
             result.getString(3),
             result.getString(5),
@@ -75,8 +75,8 @@ public class UserDAO {
             typeId);
   }
 
-  public List<User> getAllUsers() throws Exception {
-    List<User> result = new ArrayList<>();
+  public List<UserDTO> getAllUsers() throws Exception {
+    List<UserDTO> result = new ArrayList<>();
     PreparedStatement statement = null;
     ResultSet rs = null;
     try {
@@ -116,7 +116,7 @@ public class UserDAO {
     }
   }
 
-  public void editUser(User user) throws Exception {
+  public void editUser(UserDTO user) throws Exception {
     PreparedStatement statement = null;
     try {
       statement = connection.prepareStatement("UPDATE users set first_name = ?, last_name = ? , email = ?, user_name = ?, user_type = ? where id = ?");
@@ -133,7 +133,7 @@ public class UserDAO {
     }
   }
 
-  public void deleteUsers(List<User> users) throws SQLException {
+  public void deleteUsers(List<UserDTO> users) throws SQLException {
     PreparedStatement statement = null;
     try {
       String sql = "delete from users where id in (";

@@ -12,7 +12,7 @@ import com.google.lecture_manager.client.utils.Controller;
 import com.google.lecture_manager.client.utils.MaskableView;
 import com.google.lecture_manager.client.utils.View;
 import com.google.lecture_manager.shared.InputValidator;
-import com.google.lecture_manager.shared.model.User;
+import com.google.lecture_manager.shared.model.UserDTO;
 import com.sencha.gxt.widget.core.client.box.AlertMessageBox;
 import com.sencha.gxt.widget.core.client.button.TextButton;
 import com.sencha.gxt.widget.core.client.event.SelectEvent;
@@ -104,8 +104,8 @@ public class SignUpController extends Controller<SignUpController.ISignUpView> {
     });
   }
 
-  private User collect() {
-    return new User(view.getFirstNameTextField().getText(),
+  private UserDTO collect() {
+    return new UserDTO(view.getFirstNameTextField().getText(),
             view.getLastNameTextField().getText(),
             view.getUsernameTextField().getText(),
             view.getEmailTextField().getText(),

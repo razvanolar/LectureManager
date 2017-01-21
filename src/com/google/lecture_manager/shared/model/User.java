@@ -1,14 +1,12 @@
 package com.google.lecture_manager.shared.model;
 
-import com.google.gwt.user.client.rpc.IsSerializable;
-import com.google.lecture_manager.shared.UserTypes;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
- * Created by razvanolar on 30.10.2016
+ * Created by razvanolar on 21.01.2017
  */
-public class User implements IsSerializable {
-
-  public User() {}
+public class User {
 
   private long id;
   private String firstName;
@@ -17,23 +15,9 @@ public class User implements IsSerializable {
   private String email;
   private String password;
   private int typeId;
+  private Set<Lecture> lectures = new HashSet<>(0);
 
-  public User(long id, String firstName, String lastName, String userName, String email, int typeId) {
-    this.id = id;
-    this.firstName = firstName;
-    this.lastName = lastName;
-    this.userName = userName;
-    this.email = email;
-    this.typeId = typeId;
-  }
-
-  public User(String firstName, String lastName, String userName, String email, String password) {
-    this.firstName = firstName;
-    this.lastName = lastName;
-    this.userName = userName;
-    this.email = email;
-    this.password = password;
-  }
+  public User() {}
 
   public long getId() {
     return id;
@@ -63,6 +47,10 @@ public class User implements IsSerializable {
     return typeId;
   }
 
+  public Set<Lecture> getLectures() {
+    return lectures;
+  }
+
   public void setFirstName(String firstName) {
     this.firstName = firstName;
   }
@@ -83,15 +71,15 @@ public class User implements IsSerializable {
     this.typeId = typeId;
   }
 
-  public UserTypes getType() {
-    return UserTypes.fromId(typeId);
-  }
-
   public void setPassword(String password) {
     this.password = password;
   }
 
   public void setId(long id) {
     this.id = id;
+  }
+
+  public void setLectures(Set<Lecture> lectures) {
+    this.lectures = lectures;
   }
 }

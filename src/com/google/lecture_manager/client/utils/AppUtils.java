@@ -5,7 +5,7 @@ import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.event.shared.SimpleEventBus;
 import com.google.lecture_manager.client.utils.factories.ServiceFactory;
 import com.google.lecture_manager.shared.UserTypes;
-import com.google.lecture_manager.shared.model.User;
+import com.google.lecture_manager.shared.model.UserDTO;
 
 /**
  * Created by razvanolar on 28.10.2016
@@ -20,15 +20,15 @@ public class AppUtils {
 
   public static Icons ICONS = GWT.create(Icons.class);
 
-  private User authenticatedUser;
+  private UserDTO authenticatedUser;
 
   private AppUtils() {}
 
-  public User getAuthenticatedUser() {
+  public UserDTO getAuthenticatedUser() {
     return authenticatedUser;
   }
 
-  public void setAuthenticatedUser(User authenticatedUser) {
+  public void setAuthenticatedUser(UserDTO authenticatedUser) {
     this.authenticatedUser = authenticatedUser;
   }
 

@@ -8,6 +8,7 @@ import com.google.lecture_manager.server.utils.ServerUtil;
 import com.google.lecture_manager.shared.InputValidator;
 import com.google.lecture_manager.shared.model.Teacher;
 import com.google.lecture_manager.shared.model.User;
+import com.google.lecture_manager.shared.model.UserDTO;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
@@ -21,7 +22,7 @@ import java.util.List;
 public class UserServiceImpl extends RemoteServiceServlet implements UserService {
 
   @Override
-  public void addNewUser(User user) throws Exception {
+  public void addNewUser(UserDTO user) throws Exception {
     if (user == null || user.getPassword() == null || user.getPassword().isEmpty())
       throw new Exception("Can not add user NULL instance into db.");
     user.setPassword(ServerUtil.getMD5().crypt(user.getPassword()));
@@ -41,7 +42,7 @@ public class UserServiceImpl extends RemoteServiceServlet implements UserService
   }
 
   @Override
-  public User authenticate(String username, String password) throws Exception {
+  public UserDTO authenticate(String username, String password) throws Exception {
     if (InputValidator.isNullOrEmpty(username) || InputValidator.isNullOrEmpty(password))
       throw new Exception("Authentication failed due to incomplete data.");
     password = ServerUtil.getMD5().crypt(password);
@@ -62,11 +63,11 @@ public class UserServiceImpl extends RemoteServiceServlet implements UserService
 
     if (userList == null || userList.isEmpty() || userList.size() > 1)
       return null;
-    return (User) userList.get(0);
+    return new UserDTO((User) userList.get(0));
   }
 
   @Override
-  public List<User> getAllUsers() throws Exception {
+  public List<UserDTO> getAllUsers() throws Exception {
     Connection connection = null;
     try {
       connection = JDBCUtil.getInstance().getConnection();
@@ -98,7 +99,7 @@ public class UserServiceImpl extends RemoteServiceServlet implements UserService
   }
 
   @Override
-  public void editUser(User user) throws Exception {
+  public void editUser(UserDTO user) throws Exception {
     Connection connection = null;
     try {
       connection = JDBCUtil.getInstance().getConnection();
@@ -114,7 +115,7 @@ public class UserServiceImpl extends RemoteServiceServlet implements UserService
   }
 
   @Override
-  public void deleteUsers(List<User> users) throws Exception {
+  public void deleteUsers(List<UserDTO> users) throws Exception {
     Connection connection = null;
     try {
       connection = JDBCUtil.getInstance().getConnection();

@@ -2,14 +2,14 @@ package com.google.lecture_manager.client.events;
 
 import com.google.gwt.event.shared.GwtEvent;
 import com.google.lecture_manager.client.handlers.EditUserEventHandler;
-import com.google.lecture_manager.shared.model.User;
+import com.google.lecture_manager.shared.model.UserDTO;
 
 public class EditUserEvent extends GwtEvent<EditUserEventHandler> {
 
   public static Type<EditUserEventHandler> TYPE = new Type<>();
-  private final User selectedItem;
+  private final UserDTO selectedItem;
 
-  public EditUserEvent(User selectedItem) {
+  public EditUserEvent(UserDTO selectedItem) {
     this.selectedItem = selectedItem;
   }
 
@@ -23,7 +23,7 @@ public class EditUserEvent extends GwtEvent<EditUserEventHandler> {
     handler.onEditUserEvent(this);
   }
 
-  public User getSelectedItem() {
+  public UserDTO getSelectedItem() {
     return selectedItem;
   }
 }

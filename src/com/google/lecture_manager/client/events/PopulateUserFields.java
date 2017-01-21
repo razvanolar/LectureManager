@@ -2,14 +2,14 @@ package com.google.lecture_manager.client.events;
 
 import com.google.gwt.event.shared.GwtEvent;
 import com.google.lecture_manager.client.handlers.PopulateUserFieldsHandler;
-import com.google.lecture_manager.shared.model.User;
+import com.google.lecture_manager.shared.model.UserDTO;
 
 public class PopulateUserFields extends GwtEvent<PopulateUserFieldsHandler> {
 
   public static Type<PopulateUserFieldsHandler> TYPE = new Type<>();
-  private User user;
+  private UserDTO user;
 
-  public PopulateUserFields(User user) {
+  public PopulateUserFields(UserDTO user) {
     this.user = user;
   }
 
@@ -23,7 +23,7 @@ public class PopulateUserFields extends GwtEvent<PopulateUserFieldsHandler> {
     handler.initEditMode(this);
   }
 
-  public User getUser() {
+  public UserDTO getUser() {
     return user;
   }
 }

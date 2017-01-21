@@ -2,10 +2,12 @@ package com.google.lecture_manager.shared.model;
 
 import com.google.gwt.user.client.rpc.IsSerializable;
 
+import java.io.Serializable;
+
 /**
- * Created by Cristi on 1/4/2017.
+ * Created by Cristi on 1/4/2017
  */
-public class Lecture implements IsSerializable {
+public class Lecture implements Serializable {
   private long id;
   private Teacher teacher;
   private String lectureName;

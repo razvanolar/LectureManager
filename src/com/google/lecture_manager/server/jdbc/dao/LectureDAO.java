@@ -4,7 +4,6 @@ import com.google.lecture_manager.server.jdbc.JDBCUtil;
 import com.google.lecture_manager.shared.UserTypes;
 import com.google.lecture_manager.shared.model.Lecture;
 import com.google.lecture_manager.shared.model.Teacher;
-import com.google.lecture_manager.shared.model.User;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

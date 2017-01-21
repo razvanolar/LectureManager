@@ -11,7 +11,7 @@ import com.google.lecture_manager.client.utils.Controller;
 import com.google.lecture_manager.client.utils.ElementTypes;
 import com.google.lecture_manager.client.utils.View;
 import com.google.lecture_manager.client.utils.factories.AbstractFactory;
-import com.google.lecture_manager.shared.model.User;
+import com.google.lecture_manager.shared.model.UserDTO;
 import com.sencha.gxt.widget.core.client.Window;
 import com.sencha.gxt.widget.core.client.box.AlertMessageBox;
 import com.sencha.gxt.widget.core.client.button.TextButton;
@@ -24,7 +24,7 @@ import java.util.List;
 public class ManageUsersController extends Controller<ManageUsersController.IManageUsersView> {
 
   public interface IManageUsersView extends View {
-    Grid<User> getGrid();
+    Grid<UserDTO> getGrid();
     TextButton getEditButton();
     TextButton getDeleteButton();
     void mask(String message);
@@ -80,9 +80,9 @@ public class ManageUsersController extends Controller<ManageUsersController.IMan
         });
       }
     });
-    view.getGrid().getSelectionModel().addSelectionChangedHandler(new SelectionChangedEvent.SelectionChangedHandler<User>() {
+    view.getGrid().getSelectionModel().addSelectionChangedHandler(new SelectionChangedEvent.SelectionChangedHandler<UserDTO>() {
       @Override
-      public void onSelectionChanged(SelectionChangedEvent<User> event) {
+      public void onSelectionChanged(SelectionChangedEvent<UserDTO> event) {
         view.getDeleteButton().setEnabled(!(event.getSelection() == null || event.getSelection().size() == 0));
         view.getEditButton().setEnabled(event.getSelection() != null && event.getSelection().size() == 1);
       }
@@ -92,7 +92,7 @@ public class ManageUsersController extends Controller<ManageUsersController.IMan
 
   private void loadUsers() {
     view.mask("Loading users...");
-    AppUtils.SERVICE_FACTORY.getUserService().getAllUsers(new AsyncCallback<List<User>>() {
+    AppUtils.SERVICE_FACTORY.getUserService().getAllUsers(new AsyncCallback<List<UserDTO>>() {
       @Override
       public void onFailure(Throwable caught) {
         view.unmask();
@@ -100,7 +100,7 @@ public class ManageUsersController extends Controller<ManageUsersController.IMan
       }
 
       @Override
-      public void onSuccess(List<User> result) {
+      public void onSuccess(List<UserDTO> result) {
         view.unmask();
         view.getGrid().getStore().clear();
         view.getGrid().getStore().addAll(result);

@@ -11,7 +11,7 @@ public class UserDTO implements Serializable {
 
   public UserDTO() {}
 
-  private long id;
+  private int id;
   private String firstName;
   private String lastName;
   private String userName;
@@ -19,7 +19,7 @@ public class UserDTO implements Serializable {
   private String password;
   private int typeId;
 
-  public UserDTO(long id, String firstName, String lastName, String userName, String email, int typeId) {
+  public UserDTO(int id, String firstName, String lastName, String userName, String email, int typeId) {
     this.id = id;
     this.firstName = firstName;
     this.lastName = lastName;
@@ -46,7 +46,7 @@ public class UserDTO implements Serializable {
     this.typeId = user.getTypeId();
   }
 
-  public long getId() {
+  public int getId() {
     return id;
   }
 
@@ -102,7 +102,7 @@ public class UserDTO implements Serializable {
     this.password = password;
   }
 
-  public void setId(long id) {
+  public void setId(int id) {
     this.id = id;
   }
 }

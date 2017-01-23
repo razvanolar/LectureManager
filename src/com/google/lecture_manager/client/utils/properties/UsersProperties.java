@@ -7,13 +7,13 @@ import com.sencha.gxt.data.shared.ModelKeyProvider;
 import com.sencha.gxt.data.shared.PropertyAccess;
 
 /**
- * Created by Cristi on 1/4/2017.
+ * Created by Cristi on 1/4/2017
  */
 public interface UsersProperties extends PropertyAccess<UserDTO> {
   @Editor.Path("id")
   ModelKeyProvider<UserDTO> key();
 
-  ValueProvider<UserDTO, Long> id();
+  ValueProvider<UserDTO, Integer> id();
   ValueProvider<UserDTO, String> firstName();
   ValueProvider<UserDTO, String> lastName();
   ValueProvider<UserDTO, String> userName();

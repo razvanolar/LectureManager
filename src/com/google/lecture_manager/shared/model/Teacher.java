@@ -5,7 +5,7 @@ package com.google.lecture_manager.shared.model;
  */
 public class Teacher {
 
-  private long id;
+  private int id;
   private String firstName;
   private String lastName;
   private String userName;
@@ -15,7 +15,7 @@ public class Teacher {
 
   public Teacher() {}
 
-  public long getId() {
+  public int getId() {
     return id;
   }
 
@@ -67,7 +67,7 @@ public class Teacher {
     this.password = password;
   }
 
-  public void setId(long id) {
+  public void setId(int id) {
     this.id = id;
   }
 

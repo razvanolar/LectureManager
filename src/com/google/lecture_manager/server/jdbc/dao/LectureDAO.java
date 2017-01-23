@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Cristi on 1/6/2017.
+ * Created by Cristi on 1/6/2017
  */
 public class LectureDAO {
   private Connection connection;
@@ -47,7 +47,7 @@ public class LectureDAO {
 
   private LectureDTO computeResultSet(ResultSet rs) throws SQLException {
     return new LectureDTO(rs.getLong(1),
-            new TeacherDTO(rs.getLong(5),
+            new TeacherDTO(rs.getInt(5),
                     rs.getString(6),
                     rs.getString(7),
                     rs.getString(9),

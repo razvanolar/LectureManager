@@ -10,7 +10,7 @@ public class TeacherDTO extends UserDTO {
   public TeacherDTO() {
   }
 
-  public TeacherDTO(long id, String firstName, String lastName, String username, String email) {
+  public TeacherDTO(int id, String firstName, String lastName, String username, String email) {
     super(id, firstName, lastName, username, email, UserTypes.TEACHER.getId());
   }
 

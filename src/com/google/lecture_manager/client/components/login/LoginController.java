@@ -48,7 +48,7 @@ public class LoginController extends Controller<LoginController.ILoginView> {
                       Info.display("Error", "Unable to authenticate.");
                       return;
                     }
-                    Info.display("Info", "Successfully authenticated.");
+//                    Info.display("Info", "Successfully authenticated.");
                     AppUtils.EVENT_BUS.fireEvent(new LoginEvent(user));
                   }
                 });

@@ -7,13 +7,13 @@ import com.sencha.gxt.data.shared.ModelKeyProvider;
 import com.sencha.gxt.data.shared.PropertyAccess;
 
 /**
- * Created by Cristi on 1/6/2017.
+ * Created by Cristi on 1/6/2017
  */
 public interface LectureProperties extends PropertyAccess<LectureDTO> {
   @Editor.Path("id")
   ModelKeyProvider<LectureDTO> key();
 
-  ValueProvider<LectureDTO, Long> id();
+  ValueProvider<LectureDTO, Integer> id();
   ValueProvider<LectureDTO, String> lectureName();
   ValueProvider<LectureDTO, String> enrolmentKey();
 }

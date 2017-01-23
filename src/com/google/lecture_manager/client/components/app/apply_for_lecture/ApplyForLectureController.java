@@ -10,9 +10,12 @@ import com.google.lecture_manager.client.utils.services.LectureServiceAsync;
 import com.google.lecture_manager.shared.InputValidator;
 import com.google.lecture_manager.shared.model.LectureDTO;
 import com.sencha.gxt.data.shared.ListStore;
+import com.sencha.gxt.widget.core.client.box.AlertMessageBox;
 import com.sencha.gxt.widget.core.client.button.TextButton;
+import com.sencha.gxt.widget.core.client.event.SelectEvent;
 import com.sencha.gxt.widget.core.client.form.TextField;
 import com.sencha.gxt.widget.core.client.grid.Grid;
+import com.sencha.gxt.widget.core.client.info.Info;
 import com.sencha.gxt.widget.core.client.selection.SelectionChangedEvent;
 
 import java.util.List;
@@ -27,14 +30,11 @@ public class ApplyForLectureController extends Controller<ApplyForLectureControl
     void unmask();
   }
 
-  private static ApplyForLectureController INSTANCE = null;
-
   private IApplyForLectureView view;
 
   @Override
   public void bind(final IApplyForLectureView view) {
     this.view = view;
-    loadLectures();
 
     view.getEnrolmentKeyTextField().setEnabled(false);
     view.getApplyButton().setEnabled(false);
@@ -52,6 +52,35 @@ public class ApplyForLectureController extends Controller<ApplyForLectureControl
       }
     });
 
+    view.getApplyButton().addSelectHandler(new SelectEvent.SelectHandler() {
+      public void onSelect(SelectEvent event) {
+        if (isValidConfiguration()) {
+          LectureDTO lecture = getSelectedLecture();
+          String key = view.getEnrolmentKeyTextField().getText();
+          if (!key.equals(lecture.getEnrolmentKey())) {
+            Info.display("Error", "Incorrect enrolment key!");
+            return;
+          }
+          LectureServiceAsync lectureService = AppUtils.SERVICE_FACTORY.getLectureService();
+          view.mask("Enrolling user...");
+          lectureService.addUserForLecture(AppUtils.getInstance().getAuthenticatedUser().getId(), lecture.getId(),
+                  new AsyncCallback<Void>() {
+                    public void onFailure(Throwable throwable) {
+                      view.unmask();
+                      new AlertMessageBox("Error", "Error while enrolling to lecture. " + throwable.getMessage()).show();
+                    }
+
+                    public void onSuccess(Void aVoid) {
+                      view.unmask();
+                      loadLectures();
+                    }
+                  });
+        }
+      }
+    });
+
+    loadLectures();
+
     setIsBound(true);
   }
 
@@ -60,14 +89,15 @@ public class ApplyForLectureController extends Controller<ApplyForLectureControl
     view.mask("Loading Lectures...");
     lectureService.getUnattendedLectures(AppUtils.getInstance().getAuthenticatedUser().getId(), new AsyncCallback<List<LectureDTO>>() {
       public void onFailure(Throwable throwable) {
+        new AlertMessageBox("Error", "Unable to retrieve lectures.").show();
         view.unmask();
       }
 
       public void onSuccess(List<LectureDTO> result) {
         view.unmask();
+        ListStore<LectureDTO> store = view.getLecturesGrid().getStore();
+        store.clear();
         if (result != null) {
-          ListStore<LectureDTO> store = view.getLecturesGrid().getStore();
-          store.clear();
           store.addAll(result);
         }
       }
@@ -83,6 +113,10 @@ public class ApplyForLectureController extends Controller<ApplyForLectureControl
     return getSelectedLecture() != null;
   }
 
+  private boolean isValidConfiguration() {
+    return isValidApply() && isValidSelection();
+  }
+
   private LectureDTO getSelectedLecture() {
     return view.getLecturesGrid().getSelectionModel().getSelectedItem();
   }
@@ -93,8 +127,6 @@ public class ApplyForLectureController extends Controller<ApplyForLectureControl
   }
 
   public static Controller getInstance() {
-    if (INSTANCE == null)
-      INSTANCE = new ApplyForLectureController();
-    return INSTANCE;
+    return new ApplyForLectureController();
   }
 }

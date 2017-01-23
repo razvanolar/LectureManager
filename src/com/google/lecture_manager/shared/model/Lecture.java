@@ -7,12 +7,12 @@ public class Lecture {
 
   public Lecture() {}
 
-  private long id;
+  private int id;
   private Teacher teacher;
   private String lectureName;
   private String enrolmentKey;
 
-  public long getId() {
+  public int getId() {
     return id;
   }
 
@@ -28,7 +28,7 @@ public class Lecture {
     return enrolmentKey;
   }
 
-  public void setId(long id) {
+  public void setId(int id) {
     this.id = id;
   }
 

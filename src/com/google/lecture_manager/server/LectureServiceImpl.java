@@ -11,8 +11,7 @@ import com.google.lecture_manager.shared.model.Lecture;
 import com.google.lecture_manager.shared.model.LectureDTO;
 import com.google.lecture_manager.shared.model.tree.Node;
 import com.google.lecture_manager.shared.model.tree.Tree;
-import org.hibernate.SQLQuery;
-import org.hibernate.Session;
+import org.hibernate.*;
 
 import java.sql.Connection;
 import java.util.ArrayList;
@@ -73,12 +72,16 @@ public class LectureServiceImpl extends RemoteServiceServlet implements LectureS
   @Override
   public List<LectureDTO> getUnattendedLectures(int userId) throws Exception {
     Session session = ServerUtil.SESSION_FACTORY.openSession();
+    session.setFlushMode(FlushMode.MANUAL);
     List<LectureDTO> lectures = null;
     try {
+      Transaction transaction = session.beginTransaction();
       SQLQuery query = session.createSQLQuery("SELECT lc.* FROM lectures lc LEFT JOIN user_lecture_maps ulm ON lc.id = ulm.lecture_id LEFT JOIN users us ON ulm.user_id = us.id WHERE us.id <> :id_user OR us.id IS NULL");
       query.setParameter("id_user", userId);
+      query.setCacheable(false);
       query.addEntity(Lecture.class);
       List list = query.list();
+      transaction.commit();
       if (list != null) {
         lectures = new ArrayList<>(list.size());
         for (Object obj : list) {
@@ -138,6 +141,22 @@ public class LectureServiceImpl extends RemoteServiceServlet implements LectureS
       dao.addLecture(temp);
     } catch (Exception e) {
       System.out.println(e.getMessage());
+      throw new Exception(e.getMessage());
+    } finally {
+      if (connection != null)
+        JDBCUtil.getInstance().closeConnection(connection);
+    }
+  }
+
+  @Override
+  public void addUserForLecture(int userId, int lectureId) throws Exception {
+    Connection connection = null;
+    try {
+      connection = JDBCUtil.getInstance().getConnection();
+      LectureDAO dao = new LectureDAO(connection);
+      dao.addUserForLecture(userId, lectureId);
+    } catch (Exception e) {
+      e.printStackTrace();
       throw new Exception(e.getMessage());
     } finally {
       if (connection != null)

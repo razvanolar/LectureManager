@@ -22,6 +22,14 @@
             root
         </property>
 
+        <property name="hibernate.cache.use_second_level_cache">false</property>
+        <property name="hibernate.cache.use_query_cache">false</property>
+
+        <!-- Disable the second-level cache  -->
+        <property name="cache.provider_class">org.hibernate.cache.NoCacheProvider</property>
+
+        <property name="show_sql">true</property>
+
         <!-- List of XML mapping files -->
         <mapping resource="users.hbm.xml"/>
         <mapping resource="teachers.hbm.xml"/>

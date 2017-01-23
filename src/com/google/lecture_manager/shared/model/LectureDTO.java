@@ -6,7 +6,7 @@ import java.io.Serializable;
  * Created by Cristi on 1/4/2017
  */
 public class LectureDTO implements Serializable {
-  private long id;
+  private int id;
   private TeacherDTO teacher;
   private String lectureName;
   private String enrolmentKey;
@@ -19,7 +19,7 @@ public class LectureDTO implements Serializable {
     this.enrolmentKey = enrolmentKey;
   }
 
-  public LectureDTO(long id, TeacherDTO teacher, String lectureName, String enrolmentKey) {
+  public LectureDTO(int id, TeacherDTO teacher, String lectureName, String enrolmentKey) {
     this(teacher, lectureName, enrolmentKey);
     this.id = id;
   }
@@ -57,11 +57,11 @@ public class LectureDTO implements Serializable {
     this.enrolmentKey = enrolmentKey;
   }
 
-  public long getId() {
+  public int getId() {
     return id;
   }
 
-  public void setId(long id) {
+  public void setId(int id) {
     this.id = id;
   }
 

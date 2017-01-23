@@ -14,4 +14,6 @@ public interface LectureServiceAsync {
   void deleteLecture(List<LectureDTO> lectures, AsyncCallback<Void> asyncCallback);
   void editLecture(LectureDTO lecture, AsyncCallback<Void> async);
   void addLecture(LectureDTO temp, AsyncCallback<Void> asyncCallback);
+
+  void addUserForLecture(int userId, int lectureId, AsyncCallback<Void> async);
 }

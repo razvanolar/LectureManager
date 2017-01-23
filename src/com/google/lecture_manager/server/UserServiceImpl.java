@@ -11,6 +11,8 @@ import com.google.lecture_manager.shared.model.User;
 import com.google.lecture_manager.shared.model.UserDTO;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
+import org.hibernate.StatelessSession;
+import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
 
 import java.sql.Connection;
@@ -50,14 +52,17 @@ public class UserServiceImpl extends RemoteServiceServlet implements UserService
     Session session = ServerUtil.SESSION_FACTORY.openSession();
     List userList = null;
     try {
+      Transaction transaction = session.beginTransaction();
       Criteria criteria = session.createCriteria(User.class);
       criteria.add(Restrictions.eq("userName", username));
       criteria.add(Restrictions.eq("password", password));
       userList = criteria.list();
+      transaction.commit();
     } catch (Exception e) {
       e.printStackTrace();
       throw e;
     } finally {
+      session.clear();
       session.close();
     }
 

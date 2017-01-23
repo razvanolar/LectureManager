@@ -4,6 +4,7 @@ import com.google.gwt.user.client.ui.Widget;
 import com.google.lecture_manager.client.utils.Controller;
 import com.google.lecture_manager.client.utils.ElementTypes;
 import com.google.lecture_manager.client.utils.View;
+import com.sencha.gxt.widget.core.client.info.Info;
 
 /**
  * Created by razvanolar on 27.10.2016
@@ -29,6 +30,8 @@ public class AbstractFactory {
     if (!controller.isBound() || controller.getView() == null) {
       View view = VIEW_FACTORY.getView(type);
       controller.bind(view);
+      if (type == ElementTypes.SHOW_APPLY_FOR_LECTURE)
+        Info.display("Factory", "get app controller");
     }
     controller.setDefaults();
   }

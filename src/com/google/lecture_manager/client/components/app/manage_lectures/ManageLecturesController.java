@@ -69,7 +69,6 @@ public class ManageLecturesController extends Controller<ManageLecturesControlle
           @Override
           public void onFailure(Throwable caught) {
             new AlertMessageBox("Info", "Error while deleting Lectures: " + caught.getMessage()).show();
-
           }
 
           @Override

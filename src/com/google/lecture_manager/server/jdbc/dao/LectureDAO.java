@@ -46,7 +46,7 @@ public class LectureDAO {
   }
 
   private LectureDTO computeResultSet(ResultSet rs) throws SQLException {
-    return new LectureDTO(rs.getLong(1),
+    return new LectureDTO(rs.getInt(1),
             new TeacherDTO(rs.getInt(5),
                     rs.getString(6),
                     rs.getString(7),
@@ -102,6 +102,19 @@ public class LectureDAO {
       if (statement != null) {
         JDBCUtil.getInstance().closeStatement(statement);
       }
+    }
+  }
+
+  public void addUserForLecture(int userId, int lectureId) throws SQLException {
+    PreparedStatement statement = null;
+    try {
+      statement = connection.prepareStatement("INSERT INTO user_lecture_maps (user_id, lecture_id) VALUES (?, ?)");
+      statement.setInt(1, userId);
+      statement.setInt(2, lectureId);
+      statement.executeUpdate();
+    } finally {
+      if (statement != null)
+        JDBCUtil.getInstance().closeStatement(statement);
     }
   }
 }

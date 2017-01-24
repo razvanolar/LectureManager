@@ -50,17 +50,25 @@ public class LectureServiceImpl extends RemoteServiceServlet implements LectureS
 
   @Override
   public List<LectureDTO> getAllLectures() throws Exception {
-    Connection connection = null;
+    Session session = ServerUtil.SESSION_FACTORY.openSession();
     try {
-      connection = JDBCUtil.getInstance().getConnection();
-      LectureDAO dao = new LectureDAO(connection);
-      return dao.getAllLectures();
+      Transaction transaction = session.beginTransaction();
+      List userList = session.createCriteria(Lecture.class).list();
+      transaction.commit();
+      if (userList == null || userList.isEmpty()) {
+        return new ArrayList<>();
+      }
+      List<LectureDTO> result = new ArrayList<>();
+      for (Object o : userList) {
+        result.add(new LectureDTO((Lecture) o));
+      }
+      return result;
     } catch (Exception e) {
       System.out.println(e.getMessage());
       throw new Exception(e.getMessage());
     } finally {
-      if (connection != null)
-        JDBCUtil.getInstance().closeConnection(connection);
+      session.clear();
+      session.close();
     }
   }
 
@@ -96,49 +104,51 @@ public class LectureServiceImpl extends RemoteServiceServlet implements LectureS
 
   @Override
   public void deleteLecture(List<LectureDTO> lectures) throws Exception {
-    Connection connection = null;
+    Session session = ServerUtil.SESSION_FACTORY.openSession();
     try {
-      connection = JDBCUtil.getInstance().getConnection();
-      LectureDAO dao = new LectureDAO(connection);
-      dao.deleteLectures(lectures);
+      Transaction transaction = session.beginTransaction();
+      for (LectureDTO temp : lectures) {
+        Lecture lecture = new Lecture(temp);
+        session.delete(lecture);
+      }
+      transaction.commit();
     } catch (Exception e) {
-      System.out.println(e.getMessage());
-      throw new Exception(e.getMessage());
+      e.printStackTrace();
+      throw e;
     } finally {
-      if (connection != null)
-        JDBCUtil.getInstance().closeConnection(connection);
+      session.close();
     }
   }
 
   @Override
-  public void editLecture(LectureDTO lecture) throws Exception {
-    Connection connection = null;
+  public void editLecture(LectureDTO temp) throws Exception {
+    Session session = ServerUtil.SESSION_FACTORY.openSession();
     try {
-      connection = JDBCUtil.getInstance().getConnection();
-      LectureDAO dao = new LectureDAO(connection);
-      dao.editLecture(lecture);
+      Transaction transaction = session.beginTransaction();
+      Lecture lecture = new Lecture(temp);
+      session.update(lecture);
+      transaction.commit();
     } catch (Exception e) {
-      System.out.println(e.getMessage());
-      throw new Exception(e.getMessage());
+      e.printStackTrace();
+      throw e;
     } finally {
-      if (connection != null)
-        JDBCUtil.getInstance().closeConnection(connection);
+      session.close();
     }
   }
 
   @Override
   public void addLecture(LectureDTO temp) throws Exception {
-    Connection connection = null;
+    Session session = ServerUtil.SESSION_FACTORY.openSession();
     try {
-      connection = JDBCUtil.getInstance().getConnection();
-      LectureDAO dao = new LectureDAO(connection);
-      dao.addLecture(temp);
+      Transaction transaction = session.beginTransaction();
+      Lecture lecture = new Lecture(temp);
+      session.save(lecture);
+      transaction.commit();
     } catch (Exception e) {
-      System.out.println(e.getMessage());
-      throw new Exception(e.getMessage());
+      e.printStackTrace();
+      throw e;
     } finally {
-      if (connection != null)
-        JDBCUtil.getInstance().closeConnection(connection);
+      session.close();
     }
   }
 

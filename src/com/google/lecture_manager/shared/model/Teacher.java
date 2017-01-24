@@ -15,6 +15,16 @@ public class Teacher {
 
   public Teacher() {}
 
+  public Teacher(TeacherDTO teacher) {
+    this.id = teacher.getId();
+    this.firstName = teacher.getFirstName();
+    this.lastName = teacher.getLastName();
+    this.userName = teacher.getUserName();
+    this.email = teacher.getUserName();
+    this.password = teacher.getPassword();
+    this.typeId = teacher.getTypeId();
+  }
+
   public int getId() {
     return id;
   }

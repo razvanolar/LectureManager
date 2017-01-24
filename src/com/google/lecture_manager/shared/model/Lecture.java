@@ -12,6 +12,13 @@ public class Lecture {
   private String lectureName;
   private String enrolmentKey;
 
+  public Lecture(LectureDTO temp) {
+    this.id = temp.getId();
+    this.teacher = new Teacher(temp.getTeacher());
+    this.lectureName = temp.getLectureName();
+    this.enrolmentKey = temp.getEnrolmentKey();
+  }
+
   public int getId() {
     return id;
   }

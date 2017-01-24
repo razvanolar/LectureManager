@@ -79,5 +79,17 @@ public class LectureManager implements EntryPoint {
         mainContainer.forceLayout();
       }
     });
+
+    AppUtils.EVENT_BUS.addHandler(MaskUIEvent.TYPE, new MaskUIEventHandler() {
+      public void onMaskUIEvent(MaskUIEvent event) {
+        mainContainer.mask(event.getMessage());
+      }
+    });
+
+    AppUtils.EVENT_BUS.addHandler(UnmaskUIEvent.TYPE, new UnmaskUIEventHandler() {
+      public void onUnmaskUIEvent(UnmaskUIEvent event) {
+        mainContainer.unmask();
+      }
+    });
   }
 }

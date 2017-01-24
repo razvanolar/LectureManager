@@ -3,7 +3,9 @@ package com.google.lecture_manager.client.components.app.center.lectures_tree;
 import com.google.gwt.event.logical.shared.SelectionEvent;
 import com.google.gwt.event.logical.shared.SelectionHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.lecture_manager.client.events.MaskUIEvent;
 import com.google.lecture_manager.client.events.SelectFileEvent;
+import com.google.lecture_manager.client.events.UnmaskUIEvent;
 import com.google.lecture_manager.client.utils.AppUtils;
 import com.google.lecture_manager.client.utils.Controller;
 import com.google.lecture_manager.client.utils.View;
@@ -46,13 +48,16 @@ public class LecturesTreeController extends Controller<LecturesTreeController.IL
   }
 
   private void loadLecturesTree() {
+    AppUtils.EVENT_BUS.fireEvent(new MaskUIEvent("Loading Lectures Files..."));
     AppUtils.SERVICE_FACTORY.getLectureService().getLecturesFilesForUser(
             AppUtils.getInstance().getAuthenticatedUser().getId(), new AsyncCallback<Tree<FileData>>() {
       public void onFailure(Throwable throwable) {
+        AppUtils.EVENT_BUS.fireEvent(new UnmaskUIEvent());
         Info.display("Error", throwable.getMessage());
       }
 
       public void onSuccess(Tree<FileData> fileDataTree) {
+        AppUtils.EVENT_BUS.fireEvent(new UnmaskUIEvent());
         loadTreeStore(fileDataTree);
       }
     });

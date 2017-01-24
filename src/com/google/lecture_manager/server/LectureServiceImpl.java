@@ -6,13 +6,13 @@ import com.google.lecture_manager.server.jdbc.JDBCUtil;
 import com.google.lecture_manager.server.jdbc.dao.LectureDAO;
 import com.google.lecture_manager.server.utils.FileUtil;
 import com.google.lecture_manager.server.utils.ServerUtil;
-import com.google.lecture_manager.shared.FileTypes;
 import com.google.lecture_manager.shared.model.FileData;
 import com.google.lecture_manager.shared.model.Lecture;
 import com.google.lecture_manager.shared.model.LectureDTO;
 import com.google.lecture_manager.shared.model.tree.Node;
 import com.google.lecture_manager.shared.model.tree.Tree;
 import org.hibernate.*;
+import org.hibernate.criterion.Restrictions;
 
 import java.sql.Connection;
 import java.util.ArrayList;
@@ -42,6 +42,13 @@ public class LectureServiceImpl extends RemoteServiceServlet implements LectureS
   }
 
   @Override
+  public Node<FileData> getLectureFilesForUser(int lectureId, int userId) throws Exception {
+    if (!checkUserAttendance(lectureId, userId))
+      return null;
+    return FileUtil.getHierarchyForLecture(getLectureById(lectureId));
+  }
+
+  @Override
   public List<LectureDTO> getAllLectures() throws Exception {
     Connection connection = null;
     try {
@@ -65,6 +72,26 @@ public class LectureServiceImpl extends RemoteServiceServlet implements LectureS
   @Override
   public List<LectureDTO> getUnattendedLectures(int userId) throws Exception {
     return getLecturesFromQuery(unatendedLecturesQuery, userId);
+  }
+
+  @Override
+  public LectureDTO getLectureById(int lectureId) throws Exception {
+    Session session = ServerUtil.SESSION_FACTORY.openSession();
+    try {
+      Transaction transaction = session.beginTransaction();
+      Criteria criteria = session.createCriteria(Lecture.class);
+      criteria.add(Restrictions.eq("id", lectureId));
+      List list = criteria.list();
+      transaction.commit();
+      if (list != null && list.size() == 1)
+        return new LectureDTO((Lecture) list.get(0));
+    } catch (Exception e) {
+      e.printStackTrace();
+      throw new Exception(e.getMessage());
+    } finally {
+      session.close();
+    }
+    return null;
   }
 
   @Override
@@ -129,6 +156,21 @@ public class LectureServiceImpl extends RemoteServiceServlet implements LectureS
       if (connection != null)
         JDBCUtil.getInstance().closeConnection(connection);
     }
+  }
+
+  private boolean checkUserAttendance(int lectureId, int userId) {
+    Connection connection = null;
+    try {
+      connection = JDBCUtil.getInstance().getConnection();
+      LectureDAO dao = new LectureDAO(connection);
+      return dao.checkUserAttendance(lectureId, userId);
+    } catch (Exception e) {
+      e.printStackTrace();
+    } finally {
+      if (connection != null)
+        JDBCUtil.getInstance().closeConnection(connection);
+    }
+    return false;
   }
 
   private List<LectureDTO> getLecturesFromQuery(String queryString, int userId) throws Exception {

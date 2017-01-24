@@ -3,6 +3,7 @@ package com.google.lecture_manager.client.utils.services;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.lecture_manager.shared.model.FileData;
 import com.google.lecture_manager.shared.model.LectureDTO;
+import com.google.lecture_manager.shared.model.tree.Node;
 import com.google.lecture_manager.shared.model.tree.Tree;
 
 import java.util.List;
@@ -18,4 +19,8 @@ public interface LectureServiceAsync {
   void addUserForLecture(int userId, int lectureId, AsyncCallback<Void> async);
 
   void getAttendedLectures(int userId, AsyncCallback<List<LectureDTO>> async);
+
+  void getLectureFilesForUser(int lectureId, int userId, AsyncCallback<Node<FileData>> async);
+
+  void getLectureById(int lectureId, AsyncCallback<LectureDTO> async);
 }

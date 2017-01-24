@@ -117,4 +117,21 @@ public class LectureDAO {
         JDBCUtil.getInstance().closeStatement(statement);
     }
   }
+
+  public boolean checkUserAttendance(int lectureId, int userId) throws SQLException {
+    PreparedStatement statement = null;
+    ResultSet resultSet = null;
+    try {
+      statement = connection.prepareStatement("SELECT * FROM lectures lc INNER JOIN user_lecture_maps ulm ON lc.id = ulm.lecture_id WHERE ulm.lecture_id = ? AND ulm.user_id = ?");
+      statement.setInt(1, lectureId);
+      statement.setInt(2, userId);
+      resultSet = statement.executeQuery();
+      return resultSet.next();
+    } finally {
+      if (statement != null)
+        JDBCUtil.getInstance().closeStatement(statement);
+      if (resultSet != null)
+        JDBCUtil.getInstance().closeResultSet(resultSet);
+    }
+  }
 }

@@ -3,6 +3,7 @@ package com.google.lecture_manager.client.components.app.apply_for_lecture;
 import com.google.gwt.event.dom.client.KeyUpEvent;
 import com.google.gwt.event.dom.client.KeyUpHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.lecture_manager.client.events.AttendLectureEvent;
 import com.google.lecture_manager.client.utils.AppUtils;
 import com.google.lecture_manager.client.utils.Controller;
 import com.google.lecture_manager.client.utils.View;
@@ -55,7 +56,7 @@ public class ApplyForLectureController extends Controller<ApplyForLectureControl
     view.getApplyButton().addSelectHandler(new SelectEvent.SelectHandler() {
       public void onSelect(SelectEvent event) {
         if (isValidConfiguration()) {
-          LectureDTO lecture = getSelectedLecture();
+          final LectureDTO lecture = getSelectedLecture();
           String key = view.getEnrolmentKeyTextField().getText();
           if (!key.equals(lecture.getEnrolmentKey())) {
             Info.display("Error", "Incorrect enrolment key!");
@@ -72,6 +73,7 @@ public class ApplyForLectureController extends Controller<ApplyForLectureControl
 
                     public void onSuccess(Void aVoid) {
                       view.unmask();
+                      AppUtils.EVENT_BUS.fireEvent(new AttendLectureEvent(lecture));
                       loadLectures();
                     }
                   });

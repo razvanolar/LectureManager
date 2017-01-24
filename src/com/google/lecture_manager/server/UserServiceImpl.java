@@ -2,10 +2,9 @@ package com.google.lecture_manager.server;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import com.google.lecture_manager.client.utils.services.UserService;
-import com.google.lecture_manager.server.jdbc.JDBCUtil;
-import com.google.lecture_manager.server.jdbc.dao.UserDAO;
 import com.google.lecture_manager.server.utils.ServerUtil;
 import com.google.lecture_manager.shared.InputValidator;
+import com.google.lecture_manager.shared.UserTypes;
 import com.google.lecture_manager.shared.model.TeacherDTO;
 import com.google.lecture_manager.shared.model.User;
 import com.google.lecture_manager.shared.model.UserDTO;
@@ -14,7 +13,7 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
 
-import java.sql.Connection;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -23,23 +22,23 @@ import java.util.List;
 public class UserServiceImpl extends RemoteServiceServlet implements UserService {
 
   @Override
-  public void addNewUser(UserDTO user) throws Exception {
-    if (user == null || user.getPassword() == null || user.getPassword().isEmpty())
+  public void addNewUser(UserDTO userDTO) throws Exception {
+    if (userDTO == null || userDTO.getPassword() == null || userDTO.getPassword().isEmpty())
       throw new Exception("Can not add user NULL instance into db.");
-    user.setPassword(ServerUtil.getMD5().crypt(user.getPassword()));
-
-    Connection connection = null;
+    userDTO.setPassword(ServerUtil.getMD5().crypt(userDTO.getPassword()));
+    Session session = ServerUtil.SESSION_FACTORY.openSession();
     try {
-      connection = JDBCUtil.getInstance().getConnection();
-      UserDAO dao = new UserDAO(connection);
-      dao.addUser(user);
+      Transaction transaction = session.beginTransaction();
+      User user = new User(userDTO);
+      session.save(user);
+      transaction.commit();
     } catch (Exception e) {
-      System.out.println(e.getMessage());
-      throw new Exception(e.getMessage());
+      e.printStackTrace();
+      throw e;
     } finally {
-      if (connection != null)
-        JDBCUtil.getInstance().closeConnection(connection);
+      session.close();
     }
+
   }
 
   @Override
@@ -72,65 +71,85 @@ public class UserServiceImpl extends RemoteServiceServlet implements UserService
 
   @Override
   public List<UserDTO> getAllUsers() throws Exception {
-    Connection connection = null;
+    Session session = ServerUtil.SESSION_FACTORY.openSession();
     try {
-      connection = JDBCUtil.getInstance().getConnection();
-      UserDAO dao = new UserDAO(connection);
-      return dao.getAllUsers();
+      Transaction transaction = session.beginTransaction();
+      List userList = session.createCriteria(User.class).list();
+      transaction.commit();
+      if (userList == null || userList.isEmpty()) {
+        return new ArrayList<>();
+      }
+      List<UserDTO> result = new ArrayList<>();
+      for (Object o : userList) {
+        result.add(new UserDTO((User) o));
+      }
+      return result;
     } catch (Exception e) {
       System.out.println(e.getMessage());
       throw new Exception(e.getMessage());
     } finally {
-      if (connection != null)
-        JDBCUtil.getInstance().closeConnection(connection);
+      session.clear();
+      session.close();
     }
   }
 
   @Override
   public List<TeacherDTO> getAllTeachers() throws Exception {
-    Connection connection = null;
+    Session session = ServerUtil.SESSION_FACTORY.openSession();
     try {
-      connection = JDBCUtil.getInstance().getConnection();
-      UserDAO dao = new UserDAO(connection);
-      return dao.getAllTeachers();
+      Transaction transaction = session.beginTransaction();
+      Criteria criteria = session.createCriteria(User.class);
+      criteria.add(Restrictions.eq("typeId", UserTypes.TEACHER.getId()));
+      List userList = criteria.list();
+      transaction.commit();
+      if (userList == null || userList.isEmpty()) {
+        return new ArrayList<>();
+      }
+      List<TeacherDTO> result = new ArrayList<>();
+      for (Object o : userList) {
+        result.add(new TeacherDTO((User) o));
+      }
+      return result;
     } catch (Exception e) {
       System.out.println(e.getMessage());
       throw new Exception(e.getMessage());
     } finally {
-      if (connection != null)
-        JDBCUtil.getInstance().closeConnection(connection);
+      session.clear();
+      session.close();
     }
   }
 
   @Override
-  public void editUser(UserDTO user) throws Exception {
-    Connection connection = null;
+  public void editUser(UserDTO userDTO) throws Exception {
+    Session session = ServerUtil.SESSION_FACTORY.openSession();
     try {
-      connection = JDBCUtil.getInstance().getConnection();
-      UserDAO dao = new UserDAO(connection);
-      dao.editUser(user);
+      Transaction transaction = session.beginTransaction();
+      User user = new User(userDTO);
+      session.update(user);
+      transaction.commit();
     } catch (Exception e) {
-      System.out.println(e.getMessage());
-      throw new Exception(e.getMessage());
+      e.printStackTrace();
+      throw e;
     } finally {
-      if (connection != null)
-        JDBCUtil.getInstance().closeConnection(connection);
+      session.close();
     }
   }
 
   @Override
   public void deleteUsers(List<UserDTO> users) throws Exception {
-    Connection connection = null;
+    Session session = ServerUtil.SESSION_FACTORY.openSession();
     try {
-      connection = JDBCUtil.getInstance().getConnection();
-      UserDAO dao = new UserDAO(connection);
-      dao.deleteUsers(users);
+      Transaction transaction = session.beginTransaction();
+      for (UserDTO userDTO : users) {
+        User user = new User(userDTO);
+        session.delete(user);
+      }
+      transaction.commit();
     } catch (Exception e) {
-      System.out.println(e.getMessage());
-      throw new Exception(e.getMessage());
+      e.printStackTrace();
+      throw e;
     } finally {
-      if (connection != null)
-        JDBCUtil.getInstance().closeConnection(connection);
+      session.close();
     }
   }
 }

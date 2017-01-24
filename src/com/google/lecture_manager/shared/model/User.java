@@ -15,6 +15,16 @@ public class User {
 
   public User() {}
 
+  public User(UserDTO userDTO) {
+    this.id = userDTO.getId();
+    this.firstName = userDTO.getFirstName();
+    this.lastName = userDTO.getLastName();
+    this.userName = userDTO.getUserName();
+    this.email = userDTO.getEmail();
+    this.password = userDTO.getPassword();
+    this.typeId = userDTO.getTypeId();
+  }
+
   public int getId() {
     return id;
   }

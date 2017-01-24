@@ -19,6 +19,11 @@ public class TeacherDTO extends UserDTO {
             UserTypes.TEACHER.getId());
   }
 
+  public TeacherDTO(User user) {
+    super(user);
+    setTypeId(UserTypes.TEACHER.getId());
+  }
+
   @Override
   public String toString() {
     return super.getFirstName() + " " + super.getLastName();

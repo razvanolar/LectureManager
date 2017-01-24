@@ -1,8 +1,10 @@
 package com.google.lecture_manager.client.components.app.center;
 
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.lecture_manager.client.utils.View;
 import com.sencha.gxt.widget.core.client.container.BorderLayoutContainer;
+import com.sencha.gxt.widget.core.client.container.CenterLayoutContainer;
 import com.sencha.gxt.widget.core.client.container.HBoxLayoutContainer;
 
 public class CenterView implements CenterController.ICenterView {
@@ -32,6 +34,14 @@ public class CenterView implements CenterController.ICenterView {
     leftLayoutData.setFloatable(true);
     borderLayoutContainer.setWestWidget(lecturesTreeView, leftLayoutData);
     borderLayoutContainer.setCenterWidget(lectureFileContentView);
+    borderLayoutContainer.forceLayout();
+  }
+
+  @Override
+  public void setContent(Label label) {
+    CenterLayoutContainer centerLayoutContainer = new CenterLayoutContainer();
+    centerLayoutContainer.add(label);
+    borderLayoutContainer.setCenterWidget(centerLayoutContainer);
     borderLayoutContainer.forceLayout();
   }
 

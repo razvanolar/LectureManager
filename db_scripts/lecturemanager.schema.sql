@@ -16,6 +16,41 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
+-- Table structure for table `lectures`
+--
+
+DROP TABLE IF EXISTS `lectures`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `lectures` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `teacher_id` int(11) DEFAULT NULL,
+  `name` varchar(100) DEFAULT NULL,
+  `enrolment_key` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `teacher_id` (`teacher_id`),
+  CONSTRAINT `lecture_ibfk_1` FOREIGN KEY (`teacher_id`) REFERENCES `users` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `user_lecture_maps`
+--
+
+DROP TABLE IF EXISTS `user_lecture_maps`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `user_lecture_maps` (
+  `user_id` int(11) NOT NULL,
+  `lecture_id` int(11) NOT NULL,
+  PRIMARY KEY (`user_id`,`lecture_id`),
+  KEY `lecture_id` (`lecture_id`),
+  CONSTRAINT `user_lecture_maps_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
+  CONSTRAINT `user_lecture_maps_ibfk_2` FOREIGN KEY (`lecture_id`) REFERENCES `lectures` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Table structure for table `user_types`
 --
 
@@ -49,18 +84,7 @@ CREATE TABLE `users` (
   UNIQUE KEY `email` (`email`),
   KEY `fk_user_type` (`user_type`),
   CONSTRAINT `fk_user_type` FOREIGN KEY (`user_type`) REFERENCES `user_types` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
-
-DROP TABLE IF EXISTS `lecture`;
-CREATE TABLE `lecture` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `teacher_id` int(11) DEFAULT NULL,
-  `name` varchar(100) DEFAULT NULL,
-  `enrolment_key` varchar(100) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `teacher_id` (`teacher_id`),
-  CONSTRAINT `lecture_ibfk_1` FOREIGN KEY (`teacher_id`) REFERENCES `users` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -72,4 +96,4 @@ CREATE TABLE `lecture` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-10-31 22:55:59
+-- Dump completed on 2017-01-24 13:10:26

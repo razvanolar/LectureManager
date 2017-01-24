@@ -15,6 +15,7 @@ import java.util.List;
 public interface LectureService extends RemoteService {
   Tree<FileData> getLecturesFilesForUser(long userId) throws Exception;
   List<LectureDTO> getAllLectures() throws Exception;
+  List<LectureDTO> getAttendedLectures(int userId) throws Exception;
   List<LectureDTO> getUnattendedLectures(int userId) throws Exception;
   void deleteLecture(List<LectureDTO> lectures) throws Exception;
   void editLecture(LectureDTO lecture) throws Exception;

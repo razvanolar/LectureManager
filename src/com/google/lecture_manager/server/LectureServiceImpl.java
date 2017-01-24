@@ -22,6 +22,9 @@ import java.util.List;
  */
 public class LectureServiceImpl extends RemoteServiceServlet implements LectureService {
 
+  private static final String attendedLecturesQuery = "SELECT lc.* FROM lectures lc INNER JOIN user_lecture_maps ulm ON lc.id = ulm.lecture_id WHERE ulm.user_id = :id_user";
+  private static final String unatendedLecturesQuery = "SELECT lc.* FROM lectures lc LEFT JOIN user_lecture_maps ulm ON lc.id = ulm.lecture_id LEFT JOIN users us ON ulm.user_id = us.id WHERE us.id <> :id_user OR us.id IS NULL";
+
   @Override
   public Tree<FileData> getLecturesFilesForUser(long userId) throws Exception {
     Tree<FileData> tree = new Tree<>();
@@ -70,34 +73,13 @@ public class LectureServiceImpl extends RemoteServiceServlet implements LectureS
   }
 
   @Override
-  public List<LectureDTO> getUnattendedLectures(int userId) throws Exception {
-    Session session = ServerUtil.SESSION_FACTORY.openSession();
-    session.setFlushMode(FlushMode.MANUAL);
-    List<LectureDTO> lectures = null;
-    try {
-      Transaction transaction = session.beginTransaction();
-      SQLQuery query = session.createSQLQuery("SELECT lc.* FROM lectures lc LEFT JOIN user_lecture_maps ulm ON lc.id = ulm.lecture_id LEFT JOIN users us ON ulm.user_id = us.id WHERE us.id <> :id_user OR us.id IS NULL");
-      query.setParameter("id_user", userId);
-      query.setCacheable(false);
-      query.addEntity(Lecture.class);
-      List list = query.list();
-      transaction.commit();
-      if (list != null) {
-        lectures = new ArrayList<>(list.size());
-        for (Object obj : list) {
-          lectures.add(new LectureDTO((Lecture) obj));
-        }
-      }
-    } catch (Exception e) {
-      e.printStackTrace();
-      throw e;
-    } finally {
-      session.close();
-    }
+  public List<LectureDTO> getAttendedLectures(int userId) throws Exception {
+    return getLecturesFromQuery(attendedLecturesQuery, userId);
+  }
 
-    if (lectures == null || lectures.isEmpty())
-      return null;
-    return lectures;
+  @Override
+  public List<LectureDTO> getUnattendedLectures(int userId) throws Exception {
+    return getLecturesFromQuery(unatendedLecturesQuery, userId);
   }
 
   @Override
@@ -162,5 +144,34 @@ public class LectureServiceImpl extends RemoteServiceServlet implements LectureS
       if (connection != null)
         JDBCUtil.getInstance().closeConnection(connection);
     }
+  }
+
+  private List<LectureDTO> getLecturesFromQuery(String queryString, int userId) throws Exception {
+    Session session = ServerUtil.SESSION_FACTORY.openSession();
+    List<LectureDTO> lectures = null;
+    try {
+      Transaction transaction = session.beginTransaction();
+      SQLQuery query = session.createSQLQuery(queryString);
+      query.setParameter("id_user", userId);
+      query.setCacheable(false);
+      query.addEntity(Lecture.class);
+      List list = query.list();
+      transaction.commit();
+      if (list != null) {
+        lectures = new ArrayList<>(list.size());
+        for (Object obj : list) {
+          lectures.add(new LectureDTO((Lecture) obj));
+        }
+      }
+    } catch (Exception e) {
+      e.printStackTrace();
+      throw e;
+    } finally {
+      session.close();
+    }
+
+    if (lectures == null || lectures.isEmpty())
+      return null;
+    return lectures;
   }
 }

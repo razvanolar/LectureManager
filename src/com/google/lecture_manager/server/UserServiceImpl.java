@@ -11,7 +11,6 @@ import com.google.lecture_manager.shared.model.User;
 import com.google.lecture_manager.shared.model.UserDTO;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
-import org.hibernate.StatelessSession;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
 

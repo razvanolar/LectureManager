@@ -8,7 +8,7 @@ import com.google.lecture_manager.shared.model.tree.Tree;
 import java.util.List;
 
 public interface LectureServiceAsync {
-  void getLecturesFilesForUser(long userId, AsyncCallback<Tree<FileData>> async);
+  void getLecturesFilesForUser(int userId, AsyncCallback<Tree<FileData>> async);
   void getAllLectures(AsyncCallback<List<LectureDTO>> async);
   void getUnattendedLectures(int userId, AsyncCallback<List<LectureDTO>> async);
   void deleteLecture(List<LectureDTO> lectures, AsyncCallback<Void> asyncCallback);

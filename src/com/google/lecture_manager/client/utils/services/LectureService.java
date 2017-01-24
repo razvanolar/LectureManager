@@ -13,7 +13,7 @@ import java.util.List;
  */
 @RemoteServiceRelativePath("lectureService")
 public interface LectureService extends RemoteService {
-  Tree<FileData> getLecturesFilesForUser(long userId) throws Exception;
+  Tree<FileData> getLecturesFilesForUser(int userId) throws Exception;
   List<LectureDTO> getAllLectures() throws Exception;
   List<LectureDTO> getAttendedLectures(int userId) throws Exception;
   List<LectureDTO> getUnattendedLectures(int userId) throws Exception;

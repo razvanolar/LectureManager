@@ -9,7 +9,7 @@ import org.hibernate.cfg.Configuration;
  */
 public class ServerUtil {
 
-  public static MD5 MD5;
+  private static MD5 MD5;
   public static SessionFactory SESSION_FACTORY;
 
   public static MD5 getMD5() throws Exception {
@@ -18,6 +18,7 @@ public class ServerUtil {
     return MD5;
   }
 
+  @SuppressWarnings("deprecation")
   public static void initSessionFactory() throws Exception {
     SESSION_FACTORY = new Configuration().configure().buildSessionFactory();
   }

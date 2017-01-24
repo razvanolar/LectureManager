@@ -61,6 +61,8 @@ public class LecturesTreeController extends Controller<LecturesTreeController.IL
   private void loadTreeStore(Tree<FileData> tree) {
     treeStore.clear();
     treeStore.add(defaultTreeRoot);
+    if (tree == null)
+      return;
     List<Node<FileData>> roots = tree.getRoots();
     for (Node<FileData> node : roots) {
       FileData root = node.getValue();

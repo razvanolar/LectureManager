@@ -1,8 +1,11 @@
 package com.google.lecture_manager.client.components.app.manage_lectures;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.logical.shared.SelectionEvent;
 import com.google.gwt.event.logical.shared.SelectionHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.ui.FileUpload;
+import com.google.gwt.user.client.ui.FormPanel;
 import com.google.lecture_manager.client.events.PopulateLectureFileEvent;
 import com.google.lecture_manager.client.handlers.PopulateLectureFileEventHandler;
 import com.google.lecture_manager.client.utils.AppUtils;
@@ -16,6 +19,7 @@ import com.google.lecture_manager.shared.model.tree.Tree;
 import com.sencha.gxt.data.shared.TreeStore;
 import com.sencha.gxt.widget.core.client.box.AlertMessageBox;
 import com.sencha.gxt.widget.core.client.button.TextButton;
+import com.sencha.gxt.widget.core.client.event.SelectEvent;
 import com.sencha.gxt.widget.core.client.info.Info;
 import com.sencha.gxt.widget.core.client.treegrid.TreeGrid;
 
@@ -30,6 +34,8 @@ public class ManageLectureFilesController extends Controller<ManageLectureFilesC
     TreeGrid<FileData> getTreeGrid();
     TextButton getAddButton();
     TextButton getDeleteButton();
+    FormPanel getFileFormPanel();
+    FileUpload getFileUpload();
   }
 
   private static ManageLectureFilesController INSTANCE = null;
@@ -56,9 +62,48 @@ public class ManageLectureFilesController extends Controller<ManageLectureFilesC
       @Override
       public void onSelection(SelectionEvent<FileData> event) {
         view.getAddButton().setEnabled(event.getSelectedItem().getType().equals(FileTypes.FOLDER));
+        if (event.getSelectedItem().getType().equals(FileTypes.FOLDER)) {
+          view.getFileUpload().setEnabled(true);
+        } else {
+          view.getFileUpload().setEnabled(false);
+          view.getFileUpload().getElement().setPropertyString("value", "");
+        }
         view.getDeleteButton().setEnabled(true);
       }
     });
+
+    view.getAddButton().addSelectHandler(new SelectEvent.SelectHandler() {
+      @Override
+      public void onSelect(SelectEvent event) {
+        FileData selectedFile = getSelectedFile();
+        if (selectedFile == null || selectedFile.getType() != FileTypes.FOLDER || selectedLecture == null)
+          return;
+        view.getFileFormPanel().setAction(GWT.getModuleBaseURL() + "lectureUploadService?user=" +
+                selectedLecture.getTeacher().getId() + "&lecture=" + selectedLecture.getId() +
+                "&path=" + getFilePathWithName(selectedFile));
+        view.getFileFormPanel().submit();
+      }
+    });
+  }
+
+  private String getFilePathWithName(FileData fileData) {
+    List<FileData> roots = view.getTreeGrid().getTreeStore().getRootItems();
+    if (roots.contains(fileData))
+      return "";
+
+    String path = fileData.getName();
+    FileData parent = view.getTreeGrid().getTreeStore().getParent(fileData);
+    while (parent != null && !(roots.contains(parent))) {
+      path = parent.getName() + "\\" + path;
+      parent = view.getTreeGrid().getTreeStore().getParent(parent);
+    }
+    return path;
+  }
+
+  private FileData getSelectedFile() {
+    if (view.getTreeGrid() != null && view.getTreeGrid().getSelectionModel() != null)
+      return view.getTreeGrid().getSelectionModel().getSelectedItem();
+    return null;
   }
 
   private void loadLectureFiles() {

@@ -13,7 +13,7 @@ import java.util.*;
  */
 public class FileUtil {
 
-  private static final String LECTURES_PATH = "lecturemanager\\app_files\\lectures\\";
+  public static final String LECTURES_PATH = "lecturemanager\\app_files\\lectures\\";
 
   public static String getPathForLecture(LectureDTO lecture) {
     return getPathForLecture(lecture.getId());

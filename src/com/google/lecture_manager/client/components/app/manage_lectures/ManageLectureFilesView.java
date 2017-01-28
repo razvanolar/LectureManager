@@ -1,6 +1,9 @@
 package com.google.lecture_manager.client.components.app.manage_lectures;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.user.client.ui.FileUpload;
+import com.google.gwt.user.client.ui.FormPanel;
+import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.lecture_manager.client.utils.properties.FileDataProperties;
 import com.google.lecture_manager.shared.model.FileData;
@@ -26,6 +29,8 @@ public class ManageLectureFilesView implements ManageLectureFilesController.IMan
   private ContentPanel contentPanel;
   private TreeGrid<FileData> treeGrid;
   private TextButton addButton, deleteButton;
+  private FormPanel fileFormPanel;
+  private FileUpload fileUpload;
 
   public ManageLectureFilesView() {
     initGUI();
@@ -42,13 +47,24 @@ public class ManageLectureFilesView implements ManageLectureFilesController.IMan
 
     mainContainer = new VerticalLayoutContainer();
 
-    addButton = new TextButton("Add");
-    addButton.setEnabled(false);
     deleteButton = new TextButton("Delete");
     deleteButton.setEnabled(false);
+    addButton = new TextButton("Add");
+    addButton.setEnabled(false);
+    fileFormPanel = new FormPanel();
+    fileUpload = new FileUpload();
+    HorizontalPanel fileUploadContainer = new HorizontalPanel();
+    fileFormPanel.setEncoding(FormPanel.ENCODING_MULTIPART);
+    fileFormPanel.setMethod(FormPanel.METHOD_POST);
+    fileFormPanel.setWidget(fileUploadContainer);
+    fileUpload.setName("fileUpload");
+    fileUploadContainer.add(fileUpload);
+
+
     HorizontalLayoutContainer horizontalLayoutContainer = new HorizontalLayoutContainer();
-    horizontalLayoutContainer.add(addButton, new HorizontalLayoutContainer.HorizontalLayoutData(-1, -1, new Margins(0, 10, 0, 10)));
     horizontalLayoutContainer.add(deleteButton, new HorizontalLayoutContainer.HorizontalLayoutData(-1, -1, new Margins(0, 10, 0, 0)));
+    horizontalLayoutContainer.add(addButton, new HorizontalLayoutContainer.HorizontalLayoutData(-1, -1, new Margins(0, 10, 0, 10)));
+    horizontalLayoutContainer.add(fileFormPanel, new HorizontalLayoutContainer.HorizontalLayoutData(-1, -1, new Margins(0, 10, 0, 10)));
 
     mainContainer.add(horizontalLayoutContainer, new VerticalLayoutContainer.VerticalLayoutData(1, 30));
     mainContainer.add(contentPanel, new VerticalLayoutContainer.VerticalLayoutData(1, 1));
@@ -102,5 +118,13 @@ public class ManageLectureFilesView implements ManageLectureFilesController.IMan
 
   public TextButton getDeleteButton() {
     return deleteButton;
+  }
+
+  public FormPanel getFileFormPanel() {
+    return fileFormPanel;
+  }
+
+  public FileUpload getFileUpload() {
+    return fileUpload;
   }
 }

@@ -23,4 +23,6 @@ public interface LectureServiceAsync {
   void getLectureFilesForUser(int lectureId, int userId, AsyncCallback<Node<FileData>> async);
 
   void getLectureById(int lectureId, AsyncCallback<LectureDTO> async);
+
+  void getLectureFiles(LectureDTO lecture, AsyncCallback<Tree<FileData>> async);
 }

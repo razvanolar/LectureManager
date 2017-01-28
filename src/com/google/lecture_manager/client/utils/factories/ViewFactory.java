@@ -12,6 +12,7 @@ import com.google.lecture_manager.client.components.app.manage_users.ManageUsers
 import com.google.lecture_manager.client.components.app.center.lectures_tree.LecturesTreeView;
 import com.google.lecture_manager.client.components.app.center.lecture_file_content.LectureFileContentView;
 import com.google.lecture_manager.client.components.app.manage_lectures.AddEditLectureView;
+import com.google.lecture_manager.client.components.app.manage_lectures.ManageLectureFilesView;
 //{view}
 import com.google.lecture_manager.client.utils.ElementTypes;
 import com.google.lecture_manager.client.utils.View;
@@ -47,6 +48,8 @@ public class ViewFactory {
         return new AddEditLectureView();
       case SHOW_APPLY_FOR_LECTURE:
         return new ApplyForLectureView();
+      case MANAGE_FILES:
+        return new ManageLectureFilesView();
       //{new_case}
     }
     return null;

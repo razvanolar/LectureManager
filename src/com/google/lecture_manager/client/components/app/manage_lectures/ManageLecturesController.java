@@ -2,10 +2,7 @@ package com.google.lecture_manager.client.components.app.manage_lectures;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.lecture_manager.client.events.*;
-import com.google.lecture_manager.client.handlers.AddLectureEventHandler;
-import com.google.lecture_manager.client.handlers.DeleteLectureEventHandler;
-import com.google.lecture_manager.client.handlers.EditLectureEventHandler;
-import com.google.lecture_manager.client.handlers.LoadLecturesEventHandler;
+import com.google.lecture_manager.client.handlers.*;
 import com.google.lecture_manager.client.utils.AppUtils;
 import com.google.lecture_manager.client.utils.Controller;
 import com.google.lecture_manager.client.utils.ElementTypes;
@@ -27,6 +24,7 @@ public class ManageLecturesController extends Controller<ManageLecturesControlle
     Grid<LectureDTO> getGrid();
     TextButton getEditButton();
     TextButton getDeleteButton();
+    TextButton getFileButton();
     void mask(String message);
     void unmask();
   }
@@ -50,8 +48,17 @@ public class ManageLecturesController extends Controller<ManageLecturesControlle
     AppUtils.EVENT_BUS.addHandler(EditLectureEvent.TYPE, new EditLectureEventHandler() {
       @Override
       public void onEditLectureEvent(EditLectureEvent event) {
-        ((Window) AbstractFactory.getWidget(ElementTypes.ADD_EDIT_LECTURES)).show();
+        ((Window) AbstractFactory.getWidget(ElementTypes.MANAGE_FILES)).show();
         AppUtils.EVENT_BUS.fireEvent(new PopulateLectureFields(event.getSelectedItem()));
+      }
+    });
+
+    AbstractFactory.getController(ElementTypes.MANAGE_FILES);
+    AppUtils.EVENT_BUS.addHandler(FilesEvent.TYPE, new FilesEventHandler() {
+      @Override
+      public void onOpenFileManagementEvent(FilesEvent event) {
+        ((Window) AbstractFactory.getWidget(ElementTypes.MANAGE_FILES)).show();
+        AppUtils.EVENT_BUS.fireEvent(new PopulateLectureFileEvent(event.getSelectedItem()));
       }
     });
 
@@ -84,6 +91,7 @@ public class ManageLecturesController extends Controller<ManageLecturesControlle
       public void onSelectionChanged(SelectionChangedEvent<LectureDTO> event) {
         view.getDeleteButton().setEnabled(!(event.getSelection() == null || event.getSelection().size() == 0));
         view.getEditButton().setEnabled(event.getSelection() != null && event.getSelection().size() == 1);
+        view.getFileButton().setEnabled(event.getSelection() != null && event.getSelection().size() == 1);
       }
     });
     loadLectures();

@@ -5,6 +5,7 @@ import com.google.lecture_manager.client.components.app.lectures_grid.LecturesGr
 import com.google.lecture_manager.client.events.AddLectureEvent;
 import com.google.lecture_manager.client.events.DeleteLectureEvent;
 import com.google.lecture_manager.client.events.EditLectureEvent;
+import com.google.lecture_manager.client.events.FilesEvent;
 import com.google.lecture_manager.client.utils.AppUtils;
 import com.google.lecture_manager.shared.model.LectureDTO;
 import com.sencha.gxt.core.client.Style;
@@ -18,7 +19,7 @@ import com.sencha.gxt.widget.core.client.grid.Grid;
 public class ManageLecturesView implements ManageLecturesController.IManageLecturesView {
   private VerticalLayoutContainer mainContainer;
   private Grid<LectureDTO> grid;
-  private TextButton addButton, editButton, deleteButton;
+  private TextButton addButton, editButton, deleteButton, fileButton;
 
   public ManageLecturesView() {
     initGUI();
@@ -43,6 +44,13 @@ public class ManageLecturesView implements ManageLecturesController.IManageLectu
         AppUtils.EVENT_BUS.fireEvent(new DeleteLectureEvent(grid.getSelectionModel().getSelectedItems()));
       }
     });
+
+    fileButton.addSelectHandler(new SelectEvent.SelectHandler() {
+      @Override
+      public void onSelect(SelectEvent event) {
+        AppUtils.EVENT_BUS.fireEvent(new FilesEvent(grid.getSelectionModel().getSelectedItem()));
+      }
+    });
   }
 
   @Override
@@ -54,10 +62,13 @@ public class ManageLecturesView implements ManageLecturesController.IManageLectu
     editButton.setEnabled(false);
     deleteButton = new TextButton("Delete");
     deleteButton.setEnabled(false);
+    fileButton = new TextButton("Files");
+    fileButton.setEnabled(false);
     HorizontalLayoutContainer horizontalLayoutContainer = new HorizontalLayoutContainer();
     horizontalLayoutContainer.add(addButton, new HorizontalLayoutContainer.HorizontalLayoutData(-1, -1, new Margins(0, 10, 0, 10)));
     horizontalLayoutContainer.add(editButton, new HorizontalLayoutContainer.HorizontalLayoutData(-1, -1, new Margins(0, 10, 0, 0)));
     horizontalLayoutContainer.add(deleteButton, new HorizontalLayoutContainer.HorizontalLayoutData(-1, -1, new Margins(0, 10, 0, 0)));
+    horizontalLayoutContainer.add(fileButton, new HorizontalLayoutContainer.HorizontalLayoutData(-1, -1, new Margins(0, 10, 0, 0)));
 
     mainContainer.add(horizontalLayoutContainer, new VerticalLayoutContainer.VerticalLayoutData(1, 30));
     mainContainer.add(grid, new VerticalLayoutContainer.VerticalLayoutData(1, 1));
@@ -73,6 +84,11 @@ public class ManageLecturesView implements ManageLecturesController.IManageLectu
 
   public TextButton getDeleteButton() {
     return deleteButton;
+  }
+
+  @Override
+  public TextButton getFileButton() {
+    return fileButton;
   }
 
   @Override

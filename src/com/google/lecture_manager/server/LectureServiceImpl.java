@@ -49,6 +49,18 @@ public class LectureServiceImpl extends RemoteServiceServlet implements LectureS
   }
 
   @Override
+  public Tree<FileData> getLectureFiles(LectureDTO lecture) throws Exception {
+    Tree<FileData> tree = new Tree<>();
+
+    Node<FileData> node = FileUtil.getHierarchyForLecture(lecture);
+    if (node != null) {
+      tree.addRoot(node);
+    }
+
+    return tree;
+  }
+
+  @Override
   public List<LectureDTO> getAllLectures() throws Exception {
     Session session = ServerUtil.SESSION_FACTORY.openSession();
     try {

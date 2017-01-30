@@ -11,4 +11,5 @@ war/WEB-INF/lib/
 LectureManager.iml
 LectureManager.launch
 LectureManager.war
+pathConfig.txt
 classes/

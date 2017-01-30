@@ -26,18 +26,16 @@ public class LectureUploadService extends HttpServlet {
     FileItemFactory factory = new DiskFileItemFactory();
     ServletFileUpload upload = new ServletFileUpload(factory);
     String lecture = req.getParameter("lecture");
-    String path = req.getParameter("path");
     try {
       long lectureId = Long.parseLong(lecture);
-      path = path != null && !path.isEmpty() ? path + "\\" : path;
-      String fileDirPath = FileUtil.getPathForLecture((int) lectureId) + path;
-//      String fileProjPath = ServerUtil.getLecturesFileProjectPath(lectureId) + path;
+      String fileDirPath = FileUtil.getPathForLecture((int) lectureId);
+      String fileProjPath = FileUtil.DISK_PATH + FileUtil.getPathForLecture((int) lectureId);
       File dirs = new File(fileDirPath);
-//      File dirsProj = new File(fileProjPath);
+      File dirsProj = new File(fileProjPath);
       if (!dirs.exists() && !dirs.mkdirs())
         throw new Exception("Unable to create missing directories");
-//      if (!dirsProj.exists() && !dirsProj.mkdirs())
-//        throw new Exception("Unable to create missing directories");
+      if (!dirsProj.exists() && !dirsProj.mkdirs())
+        throw new Exception("Unable to create missing directories");
       List<FileItem> items = upload.parseRequest(req);
       Iterator<FileItem> iterator = items.iterator();
       while (iterator.hasNext()) {
@@ -47,15 +45,15 @@ public class LectureUploadService extends HttpServlet {
         } else {
           byte[] data = item.get();
           FileOutputStream fileOutStDir = new FileOutputStream(fileDirPath + item.getName());
-//          FileOutputStream fileOutStProj = new FileOutputStream(fileProjPath + item.getName());
+          FileOutputStream fileOutStProj = new FileOutputStream(fileProjPath + item.getName());
           fileOutStDir.write(data);
-//          fileOutStProj.write(data);
+          fileOutStProj.write(data);
           fileOutStDir.close();
-//          fileOutStProj.close();
+          fileOutStProj.close();
 
           if (item.getName().endsWith(".xml")) {
             saveAdditionalXmlFile(fileDirPath, item.getName(), data);
-//            saveAdditionalXmlFile(fileProjPath, item.getName(), data);
+            saveAdditionalXmlFile(fileProjPath, item.getName(), data);
           }
         }
       }

@@ -25,4 +25,6 @@ public interface LectureService extends RemoteService {
   void editLecture(LectureDTO lecture) throws Exception;
   void addLecture(LectureDTO temp) throws Exception;
   void addUserForLecture(int userId, int lectureId) throws Exception;
+
+  void deleteLectureFile(String path) throws Exception;
 }

@@ -50,7 +50,6 @@ public class ManageLectureFilesView implements ManageLectureFilesController.IMan
     deleteButton = new TextButton("Delete");
     deleteButton.setEnabled(false);
     addButton = new TextButton("Add");
-    addButton.setEnabled(false);
     fileFormPanel = new FormPanel();
     fileUpload = new FileUpload();
     HorizontalPanel fileUploadContainer = new HorizontalPanel();

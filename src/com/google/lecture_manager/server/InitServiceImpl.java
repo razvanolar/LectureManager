@@ -2,6 +2,7 @@ package com.google.lecture_manager.server;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import com.google.lecture_manager.client.utils.services.InitService;
+import com.google.lecture_manager.server.utils.FileUtil;
 import com.google.lecture_manager.server.utils.ServerUtil;
 
 /**
@@ -15,6 +16,7 @@ public class InitServiceImpl extends RemoteServiceServlet implements InitService
       System.out.println("Start initializing session factory...");
       ServerUtil.initSessionFactory();
       System.out.println("Session factory initialized successfully");
+      FileUtil.loadDiskPath();
     } catch (Exception e) {
       e.printStackTrace();
       throw e;

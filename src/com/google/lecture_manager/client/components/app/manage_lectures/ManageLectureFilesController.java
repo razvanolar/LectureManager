@@ -3,6 +3,7 @@ package com.google.lecture_manager.client.components.app.manage_lectures;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.logical.shared.SelectionEvent;
 import com.google.gwt.event.logical.shared.SelectionHandler;
+import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.FileUpload;
 import com.google.gwt.user.client.ui.FormPanel;
@@ -18,6 +19,7 @@ import com.google.lecture_manager.shared.model.tree.Node;
 import com.google.lecture_manager.shared.model.tree.Tree;
 import com.sencha.gxt.data.shared.TreeStore;
 import com.sencha.gxt.widget.core.client.box.AlertMessageBox;
+import com.sencha.gxt.widget.core.client.box.MessageBox;
 import com.sencha.gxt.widget.core.client.button.TextButton;
 import com.sencha.gxt.widget.core.client.event.SelectEvent;
 import com.sencha.gxt.widget.core.client.info.Info;
@@ -61,49 +63,42 @@ public class ManageLectureFilesController extends Controller<ManageLectureFilesC
     view.getTreeGrid().getSelectionModel().addSelectionHandler(new SelectionHandler<FileData>() {
       @Override
       public void onSelection(SelectionEvent<FileData> event) {
-        view.getAddButton().setEnabled(event.getSelectedItem().getType().equals(FileTypes.FOLDER));
-        if (event.getSelectedItem().getType().equals(FileTypes.FOLDER)) {
-          view.getFileUpload().setEnabled(true);
-        } else {
-          view.getFileUpload().setEnabled(false);
-          view.getFileUpload().getElement().setPropertyString("value", "");
-        }
-        view.getDeleteButton().setEnabled(true);
+        view.getDeleteButton().setEnabled(!event.getSelectedItem().getType().equals(FileTypes.FOLDER));
       }
     });
 
     view.getAddButton().addSelectHandler(new SelectEvent.SelectHandler() {
       @Override
       public void onSelect(SelectEvent event) {
-        FileData selectedFile = getSelectedFile();
-        if (selectedFile == null || selectedFile.getType() != FileTypes.FOLDER || selectedLecture == null)
-          return;
         view.getFileFormPanel().setAction(GWT.getModuleBaseURL() + "lectureUploadService?user=" +
-                selectedLecture.getTeacher().getId() + "&lecture=" + selectedLecture.getId() +
-                "&path=" + getFilePathWithName(selectedFile));
+                selectedLecture.getTeacher().getId() + "&lecture=" + selectedLecture.getId());
         view.getFileFormPanel().submit();
+        Timer t = new Timer() {
+          @Override
+          public void run() {
+            loadLectureFiles();
+          }
+        };
+        t.schedule(500);
       }
     });
-  }
 
-  private String getFilePathWithName(FileData fileData) {
-    List<FileData> roots = view.getTreeGrid().getTreeStore().getRootItems();
-    if (roots.contains(fileData))
-      return "";
+    view.getDeleteButton().addSelectHandler(new SelectEvent.SelectHandler() {
+      @Override
+      public void onSelect(SelectEvent event) {
+        AppUtils.SERVICE_FACTORY.getLectureService().deleteLectureFile(view.getTreeGrid().getSelectionModel().getSelectedItem().getPath(), new AsyncCallback<Void>() {
+          @Override
+          public void onFailure(Throwable caught) {
+            new AlertMessageBox("Info", "Could not delete file.").show();
+          }
 
-    String path = fileData.getName();
-    FileData parent = view.getTreeGrid().getTreeStore().getParent(fileData);
-    while (parent != null && !(roots.contains(parent))) {
-      path = parent.getName() + "\\" + path;
-      parent = view.getTreeGrid().getTreeStore().getParent(parent);
-    }
-    return path;
-  }
-
-  private FileData getSelectedFile() {
-    if (view.getTreeGrid() != null && view.getTreeGrid().getSelectionModel() != null)
-      return view.getTreeGrid().getSelectionModel().getSelectedItem();
-    return null;
+          @Override
+          public void onSuccess(Void result) {
+            loadLectureFiles();
+          }
+        });
+      }
+    });
   }
 
   private void loadLectureFiles() {
@@ -130,6 +125,7 @@ public class ManageLectureFilesController extends Controller<ManageLectureFilesC
           addStoreChildrenHierarchy(root, node.getChildren());
         }
         view.unmask();
+        view.getTreeGrid().expandAll();
       }
     });
   }

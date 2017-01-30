@@ -5,7 +5,7 @@ import com.google.lecture_manager.shared.model.FileData;
 import com.google.lecture_manager.shared.model.LectureDTO;
 import com.google.lecture_manager.shared.model.tree.Node;
 
-import java.io.File;
+import java.io.*;
 import java.util.*;
 
 /**
@@ -14,6 +14,7 @@ import java.util.*;
 public class FileUtil {
 
   public static final String LECTURES_PATH = "lecturemanager\\app_files\\lectures\\";
+  public static String DISK_PATH;
 
   public static String getPathForLecture(LectureDTO lecture) {
     return getPathForLecture(lecture.getId());
@@ -66,6 +67,24 @@ public class FileUtil {
       return null;
 
     return file.listFiles();
+  }
+
+  public static void loadDiskPath() throws IOException {
+    File file = new File(FileUtil.class.getResource("pathConfig.txt").getPath());
+    BufferedReader br = new BufferedReader(new FileReader(file));
+    FileUtil.DISK_PATH = br.readLine();
+    br.close();
+  }
+
+  public static void deleteFile(String path) throws Exception {
+    File file = new File(LECTURES_PATH + path);
+    boolean success = file.delete();
+    String fileProjPath = FileUtil.DISK_PATH + path;
+    File projFile = new File(fileProjPath);
+    boolean success2 = projFile.delete();
+    if (!success || !success2) {
+      throw new Exception("Error while deleting file.");
+    }
   }
 
   private static List<Node<FileData>> createFileNodesFromFiles(File[] files) {

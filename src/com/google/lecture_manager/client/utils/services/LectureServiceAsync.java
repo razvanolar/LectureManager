@@ -25,4 +25,6 @@ public interface LectureServiceAsync {
   void getLectureById(int lectureId, AsyncCallback<LectureDTO> async);
 
   void getLectureFiles(LectureDTO lecture, AsyncCallback<Tree<FileData>> async);
+
+  void deleteLectureFile(String path, AsyncCallback<Void> async);
 }

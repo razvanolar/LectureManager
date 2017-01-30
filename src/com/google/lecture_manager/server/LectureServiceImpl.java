@@ -24,7 +24,7 @@ import java.util.List;
 public class LectureServiceImpl extends RemoteServiceServlet implements LectureService {
 
   private static final String attendedLecturesQuery = "SELECT lc.* FROM lectures lc INNER JOIN user_lecture_maps ulm ON lc.id = ulm.lecture_id WHERE ulm.user_id = :id_user";
-  private static final String unatendedLecturesQuery = "SELECT lc.* FROM lectures lc LEFT JOIN user_lecture_maps ulm ON lc.id = ulm.lecture_id LEFT JOIN users us ON ulm.user_id = us.id WHERE us.id <> :id_user OR us.id IS NULL";
+  private static final String unatendedLecturesQuery = "select lc.* from lectures lc where lc.id not in (SELECT DISTINCT ulm.lecture_id FROM user_lecture_maps ulm INNER JOIN users us ON ulm.user_id = us.id WHERE us.id = :id_user)";
 
   @Override
   public Tree<FileData> getLecturesFilesForUser(int userId) throws Exception {
@@ -178,6 +178,11 @@ public class LectureServiceImpl extends RemoteServiceServlet implements LectureS
       if (connection != null)
         JDBCUtil.getInstance().closeConnection(connection);
     }
+  }
+
+  @Override
+  public void deleteLectureFile(String path) throws Exception {
+    FileUtil.deleteFile(path);
   }
 
   private boolean checkUserAttendance(int lectureId, int userId) {

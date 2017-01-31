@@ -10,7 +10,7 @@ import java.util.List;
 
 public interface LectureServiceAsync {
   void getLecturesFilesForUser(int userId, AsyncCallback<Tree<FileData>> async);
-  void getAllLectures(AsyncCallback<List<LectureDTO>> async);
+  void getAllLectures(int teacherId, AsyncCallback<List<LectureDTO>> async);
   void getUnattendedLectures(int userId, AsyncCallback<List<LectureDTO>> async);
   void deleteLecture(List<LectureDTO> lectures, AsyncCallback<Void> asyncCallback);
   void editLecture(LectureDTO lecture, AsyncCallback<Void> async);

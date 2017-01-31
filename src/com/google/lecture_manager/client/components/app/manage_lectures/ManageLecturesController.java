@@ -48,7 +48,7 @@ public class ManageLecturesController extends Controller<ManageLecturesControlle
     AppUtils.EVENT_BUS.addHandler(EditLectureEvent.TYPE, new EditLectureEventHandler() {
       @Override
       public void onEditLectureEvent(EditLectureEvent event) {
-        ((Window) AbstractFactory.getWidget(ElementTypes.MANAGE_FILES)).show();
+        ((Window) AbstractFactory.getWidget(ElementTypes.ADD_EDIT_LECTURES)).show();
         AppUtils.EVENT_BUS.fireEvent(new PopulateLectureFields(event.getSelectedItem()));
       }
     });
@@ -99,7 +99,7 @@ public class ManageLecturesController extends Controller<ManageLecturesControlle
 
   private void loadLectures() {
     view.mask("Loading lectures...");
-    AppUtils.SERVICE_FACTORY.getLectureService().getAllLectures(new AsyncCallback<List<LectureDTO>>() {
+    AppUtils.SERVICE_FACTORY.getLectureService().getAllLectures((AppUtils.getInstance().isAdmin() ? 0 : AppUtils.getInstance().getAuthenticatedUser().getId()), new AsyncCallback<List<LectureDTO>>() {
       @Override
       public void onFailure(Throwable caught) {
         view.unmask();

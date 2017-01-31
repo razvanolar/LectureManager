@@ -5,12 +5,18 @@ package com.google.lecture_manager.shared;
  */
 public enum UserTypes {
 
-  ADMIN(1), TEACHER(2), STUDENT(3);
+  ADMIN(1, false, true, true), TEACHER(2, false, false, true), STUDENT(3, true, false, false);
 
   int id;
+  boolean applyForLecture;
+  boolean manageUsers;
+  boolean manageLectures;
 
-  UserTypes(int id) {
+  UserTypes(int id, boolean applyForLecture, boolean manageUsers, boolean manageLectures) {
     this.id = id;
+    this.applyForLecture = applyForLecture;
+    this.manageUsers = manageUsers;
+    this.manageLectures = manageLectures;
   }
 
   public int getId() {
@@ -23,5 +29,17 @@ public enum UserTypes {
         return type;
     }
     return null;
+  }
+
+  public boolean hasApplyForLectureRight() {
+    return applyForLecture;
+  }
+
+  public boolean hasManageUsersRight() {
+    return manageUsers;
+  }
+
+  public boolean hasManageLecturesRight() {
+    return manageLectures;
   }
 }

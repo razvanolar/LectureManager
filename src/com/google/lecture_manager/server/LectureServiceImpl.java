@@ -61,11 +61,16 @@ public class LectureServiceImpl extends RemoteServiceServlet implements LectureS
   }
 
   @Override
-  public List<LectureDTO> getAllLectures() throws Exception {
+  public List<LectureDTO> getAllLectures(int teacherId) throws Exception {
     Session session = ServerUtil.SESSION_FACTORY.openSession();
     try {
       Transaction transaction = session.beginTransaction();
-      List userList = session.createCriteria(Lecture.class).list();
+      Criteria criteria = session.createCriteria(Lecture.class);
+      if (teacherId != 0) {
+        criteria.createAlias("teacher", "t");
+        criteria.add(Restrictions.eq("t.id", teacherId));
+      }
+      List userList = criteria.list();
       transaction.commit();
       if (userList == null || userList.isEmpty()) {
         return new ArrayList<>();

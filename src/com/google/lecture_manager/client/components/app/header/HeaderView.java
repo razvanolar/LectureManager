@@ -32,8 +32,11 @@ public class HeaderView implements HeaderController.IHeaderView {
     homeButton = new TextButton("Home");
     userNameLabel = new Label("Test");
     manageUsersButton = new TextButton("Manage Users");
+    manageUsersButton.setVisible(false);
     manageLecturesButton = new TextButton("Manage Lectures");
+    manageLecturesButton.setVisible(false);
     applyForLectureButton = new TextButton("Apply for Lecture");
+    applyForLectureButton.setVisible(false);
     logoutButton = new TextButton("LOGOUT ", AppUtils.ICONS.logout());
     Label userText = new Label("Logged in as: ");
 

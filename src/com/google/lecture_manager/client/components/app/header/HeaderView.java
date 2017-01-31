@@ -58,7 +58,7 @@ public class HeaderView implements HeaderController.IHeaderView {
     userNameLabel.getElement().getStyle().setProperty("fontWeight", "bold");
     logoutButton.setIconAlign(ButtonCell.IconAlign.RIGHT);
 
-    borderLayoutContainer.setWestWidget(leftContainer, new BorderLayoutContainer.BorderLayoutData(200));
+    borderLayoutContainer.setWestWidget(leftContainer, new BorderLayoutContainer.BorderLayoutData(400));
     borderLayoutContainer.setEastWidget(rightContainer, new BorderLayoutContainer.BorderLayoutData(400));
     borderLayoutContainer.getElement().getStyle().setBackgroundColor("#ffffff");
   }

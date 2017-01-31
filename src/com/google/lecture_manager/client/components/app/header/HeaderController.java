@@ -33,7 +33,7 @@ public class HeaderController extends Controller<HeaderController.IHeaderView> {
     this.view = view;
 
     UserTypes type = AppUtils.getInstance().getAuthenticatedUser().getType();
-
+    view.getUserNameLabel().setText(AppUtils.getInstance().getAuthenticatedUser().getUserName());
     if (type.hasApplyForLectureRight()) {
       view.getApplyForLectureButton().setVisible(true);
     }

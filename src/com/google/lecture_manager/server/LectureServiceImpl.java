@@ -182,7 +182,12 @@ public class LectureServiceImpl extends RemoteServiceServlet implements LectureS
 
   @Override
   public void deleteLectureFile(String path) throws Exception {
-    FileUtil.deleteFile(path);
+    try {
+      FileUtil.deleteFile(path);
+    } catch (Exception e) {
+      e.printStackTrace();
+      throw new Exception(e.getMessage());
+    }
   }
 
   private boolean checkUserAttendance(int lectureId, int userId) {

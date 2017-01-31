@@ -4,6 +4,7 @@ import com.google.lecture_manager.shared.FileTypes;
 import com.google.lecture_manager.shared.model.FileData;
 import com.google.lecture_manager.shared.model.LectureDTO;
 import com.google.lecture_manager.shared.model.tree.Node;
+import org.apache.commons.io.FileUtils;
 
 import java.io.*;
 import java.util.*;
@@ -77,14 +78,12 @@ public class FileUtil {
   }
 
   public static void deleteFile(String path) throws Exception {
-    File file = new File(LECTURES_PATH + path);
-    boolean success = file.delete();
+    File file = new File(path);
+    FileUtils.forceDelete(file);
+
     String fileProjPath = FileUtil.DISK_PATH + path;
     File projFile = new File(fileProjPath);
-    boolean success2 = projFile.delete();
-    if (!success || !success2) {
-      throw new Exception("Error while deleting file.");
-    }
+    FileUtils.forceDelete(projFile);
   }
 
   private static List<Node<FileData>> createFileNodesFromFiles(File[] files) {

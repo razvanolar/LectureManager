@@ -1,8 +1,9 @@
 Lecture management   *
  add         1
  remove      2
- add test    3 ?
- remove test 4 ?
+ edit
+ add lecture file    3
+ remove lecture file 4
 
 User management   **
  add    5
@@ -11,12 +12,8 @@ User management   **
 
  user types:
  - regular user 
-    * change pwd
-    * edit names
     * view lectures
-    * submit tests ?
-    * view grades
     * download lecture files
- - prof user *, ** (only for his lectures)
+ - teacher user *(only for his lectures)
    * upload/manage lecture files
  - admin (only one)  *, **
